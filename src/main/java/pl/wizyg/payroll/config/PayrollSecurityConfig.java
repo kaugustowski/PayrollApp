@@ -17,8 +17,6 @@ public class PayrollSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.inMemoryAuthentication().withUser("wizyg").password("{noop}wizyg").roles("ADMIN");
 
-//        auth.inMemoryAuthentication().withUser("wizyg").password("{noop}wizyg").roles("ADMIN");
-
 
     }
 

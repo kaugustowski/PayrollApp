@@ -9,9 +9,8 @@
 <html>
 <head>
     <title>login</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 
         body {
             margin: 0;
@@ -88,11 +87,11 @@
     <div class="login-box">
         <h1>Login</h1>
         <div class="textbox">
-            <i class="fas fa-user" aria-hidden="true"></i>
+            <i class="fa fa-user icon"></i>
             <input type="text" placeholder="Username" name="username" value="">
         </div>
         <div class="textbox">
-            <i class="fas fa-lock" aria-hidden="true"></i>
+            <i class="fa fa-lock icon"></i>
             <input type='password' placeholder="Password" name="password"/>
         </div>
         <input class="btn" name="Sign in" type="submit" value="submit"/>
