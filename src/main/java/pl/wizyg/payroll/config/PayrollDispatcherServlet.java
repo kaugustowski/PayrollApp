@@ -2,20 +2,20 @@ package pl.wizyg.payroll.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class PayrollServletDispatcher extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class PayrollDispatcherServlet extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[0];
+        return new Class[]{};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] {PayrollConfig.class};
+        return new Class[]{PayrollConfig.class};
     }
 
     @Override
     protected String[] getServletMappings() {
-        return new String[0];
+        return new String[]{"/"};
     }
 }
