@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Wizyg
@@ -85,11 +86,19 @@
 
         }
 
+        .logout {
+            width: 100%;
+            color: green;
+            font-size: 18px;
+
+        }
+
+
     </style>
 </head>
 <body>
 
-<form name='f' action="${pageContext.request.contextPath}/userAuth" method='POST'>
+<form:form name='f' action="${pageContext.request.contextPath}/userAuth" method='POST'>
 
 
     <div class="login-box">
@@ -111,10 +120,18 @@
                 <i class="failed">Sorry! You entered invalid username/password.</i>
             </div>
         </c:if>
+
+
+        <c:if test="${param.logout != null}">
+            <div>
+                <i class="logout">Logged out succesfully.</i>
+            </div>
+        </c:if>
+
     </div>
 
 
-</form>
+</form:form>
 
 </body>
 </html>

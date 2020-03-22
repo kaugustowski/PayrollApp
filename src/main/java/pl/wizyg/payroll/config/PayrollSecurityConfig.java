@@ -30,7 +30,9 @@ public class PayrollSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/userAuth")
-                .permitAll();
-        http.csrf().disable();
+                .permitAll()
+                .and()
+                .logout().permitAll();
+
     }
 }

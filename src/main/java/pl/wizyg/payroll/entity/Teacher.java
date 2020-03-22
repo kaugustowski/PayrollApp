@@ -1,6 +1,5 @@
 package pl.wizyg.payroll.entity;
 
-import com.sun.tools.javac.code.Attribute;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
