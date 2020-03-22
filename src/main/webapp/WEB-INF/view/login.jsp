@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Wizyg
@@ -77,15 +78,24 @@
             border-color: #4cffff;
         }
 
+        .failed {
+            width: 100%;
+            color: red;
+            font-size: 18px;
+
+        }
+
     </style>
 </head>
 <body>
 
-<h1>Login</h1>
 <form name='f' action="${pageContext.request.contextPath}/userAuth" method='POST'>
+
 
     <div class="login-box">
         <h1>Login</h1>
+
+
         <div class="textbox">
             <i class="fa fa-user icon"></i>
             <input type="text" placeholder="Username" name="username" value="">
@@ -95,6 +105,12 @@
             <input type='password' placeholder="Password" name="password"/>
         </div>
         <input class="btn" name="Sign in" type="submit" value="submit"/>
+
+        <c:if test="${param.error != null}">
+            <div>
+                <i class="failed">Sorry! You entered invalid username/password.</i>
+            </div>
+        </c:if>
     </div>
 
 
