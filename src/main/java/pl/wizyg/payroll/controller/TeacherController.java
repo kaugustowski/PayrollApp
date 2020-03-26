@@ -35,6 +35,11 @@ public class TeacherController {
     @GetMapping("/addTeacher")
     public String addEmployee(Model theModel) {
 
+        Teacher teacher = new Teacher();
+
+        theModel.addAttribute("teacher", teacher);
+
+
         return "teacher-form";
 
     }

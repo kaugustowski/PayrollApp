@@ -1,7 +1,8 @@
 package pl.wizyg.payroll.service;
 
-import com.sun.tools.javac.util.List;
 import pl.wizyg.payroll.entity.Employee;
+
+import java.util.List;
 
 public interface EmployeeService {
     List<Employee> getEmployees();

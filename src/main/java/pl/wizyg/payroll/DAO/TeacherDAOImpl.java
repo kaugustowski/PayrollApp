@@ -4,7 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import pl.wizyg.payroll.entity.Teacher;
 
@@ -13,9 +12,11 @@ import java.util.List;
 @Repository
 public class TeacherDAOImpl implements TeacherDAO {
 
-    @Autowired
-    @Qualifier("mySessionFactory")
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    public TeacherDAOImpl(@Autowired SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public List<Teacher> getTeachers() {
