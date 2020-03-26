@@ -13,7 +13,7 @@ import pl.wizyg.payroll.entity.Teacher;
 import java.util.Properties;
 
 @org.springframework.context.annotation.Configuration
-public class HibernateUtil {
+public class HibernateConfig {
 
     private static SessionFactory sessionFactory;
 
