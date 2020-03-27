@@ -26,7 +26,7 @@ public class HibernateConfig {
 
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                settings.put(Environment.URL, "jdbc:sqlserver://localhost/payroll");
+                settings.put(Environment.URL, "jdbc:sqlserver://localhost;database=payroll");
                 settings.put(Environment.USER, "wizyg");
                 settings.put(Environment.PASS, "wizyg");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
@@ -39,6 +39,8 @@ public class HibernateConfig {
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
+
+                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
             } catch (Exception e) {
                 e.printStackTrace();

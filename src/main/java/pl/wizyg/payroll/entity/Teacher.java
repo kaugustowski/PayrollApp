@@ -56,6 +56,30 @@ public class Teacher extends Employee implements FullTimeEmployee {
         }
     }
 
+    public TeacherType getTeacherType() {
+        return teacherType;
+    }
+
+    public void setTeacherType(TeacherType teacherType) {
+        this.teacherType = teacherType;
+    }
+
+    public double getIncentivePay() {
+        return incentivePay;
+    }
+
+    public void setIncentivePay(double incentivePay) {
+        this.incentivePay = incentivePay;
+    }
+
+    public Education getEducation() {
+        return education;
+    }
+
+    public void setEducation(Education education) {
+        this.education = education;
+    }
+
     @Override
     public double calculateSalary() {
 

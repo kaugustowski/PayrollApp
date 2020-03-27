@@ -3,6 +3,7 @@ package pl.wizyg.payroll.DAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.wizyg.payroll.entity.Teacher;
 
@@ -11,8 +12,10 @@ import java.util.List;
 @Repository
 public class TeacherDAOImpl implements TeacherDAO {
 
+
     private final SessionFactory sessionFactory;
 
+    @Autowired
     public TeacherDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -33,7 +36,7 @@ public class TeacherDAOImpl implements TeacherDAO {
 
     @Override
     public void saveTeacher(Teacher teacher) {
-        Session currentSession = sessionFactory.getCurrentSession();
+        Session currentSession = sessionFactory.openSession();
 
         currentSession.saveOrUpdate(teacher);
     }

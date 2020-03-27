@@ -11,7 +11,7 @@ public abstract class Employee {
 
     @Column(name = "base_salary")
     protected double baseSalary;
-    @Column(name = "seniorty_bonus")
+    @Column(name = "seniority_bonus")
     protected double seniorityBonus;
     @Column(name = "functional_bonus")
     protected double functionalBonus;
@@ -28,7 +28,7 @@ public abstract class Employee {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "pesel")
-    private int pesel;
+    private String pesel;
     @Column(name = "email")
     private String email;
 
@@ -56,11 +56,11 @@ public abstract class Employee {
         this.lastName = lastName;
     }
 
-    public int getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
-    public void setPesel(int pesel) {
+    public void setPesel(String pesel) {
         this.pesel = pesel;
     }
 

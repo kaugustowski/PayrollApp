@@ -26,7 +26,7 @@
 <div id="container">
     <h3>Save Teacher</h3>
 
-    <form:form action="${pageContext.request.contextPath}/saveTeacher" modelAttribute="teacher" method="POST">
+    <form:form action="${pageContext.request.contextPath}/teacher/saveTeacher" modelAttribute="teacher" method="POST">
 
         <!-- need to associate this data with customer id -->
         <form:hidden path="id"/>
@@ -49,6 +49,22 @@
             </tr>
 
             <tr>
+                <td><label>Pesel:</label></td>
+                <td><form:input path="pesel"/></td>
+            </tr>
+
+            <tr>
+                <td><label>Functional bonus:</label></td>
+                <td><form:input path="functionalBonus"/></td>
+            </tr>
+
+            <tr>
+                <td><label>Incentive pay:</label></td>
+                <td><form:input path="incentivePay"/></td>
+            </tr>
+
+
+            <tr>
                 <td><label></label></td>
                 <td><input type="submit" value="Save" class="save"/></td>
             </tr>
@@ -60,7 +76,7 @@
 
     </form:form>
 
-    <div style="clear; both;"></div>
+    <div style="clear: both"></div>
 
     <p>
         <a href="${pageContext.request.contextPath}/teacher/list">Back to List</a>

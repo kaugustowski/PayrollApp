@@ -23,7 +23,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc
     compile group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '8.2.1.jre11'
     // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.12.Final'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.10.Final'
     // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.2.Final'
     // https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
@@ -36,10 +36,8 @@ dependencies {
     // https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api
     providedCompile group: 'javax.servlet.jsp', name: 'jsp-api', version: '2.2'
 
-
     // https://mvnrepository.com/artifact/jstl/jstl
     compile group: 'jstl', name: 'jstl', version: '1.2'
-
 
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'

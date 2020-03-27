@@ -45,7 +45,7 @@ public class TeacherController {
     }
 
     @PostMapping("/saveTeacher")
-    public String saveCustomer(@ModelAttribute("teacher") Teacher teacher) {
+    public String saveTeacher(@ModelAttribute("teacher") Teacher teacher) {
 
         // save the customer using our service
         teacherService.saveTeacher(teacher);
