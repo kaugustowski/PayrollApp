@@ -50,7 +50,7 @@ public class TeacherController {
         // save the customer using our service
         teacherService.saveTeacher(teacher);
 
-        return "redirect:/teacher/list";
+        return "redirect:/teacher/addTeacher";
     }
 }
 
