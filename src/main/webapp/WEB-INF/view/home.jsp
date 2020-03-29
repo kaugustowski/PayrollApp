@@ -23,6 +23,10 @@ Welcome to my payroll app
 </p>
 
 <p>
+    <a href="${pageContext.request.contextPath}/teacher/list">addteacher</a>
+</p>
+
+<p>
     <form:form action="${pageContext.request.contextPath}/logout" method="POST">
         <input type="submit" name="logout" value="logout">
     </form:form>

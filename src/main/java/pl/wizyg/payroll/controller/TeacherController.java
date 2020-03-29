@@ -3,10 +3,7 @@ package pl.wizyg.payroll.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.wizyg.payroll.entity.Teacher;
 import pl.wizyg.payroll.service.TeacherService;
 
@@ -52,6 +49,30 @@ public class TeacherController {
 
         return "redirect:/teacher/addTeacher";
     }
+
+    @GetMapping("/showFormForUpdate")
+    public String showFormForUpdate(@RequestParam("teacherId") int theId,
+                                    Model theModel) {
+
+        // get the customer from our service
+        Teacher theTeacher = teacherService.getTeacher(theId);
+
+        // set customer as a model attribute to pre-populate the form
+        theModel.addAttribute("customer", theTeacher);
+
+        // send over to our form
+        return "teacher-form";
+    }
+
+    @GetMapping("/delete")
+    public String deleteCustomer(@RequestParam("teacherId") int theId) {
+
+        // delete the customer
+        teacherService.deleteTeacher(theId);
+
+        return "redirect:/teacher/list";
+    }
+
 }
 
 

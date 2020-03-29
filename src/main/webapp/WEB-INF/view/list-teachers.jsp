@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Wizyg
@@ -20,29 +21,29 @@
     </tr>
 
     <!-- loop over and print our customers -->
-    <c:forEach var="tempCustomer" items="${customers}">
+    <c:forEach var="tempTeacher" items="${teachers}">
 
         <!-- construct an "update" link with customer id -->
-        <c:url var="updateLink" value="/customer/showFormForUpdate">
-            <c:param name="customerId" value="${tempCustomer.id}"/>
+        <c:url var="updateLink" value="/teacher/addTeacher">
+            <c:param name="Id" value="${tempTeacher.id}"/>
         </c:url>
 
         <!-- construct an "delete" link with customer id -->
-        <c:url var="deleteLink" value="/customer/delete">
-            <c:param name="customerId" value="${tempCustomer.id}"/>
+        <c:url var="deleteLink" value="/teacher/delete">
+            <c:param name="teacherId" value="${tempTeacher.id}"/>
         </c:url>
 
         <tr>
-            <td> ${tempCustomer.firstName} </td>
-            <td> ${tempCustomer.lastName} </td>
-            <td> ${tempCustomer.email} </td>
+            <td> ${tempTeacher.firstName} </td>
+            <td> ${tempTeacher.lastName} </td>
+            <td> ${tempTeacher.email} </td>
 
             <td>
                 <!-- display the update link -->
                 <a href="${updateLink}">Update</a>
                 |
                 <a href="${deleteLink}"
-                   onclick="if (!(confirm('Are you sure you want to delete this customer?'))) return false">Delete</a>
+                   onclick="if (!(confirm('Are you sure you want to delete this teacher?'))) return false">Delete</a>
             </td>
 
         </tr>

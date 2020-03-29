@@ -30,7 +30,9 @@ public class HibernateConfig {
                 settings.put(Environment.USER, "wizyg");
                 settings.put(Environment.PASS, "wizyg");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
-
+//                settings.put(Environment.HBM2DDL_AUTO, "update");
+                settings.put(Environment.SHOW_SQL, "true");
+                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 configuration.setProperties(settings);
 
                 configuration.addAnnotatedClass(Teacher.class);
@@ -48,5 +50,6 @@ public class HibernateConfig {
         }
         return sessionFactory;
     }
+
 }
 

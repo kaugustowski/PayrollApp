@@ -23,22 +23,26 @@ public class TeacherDAOImpl implements TeacherDAO {
     @Override
     public List<Teacher> getTeachers() {
 
-        Session currentSession = sessionFactory.getCurrentSession();
-
+        Session currentSession = sessionFactory.openSession();
+        System.out.println("inside getTeachers after getCurrentSession");
         Query<Teacher> theQuery =
-                currentSession.createQuery("from Teacher",
+                currentSession.createQuery("from Teacher order by lastName asc",
                         Teacher.class);
 
         List<Teacher> teachers = theQuery.getResultList();
+        System.out.println("inside getTeachers after getResultList");
+//        currentSession.close();
 
         return teachers;
     }
 
     @Override
     public void saveTeacher(Teacher teacher) {
-        Session currentSession = sessionFactory.openSession();
+        Session currentSession = sessionFactory.getCurrentSession();
 
         currentSession.saveOrUpdate(teacher);
+
+//        currentSession.close();
     }
 
     @Override
@@ -48,17 +52,26 @@ public class TeacherDAOImpl implements TeacherDAO {
 
         Teacher teacher = currentSession.get(Teacher.class, id);
 
+//        currentSession.close();
+
         return teacher;
     }
 
+
     @Override
-    public void deleteTeacher(int id) {
+    public void deleteTeacher(int theId) {
 
-        Session currentSession = sessionFactory.getCurrentSession();
 
-        Query theQuery = currentSession.createQuery("delete from Teacher where id=:teacherId");
-        theQuery.setParameter("teacherId", id);
+        Session currentSession = sessionFactory.openSession();
+//        currentSession.beginTransaction();
+
+
+        Query theQuery;
+        theQuery = currentSession.createQuery("delete from Teacher teacher where teacher.id=:teacherId");
+        theQuery.setParameter("teacherId", theId);
 
         theQuery.executeUpdate();
+//        currentSession.getTransaction().commit();
+//        currentSession.close();
     }
 }

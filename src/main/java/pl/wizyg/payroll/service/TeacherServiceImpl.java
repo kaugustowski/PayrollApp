@@ -33,12 +33,12 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     @Transactional
     public Teacher getTeacher(int id) {
-        return null;
+        return teacherDAO.getTeacher(id);
     }
 
     @Override
     @Transactional
     public void deleteTeacher(int id) {
-
+        teacherDAO.deleteTeacher(id);
     }
 }
