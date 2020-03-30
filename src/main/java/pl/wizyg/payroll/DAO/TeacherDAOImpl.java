@@ -24,6 +24,7 @@ public class TeacherDAOImpl implements TeacherDAO {
     public List<Teacher> getTeachers() {
 
         Session currentSession = sessionFactory.openSession();
+        currentSession.beginTransaction();
         System.out.println("inside getTeachers after getCurrentSession");
         Query<Teacher> theQuery =
                 currentSession.createQuery("from Teacher order by lastName asc",
@@ -31,28 +32,31 @@ public class TeacherDAOImpl implements TeacherDAO {
 
         List<Teacher> teachers = theQuery.getResultList();
         System.out.println("inside getTeachers after getResultList");
-//        currentSession.close();
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         return teachers;
     }
 
     @Override
     public void saveTeacher(Teacher teacher) {
-        Session currentSession = sessionFactory.getCurrentSession();
-
+        Session currentSession = sessionFactory.openSession();
+        currentSession.beginTransaction();
         currentSession.saveOrUpdate(teacher);
-
-//        currentSession.close();
+        currentSession.getTransaction().commit();
+        currentSession.close();
     }
 
     @Override
     public Teacher getTeacher(int id) {
 
-        Session currentSession = sessionFactory.getCurrentSession();
+        Session currentSession = sessionFactory.openSession();
+        currentSession.beginTransaction();
 
         Teacher teacher = currentSession.get(Teacher.class, id);
 
-//        currentSession.close();
+        currentSession.getTransaction().commit();
+        currentSession.close();
 
         return teacher;
     }
@@ -63,15 +67,15 @@ public class TeacherDAOImpl implements TeacherDAO {
 
 
         Session currentSession = sessionFactory.openSession();
-//        currentSession.beginTransaction();
+        currentSession.beginTransaction();
 
 
         Query theQuery;
-        theQuery = currentSession.createQuery("delete from Teacher teacher where teacher.id=:teacherId");
+        theQuery = currentSession.createQuery("delete from Teacher where id=:teacherId");
         theQuery.setParameter("teacherId", theId);
 
         theQuery.executeUpdate();
-//        currentSession.getTransaction().commit();
-//        currentSession.close();
+        currentSession.getTransaction().commit();
+        currentSession.close();
     }
 }

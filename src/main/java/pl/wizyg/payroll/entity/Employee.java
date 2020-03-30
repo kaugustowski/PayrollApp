@@ -105,6 +105,10 @@ public abstract class Employee {
     }
 
     public double calculateDeductionsFromSalary() {
+        double deductionsFromSalary;
+
+        deductionsFromSalary = calculateTax() + calculateSicknessContribution() + calculatePensionContribution()
+                + calculateDisabilityContribution() + calculateAccidentInsuranceContribution();
         return 0;
     }
 
@@ -116,23 +120,55 @@ public abstract class Employee {
         return 0;
     }
 
+    //ubezpieczenie emerytalne
     public double calculatePensionContribution() {
-        return 0;
+        double pensionContribution;
+        final double PENSION_CONTRIBUTION_PERCENT = 9.76;
+
+        pensionContribution = salary * PENSION_CONTRIBUTION_PERCENT / 100;
+
+        return pensionContribution;
     }
 
+    // ubezpieczenie rentowe
     public double calculateDisabilityContribution() {
-        return 0;
+        double disabilityContribution;
+        final double PENSION_CONTRIBUTION_PERCENT = 9.76;
+
+        disabilityContribution = salary * PENSION_CONTRIBUTION_PERCENT / 100;
+
+        return disabilityContribution;
     }
 
+    //ubezpieczenie wypadkowe
     public double calculateAccidentInsuranceContribution() {
         return 0;
     }
 
+    //ubezpieczenie chorobowe
     public double calculateSicknessContribution() {
+        double sicknessContribution;
+        final double SICKNESS_CONTRIBUTION_PERCENT = 2.45;
+        sicknessContribution = salary * SICKNESS_CONTRIBUTION_PERCENT / 100;
+
+        return sicknessContribution;
+    }
+
+    //ubezpieczenie zdrowotne
+    public double calculateHealthCareContribution() {
+        double healthcareContribution;
+        final double HEALTHCAR_CONTRIBUTION_PERCENT = 9;
         return 0;
     }
 
-    public double calculateHealthCareContribution() {
-        return 0;
+    //
+    public double calculateHealthCareContributionDecuction() {
+        double healthcareContribution;
+        final double HEALTHCAR_CONTRIBUTION_PERCENT = 7.75;
+
+        healthcareContribution = salary * HEALTHCAR_CONTRIBUTION_PERCENT;
+
+        return healthcareContribution;
+
     }
 }

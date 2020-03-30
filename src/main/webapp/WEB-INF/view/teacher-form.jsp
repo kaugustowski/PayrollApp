@@ -26,6 +26,8 @@
 <div id="container">
     <h3>Save Teacher</h3>
 
+    <h2>${teacher.firstName } ${teacher.lastName }</h2>
+
     <form:form action="${pageContext.request.contextPath}/teacher/saveTeacher" modelAttribute="teacher" method="POST">
 
         <!-- need to associate this data with customer id -->

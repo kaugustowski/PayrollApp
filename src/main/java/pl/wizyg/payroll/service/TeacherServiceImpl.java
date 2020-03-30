@@ -2,7 +2,6 @@ package pl.wizyg.payroll.service;
 
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import pl.wizyg.payroll.DAO.TeacherDAO;
 import pl.wizyg.payroll.entity.Teacher;
 
@@ -18,26 +17,22 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    @Transactional
     public List<Teacher> getTeachers() {
         return teacherDAO.getTeachers();
     }
 
     @Override
-    @Transactional
     public void saveTeacher(Teacher teacher) {
 
         teacherDAO.saveTeacher(teacher);
     }
 
     @Override
-    @Transactional
     public Teacher getTeacher(int id) {
         return teacherDAO.getTeacher(id);
     }
 
     @Override
-    @Transactional
     public void deleteTeacher(int id) {
         teacherDAO.deleteTeacher(id);
     }

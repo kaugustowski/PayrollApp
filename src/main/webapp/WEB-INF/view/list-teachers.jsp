@@ -20,15 +20,15 @@
         <th>Action</th>
     </tr>
 
-    <!-- loop over and print our customers -->
+
     <c:forEach var="tempTeacher" items="${teachers}">
 
-        <!-- construct an "update" link with customer id -->
-        <c:url var="updateLink" value="/teacher/addTeacher">
-            <c:param name="Id" value="${tempTeacher.id}"/>
+
+        <c:url var="updateLink" value="/teacher/showFormForUpdate">
+            <c:param name="teacherId" value="${tempTeacher.id}"/>
         </c:url>
 
-        <!-- construct an "delete" link with customer id -->
+
         <c:url var="deleteLink" value="/teacher/delete">
             <c:param name="teacherId" value="${tempTeacher.id}"/>
         </c:url>

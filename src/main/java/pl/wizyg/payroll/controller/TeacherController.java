@@ -54,13 +54,10 @@ public class TeacherController {
     public String showFormForUpdate(@RequestParam("teacherId") int theId,
                                     Model theModel) {
 
-        // get the customer from our service
         Teacher theTeacher = teacherService.getTeacher(theId);
 
-        // set customer as a model attribute to pre-populate the form
-        theModel.addAttribute("customer", theTeacher);
+        theModel.addAttribute("teacher", theTeacher);
 
-        // send over to our form
         return "teacher-form";
     }
 
