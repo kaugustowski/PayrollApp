@@ -12,42 +12,30 @@
 <html>
 
 <head>
-    <title>Save Customer</title>
+    <title>Save Administrative Employee</title>
 </head>
 
 <body>
 
 <div id="wrapper">
     <div id="header">
-        <h2>Teacher form</h2>
+        <h2>Administrative Employee form</h2>
     </div>
 </div>
 
 <div id="container">
     <h3>Save Teacher</h3>
 
-    <h2>${teacher.firstName } ${teacher.lastName }</h2>
+    <h2>${employee.firstName } ${employee.lastName }</h2>
 
-    <form:form action="${pageContext.request.contextPath}/teacher/saveTeacher" modelAttribute="teacher" method="POST">
+    <form:form action="${pageContext.request.contextPath}/administrativeEmployee/saveTeacher" modelAttribute="employee"
+               method="POST">
 
         <!-- need to associate this data with customer id -->
         <form:hidden path="id"/>
 
         <table>
             <tbody>
-
-            <tr>
-                <td><label>Choose a teacher type:</label></td>
-                <td>
-                    <form:select path="teacherType">
-                        <option value="INTERN">Intern</option>
-                        <option value="CONTRACT">Contract</option>
-                        <option value="APPOINTED">Appointed</option>
-                        <option value="CERTIFIED">Certified</option>
-                    </form:select>
-                </td>
-            </tr>
-
             <tr>
                 <td><label>First name:</label></td>
                 <td><form:input path="firstName"/></td>
@@ -75,12 +63,7 @@
 
             <tr>
                 <td><label>Incentive pay:</label></td>
-                <td><form:input path="incentivePay"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Seniority bonus:</label></td>
-                <td><form:input path="seniorityBonus"/></td>
+                <td><form:input path="bonus"/></td>
             </tr>
 
 
@@ -99,7 +82,7 @@
     <div style="clear: both"></div>
 
     <p>
-        <a href="${pageContext.request.contextPath}/teacher/list">Back to List</a>
+        <a href="${pageContext.request.contextPath}/administrativeEmployee/list">Back to List</a>
     </p>
 
 </div>

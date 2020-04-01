@@ -21,11 +21,11 @@
     </tr>
 
 
-    <c:forEach var="tempTeacher" items="${teachers}">
+    <c:forEach var="tempTeacher" items="${employees}">
 
 
-        <c:url var="updateLink" value="/teacher/showFormForUpdate">
-            <c:param name="teacherId" value="${tempTeacher.id}"/>
+        <c:url var="updateLink" value="/administrativeEmployee/showFormForUpdate">
+            <c:param name="employeeId" value="${tempTeacher.id}"/>
         </c:url>
 
 

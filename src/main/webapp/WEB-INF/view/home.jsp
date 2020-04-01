@@ -15,16 +15,22 @@
 Welcome to my payroll app
 
 <p>
-    <a href="${pageContext.request.contextPath}/login">login page</a>
+    <a href="${pageContext.request.contextPath}/teacher/addTeacher">add teacher</a>
 </p>
 
 <p>
-    <a href="${pageContext.request.contextPath}/teacher/addTeacher">addteacher</a>
+    <a href="${pageContext.request.contextPath}/administrativeEmployee/addAdministrativeEmployee">add administrative
+        employee</a>
 </p>
 
 <p>
-    <a href="${pageContext.request.contextPath}/teacher/list">addteacher</a>
+    <a href="${pageContext.request.contextPath}/teacher/list">teachers list</a>
 </p>
+
+<p>
+    <a href="${pageContext.request.contextPath}/administrativeEmployee/list">administrative employees list</a>
+</p>
+
 
 <p>
     <form:form action="${pageContext.request.contextPath}/logout" method="POST">

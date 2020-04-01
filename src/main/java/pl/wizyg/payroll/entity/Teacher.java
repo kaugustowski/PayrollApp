@@ -16,6 +16,7 @@ public class Teacher extends Employee implements FullTimeEmployee {
     @Column(name = "incentive_pay")
     private double incentivePay;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "education")
     private Education education;
 

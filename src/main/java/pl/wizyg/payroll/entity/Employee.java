@@ -142,7 +142,11 @@ public abstract class Employee {
 
     //ubezpieczenie wypadkowe
     public double calculateAccidentInsuranceContribution() {
-        return 0;
+        double accidentInsuranceContribution;
+        final double ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT = 0.93;
+        accidentInsuranceContribution = salary * ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT / 100;
+
+        return accidentInsuranceContribution;
     }
 
     //ubezpieczenie chorobowe
@@ -158,7 +162,9 @@ public abstract class Employee {
     public double calculateHealthCareContribution() {
         double healthcareContribution;
         final double HEALTHCAR_CONTRIBUTION_PERCENT = 9;
-        return 0;
+        healthcareContribution = salary * HEALTHCAR_CONTRIBUTION_PERCENT / 100;
+
+        return healthcareContribution;
     }
 
     //
