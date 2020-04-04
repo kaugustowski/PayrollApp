@@ -5,7 +5,8 @@ import pl.wizyg.payroll.entity.Employee;
 import java.util.List;
 
 public interface EmployeeDAO {
-    List<? extends Employee> getEmployees();
+
+    List<Employee> getEmployees();
 
     void saveEmployee();
 

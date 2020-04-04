@@ -30,7 +30,6 @@
 
     <form:form action="${pageContext.request.contextPath}/teacher/saveTeacher" modelAttribute="teacher" method="POST">
 
-        <!-- need to associate this data with customer id -->
         <form:hidden path="id"/>
 
         <table>
@@ -44,6 +43,17 @@
                         <option value="CONTRACT">Contract</option>
                         <option value="APPOINTED">Appointed</option>
                         <option value="CERTIFIED">Certified</option>
+                    </form:select>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label>Choose an education level:</label></td>
+                <td>
+                    <form:select path="education">
+                        <option value="HIGHER_WITH_PEDAGOGIC_PREP">Higher with pedagogic preparation</option>
+                        <option value="HIGHER_WITHOUT_PEDAGOGIC_PREP">Higher without pedagogic preparation</option>
+                        <option value="OTHER">Other</option>
                     </form:select>
                 </td>
             </tr>
@@ -86,7 +96,7 @@
 
             <tr>
                 <td><label></label></td>
-                <td><input type="submit" value="Save" class="save"/></td>
+                <td><input type="submit" value="Save" class="save" onclick="${teacher.setBaseSalary()}"/></td>
             </tr>
 
 

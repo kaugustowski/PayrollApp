@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Wizyg
@@ -17,7 +18,8 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>
-        <th>Action</th>
+        <th>baseSalary</th>
+        <th>calculateSalary</th>
     </tr>
 
 
@@ -37,9 +39,11 @@
             <td> ${tempTeacher.firstName} </td>
             <td> ${tempTeacher.lastName} </td>
             <td> ${tempTeacher.email} </td>
+            <td>${tempTeacher.baseSalary}</td>
+            <td>${tempTeacher.calculateSalary()}</td>
+
 
             <td>
-                <!-- display the update link -->
                 <a href="${updateLink}">Update</a>
                 |
                 <a href="${deleteLink}"
@@ -50,8 +54,14 @@
 
     </c:forEach>
 
+    <c:url var="calculateLink" value="/teacher/calculate">
+        <%--            <c:param name="teacherId" value="${tempTeacher.id}"/>--%>
+    </c:url>
+
+
+    <button onclick="${calculateLink}"> Calculate</button>
 </table>
 
-<button onclick=""
+
 </body>
 </html>

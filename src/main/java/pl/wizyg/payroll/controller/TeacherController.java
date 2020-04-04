@@ -62,10 +62,19 @@ public class TeacherController {
     }
 
     @GetMapping("/delete")
-    public String deleteCustomer(@RequestParam("teacherId") int theId) {
+    public String deleteTeacher(@RequestParam("teacherId") int theId) {
 
         // delete the customer
         teacherService.deleteTeacher(theId);
+
+        return "redirect:/teacher/list";
+    }
+
+    @PostMapping("/calculate")
+    public String calculate() {
+
+        List<Teacher> teachers = teacherService.getTeachers();
+        teachers.forEach(Teacher::calculateSalary);
 
         return "redirect:/teacher/list";
     }

@@ -26,22 +26,22 @@ public class AdministrativeEmployeeController {
 
         theModel.addAttribute("administrativeEmployees", employees);
 
-        return "list-teachers";
+        return "list-administrative-employees";
     }
 
     @GetMapping("/addAdministrativeEmployee")
     public String addAdministrativeEmployee(Model theModel) {
 
-        AdministrativeEmployee teacher = new AdministrativeEmployee();
+        AdministrativeEmployee administrativeEmployee = new AdministrativeEmployee();
 
-        theModel.addAttribute("teacher", teacher);
+        theModel.addAttribute("administrativeEmployee", administrativeEmployee);
 
         return "administrative-employee-form";
 
     }
 
-    @PostMapping("/saveTeacher")
-    public String saveTeacher(@ModelAttribute("administrativeEmployee") AdministrativeEmployee administrativeEmployee) {
+    @PostMapping("/saveAdministrativeEmployee")
+    public String saveAdministrativeEmployee(@ModelAttribute("administrativeEmployee") AdministrativeEmployee administrativeEmployee) {
 
         // save the customer using our service
         administrativeEmployeeService.saveAdministrativeEmployee(administrativeEmployee);

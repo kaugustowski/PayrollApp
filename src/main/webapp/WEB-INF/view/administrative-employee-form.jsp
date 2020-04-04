@@ -24,14 +24,14 @@
 </div>
 
 <div id="container">
-    <h3>Save Teacher</h3>
+    <h3>Save Administrative Employee</h3>
 
-    <h2>${employee.firstName } ${employee.lastName }</h2>
+    <h2>${administrativeEmployee.firstName } ${administrativeEmployee.lastName }</h2>
 
-    <form:form action="${pageContext.request.contextPath}/administrativeEmployee/saveTeacher" modelAttribute="employee"
+    <form:form action="${pageContext.request.contextPath}/administrativeEmployee/saveAdministrativeEmployee"
+               modelAttribute="administrativeEmployee"
                method="POST">
 
-        <!-- need to associate this data with customer id -->
         <form:hidden path="id"/>
 
         <table>
@@ -62,7 +62,7 @@
             </tr>
 
             <tr>
-                <td><label>Incentive pay:</label></td>
+                <td><label>Bonus:</label></td>
                 <td><form:input path="bonus"/></td>
             </tr>
 

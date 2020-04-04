@@ -21,22 +21,22 @@
     </tr>
 
 
-    <c:forEach var="tempTeacher" items="${employees}">
+    <c:forEach var="tempEmployee" items="${administrativeEmployees}">
 
 
         <c:url var="updateLink" value="/administrativeEmployee/showFormForUpdate">
-            <c:param name="employeeId" value="${tempTeacher.id}"/>
+            <c:param name="administrativeEmployeeId" value="${tempEmployee.id}"/>
         </c:url>
 
 
-        <c:url var="deleteLink" value="/teacher/delete">
-            <c:param name="teacherId" value="${tempTeacher.id}"/>
+        <c:url var="deleteLink" value="/administrativeEmployee/delete">
+            <c:param name="administrativeEmployeeId" value="${tempEmployee.id}"/>
         </c:url>
 
         <tr>
-            <td> ${tempTeacher.firstName} </td>
-            <td> ${tempTeacher.lastName} </td>
-            <td> ${tempTeacher.email} </td>
+            <td> ${tempEmployee.firstName} </td>
+            <td> ${tempEmployee.lastName} </td>
+            <td> ${tempEmployee.email} </td>
 
             <td>
                 <!-- display the update link -->
@@ -52,6 +52,6 @@
 
 </table>
 
-<button onclick=""
+<button onclick=""></button>
 </body>
 </html>
