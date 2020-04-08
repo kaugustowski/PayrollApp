@@ -20,55 +20,45 @@ public class AdministrativeEmployeeDAOImpl implements AdministrativeEmployeeDAO 
     @Override
     public List<AdministrativeEmployee> getAdministrativeEmployees() {
 
-        Session currentSession = sessionFactory.openSession();
-        currentSession.beginTransaction();
-        System.out.println("inside getTeachers after getCurrentSession");
+        Session currentSession = sessionFactory.getCurrentSession();
+
         Query<AdministrativeEmployee> theQuery =
                 currentSession.createQuery("from AdministrativeEmployee order by lastName asc",
                         AdministrativeEmployee.class);
 
         List<AdministrativeEmployee> administrativeEmployees = theQuery.getResultList();
-        System.out.println("inside getTeachers after getResultList");
-        currentSession.getTransaction().commit();
-        currentSession.close();
+
 
         return administrativeEmployees;
     }
 
     @Override
     public void saveAdministrativeEmployee(AdministrativeEmployee employee) {
-        Session currentSession = sessionFactory.openSession();
-        currentSession.beginTransaction();
+        Session currentSession = sessionFactory.getCurrentSession();
+
         currentSession.saveOrUpdate(employee);
-        currentSession.getTransaction().commit();
-        currentSession.close();
+
+
     }
 
     @Override
     public AdministrativeEmployee getAdministrativeEmployee(int id) {
 
-        Session currentSession = sessionFactory.openSession();
-        currentSession.beginTransaction();
+        Session currentSession = sessionFactory.getCurrentSession();
 
         AdministrativeEmployee employee = currentSession.get(AdministrativeEmployee.class, id);
-
-        currentSession.getTransaction().commit();
-        currentSession.close();
 
         return employee;
     }
 
     @Override
     public void deleteAdministrativeEmployee(int id) {
-        Session currentSession = sessionFactory.openSession();
-        currentSession.beginTransaction();
+        Session currentSession = sessionFactory.getCurrentSession();
 
         Query theQuery;
         theQuery = currentSession.createQuery("delete from AdministrativeEmployee where id=:administrativeEmployeeId");
         theQuery.setParameter("administrativeEmployeeId", id);
 
         theQuery.executeUpdate();
-        currentSession.getTransaction().commit();
-        currentSession.close();
     }
 }

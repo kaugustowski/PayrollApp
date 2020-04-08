@@ -23,7 +23,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> getEmployees() {
 
         Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.beginTransaction();
+
         Query<Teacher> teacherQuery = currentSession.createQuery(" from Teacher ", Teacher.class);
 
         List<Teacher> teachers = teacherQuery.getResultList();
@@ -37,9 +37,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         employees.addAll(teachers);
 
         employees.addAll(administrativeEmployees);
-
-        currentSession.getTransaction().commit();
-        currentSession.close();
 
         return employees;
     }

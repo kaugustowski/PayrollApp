@@ -177,4 +177,6 @@ public abstract class Employee {
         return healthcareContribution;
 
     }
+
+    public abstract double calculateSalary();
 }

@@ -3,11 +3,13 @@ package pl.wizyg.payroll.entity;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Entity
 @Table(name = "teacher")
-public class Teacher extends Employee implements FullTimeEmployee {
+public class Teacher extends Employee {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "teacher_type")
@@ -20,7 +22,35 @@ public class Teacher extends Employee implements FullTimeEmployee {
     @Column(name = "education")
     private Education education;
 
+    @OneToMany(mappedBy = "teacher")
+    private List<SickLeave> sickLeaves;
+
+    @OneToMany(mappedBy = "teacher")
+    private List<TeachingPractice> teachingPracticeList;
+
+
     public Teacher() {
+    }
+
+    public void add(SickLeave sickLeave) {
+
+        if (sickLeaves == null) {
+            sickLeaves = new ArrayList<>();
+        }
+
+        sickLeaves.add(sickLeave);
+        sickLeave.setTeacher(this);
+    }
+
+    public void add(TeachingPractice teachingPractice) {
+
+        if (teachingPracticeList == null) {
+            teachingPracticeList = new ArrayList<>();
+        }
+
+        teachingPracticeList.add(teachingPractice);
+        teachingPractice.setTeacher(this);
+
     }
 
 
@@ -87,5 +117,13 @@ public class Teacher extends Employee implements FullTimeEmployee {
         salary = baseSalary + incentivePay + seniorityBonus;
 
         return salary;
+    }
+
+    public List<SickLeave> getSickLeaves() {
+        return sickLeaves;
+    }
+
+    public void setSickLeaves(List<SickLeave> sickLeaves) {
+        this.sickLeaves = sickLeaves;
     }
 }

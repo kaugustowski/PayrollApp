@@ -23,40 +23,31 @@ public class TeacherDAOImpl implements TeacherDAO {
     @Override
     public List<Teacher> getTeachers() {
 
-        Session currentSession = sessionFactory.openSession();
-        currentSession.beginTransaction();
-        System.out.println("inside getTeachers after getCurrentSession");
+        Session currentSession = sessionFactory.getCurrentSession();
+
         Query<Teacher> theQuery =
                 currentSession.createQuery("from Teacher order by lastName asc",
                         Teacher.class);
 
         List<Teacher> teachers = theQuery.getResultList();
-        System.out.println("inside getTeachers after getResultList");
-        currentSession.getTransaction().commit();
-        currentSession.close();
 
         return teachers;
     }
 
     @Override
     public void saveTeacher(Teacher teacher) {
-        Session currentSession = sessionFactory.openSession();
-        currentSession.beginTransaction();
+        Session currentSession = sessionFactory.getCurrentSession();
+
         currentSession.saveOrUpdate(teacher);
-        currentSession.getTransaction().commit();
-        currentSession.close();
+
     }
 
     @Override
     public Teacher getTeacher(int id) {
 
-        Session currentSession = sessionFactory.openSession();
-        currentSession.beginTransaction();
+        Session currentSession = sessionFactory.getCurrentSession();
 
         Teacher teacher = currentSession.get(Teacher.class, id);
-
-        currentSession.getTransaction().commit();
-        currentSession.close();
 
         return teacher;
     }
@@ -64,18 +55,11 @@ public class TeacherDAOImpl implements TeacherDAO {
 
     @Override
     public void deleteTeacher(int theId) {
-
-
-        Session currentSession = sessionFactory.openSession();
-        currentSession.beginTransaction();
-
+        Session currentSession = sessionFactory.getCurrentSession();
 
         Query theQuery;
         theQuery = currentSession.createQuery("delete from Teacher where id=:teacherId");
         theQuery.setParameter("teacherId", theId);
-
         theQuery.executeUpdate();
-        currentSession.getTransaction().commit();
-        currentSession.close();
     }
 }

@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Component
 @Entity
 @Table(name = "administrative_employee")
-public class AdministrativeEmployee extends Employee implements FullTimeEmployee {
+public class AdministrativeEmployee extends Employee {
 
 
     private double bonus;
