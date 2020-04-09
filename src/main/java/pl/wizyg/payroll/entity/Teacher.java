@@ -28,6 +28,17 @@ public class Teacher extends Employee {
     @OneToMany(mappedBy = "teacher")
     private List<TeachingPractice> teachingPracticeList;
 
+    @OneToMany(mappedBy = "teacher")
+    private List<Salary> salaries;
+
+//    @ManyToMany
+//    @JoinTable(
+//            name="Teacher_Payroll",
+//            joinColumns = {@JoinColumn(name = "teacher_id")},
+//            inverseJoinColumns = {@JoinColumn(name="payroll_id")}
+//    )
+//    private List<Payroll> payrollList;
+
 
     public Teacher() {
     }
