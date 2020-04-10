@@ -31,6 +31,8 @@ public abstract class Employee {
     private String pesel;
     @Column(name = "email")
     private String email;
+    @Column(name = "extra tax deductible expenses")
+    private boolean extraTaxDeductibleExpenses;
 
     public int getId() {
         return id;
@@ -102,6 +104,14 @@ public abstract class Employee {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    public boolean isExtraTaxDeductibleExpenses() {
+        return extraTaxDeductibleExpenses;
+    }
+
+    public void setExtraTaxDeductibleExpenses(boolean extraTaxDeductibleExpenses) {
+        this.extraTaxDeductibleExpenses = extraTaxDeductibleExpenses;
     }
 
     public double calculateDeductionsFromSalary() {

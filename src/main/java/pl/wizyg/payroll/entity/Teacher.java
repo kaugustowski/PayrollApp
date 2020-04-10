@@ -64,6 +64,17 @@ public class Teacher extends Employee {
 
     }
 
+    public void add(Salary salary) {
+
+        if (salaries == null) {
+            salaries = new ArrayList<>();
+        }
+
+        salaries.add(salary);
+        salary.setTeacher(this);
+
+    }
+
 
     public void setBaseSalary() {
         if (education == Education.HIGHER_WITH_PEDAGOGIC_PREP) {
