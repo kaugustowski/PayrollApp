@@ -1,7 +1,10 @@
 package pl.wizyg.payroll.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Table(name = "sick_leave")
@@ -12,10 +15,15 @@ public class SickLeave {
     private int sickLeaveId;
 
     @Column(name = "sick_leave_from")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate sickLeaveFrom;
 
     @Column(name = "sick_leave_to")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate sickLeaveTo;
+
+    @Transient
+    private int consecutiveDays;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
@@ -24,6 +32,12 @@ public class SickLeave {
     public SickLeave() {
     }
 
+    public int getConsecutiveDays() {
+        consecutiveDays =
+                Period.between(sickLeaveFrom, sickLeaveTo).getDays() + 1;
+
+        return consecutiveDays;
+    }
 
     public int getSickLeaveId() {
         return sickLeaveId;
@@ -44,6 +58,7 @@ public class SickLeave {
     public LocalDate getSickLeaveTo() {
         return sickLeaveTo;
     }
+
 
     public void setSickLeaveTo(LocalDate sickLeaveTo) {
         this.sickLeaveTo = sickLeaveTo;

@@ -35,6 +35,10 @@ Welcome to my payroll app
     <a href="${pageContext.request.contextPath}/employee/list">employees list</a>
 </p>
 
+<p>
+    <a href="${pageContext.request.contextPath}/teacher/sickLeaves/1">sick leaves list for teacher with id = 1</a>
+</p>
+
 
 <p>
     <form:form action="${pageContext.request.contextPath}/logout" method="POST">

@@ -1,10 +1,14 @@
 package pl.wizyg.payroll.DAO;
 
+import pl.wizyg.payroll.entity.SickLeave;
 import pl.wizyg.payroll.entity.Teacher;
 
 import java.util.List;
 
 public interface TeacherDAO {
+
+    List<SickLeave> getSickLeaves(int teacherId);
+
     List<Teacher> getTeachers();
 
     void saveTeacher(Teacher teacher);
@@ -12,4 +16,6 @@ public interface TeacherDAO {
     Teacher getTeacher(int id);
 
     void deleteTeacher(int id);
+
+    void addTeachersSickLeave(int teacherId, SickLeave sickLeave);
 }

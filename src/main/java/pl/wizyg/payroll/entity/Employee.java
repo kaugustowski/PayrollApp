@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 @MappedSuperclass
 public abstract class Employee {
 
+
     @Column(name = "base_salary")
     protected double baseSalary;
     @Column(name = "seniority_bonus")
@@ -31,7 +32,7 @@ public abstract class Employee {
     private String pesel;
     @Column(name = "email")
     private String email;
-    @Column(name = "extra tax deductible expenses")
+    @Column(name = "extra_tax_deductible_expenses")
     private boolean extraTaxDeductibleExpenses;
 
     public int getId() {

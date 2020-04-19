@@ -4,8 +4,9 @@ package pl.wizyg.payroll.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "salary")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Salary {
+public class Salary {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +27,7 @@ public abstract class Salary {
     @Column(name = "disability_contribution_payer")
     private double disabilityContributionPayer;
 
-    @Column(name = "disability_contribution_payer")
+    @Column(name = "accident_insurance_contribution_payer")
     private double accidentInsuranceContributionPayer;
 
     @Column(name = "pension_contribution_employee")

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wizyg.payroll.DAO.TeacherDAO;
+import pl.wizyg.payroll.entity.SickLeave;
 import pl.wizyg.payroll.entity.Teacher;
 
 import java.util.List;
@@ -18,6 +19,11 @@ public class TeacherServiceImpl implements TeacherService {
 
     public TeacherServiceImpl(@Autowired TeacherDAO teacherDAO) {
         this.teacherDAO = teacherDAO;
+    }
+
+    @Override
+    public List<SickLeave> getSickLeaves(int teacherId) {
+        return teacherDAO.getSickLeaves(teacherId);
     }
 
     @Override
@@ -40,4 +46,11 @@ public class TeacherServiceImpl implements TeacherService {
     public void deleteTeacher(int id) {
         teacherDAO.deleteTeacher(id);
     }
+
+    @Override
+    public void saveTeachersSickLeave(int teacherId, SickLeave sickLeave) {
+        teacherDAO.addTeachersSickLeave(teacherId, sickLeave);
+    }
+
+
 }

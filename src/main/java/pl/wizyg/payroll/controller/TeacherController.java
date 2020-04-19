@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.wizyg.payroll.entity.SickLeave;
 import pl.wizyg.payroll.entity.Teacher;
 import pl.wizyg.payroll.service.TeacherService;
 
@@ -30,12 +31,11 @@ public class TeacherController {
     }
 
     @GetMapping("/addTeacher")
-    public String addEmployee(Model theModel) {
+    public String addTeacher(Model theModel) {
 
         Teacher teacher = new Teacher();
 
         theModel.addAttribute("teacher", teacher);
-
 
         return "teacher-form";
 
@@ -78,6 +78,42 @@ public class TeacherController {
 
         return "redirect:/teacher/list";
     }
+
+    @GetMapping("/sickLeaves/{teacherId}")
+    public String showSickLeaves(@PathVariable int teacherId, Model theModel) {
+
+        Teacher teacher = teacherService.getTeacher(teacherId);
+
+        List<SickLeave> sickLeaveList = teacherService.getTeacher(teacherId).getSickLeaves();
+
+        theModel.addAttribute("teacher", teacher);
+        theModel.addAttribute("sickLeaves", sickLeaveList);
+
+        return "sick-leaves";
+    }
+
+    @GetMapping("/addSickLeave/{teacherId}")
+    public String showSickLeaveForm(@PathVariable int teacherId, Model theModel) {
+
+        Teacher theTeacher = teacherService.getTeacher(teacherId);
+
+        SickLeave sickLeave = new SickLeave();
+
+        theModel.addAttribute("teacher", theTeacher);
+        theModel.addAttribute("sickLeave", sickLeave);
+
+
+        return "sickleave-form";
+    }
+
+    @PostMapping("/saveSickLeave/{teacherId}")
+    public String saveSickLeave(@ModelAttribute("sickLeave") SickLeave sickLeave, @PathVariable int teacherId) {
+
+        teacherService.saveTeachersSickLeave(teacherId, sickLeave);
+
+        return "redirect:/teacher/sickLeaves/{teacherId}";
+    }
+
 
 }
 

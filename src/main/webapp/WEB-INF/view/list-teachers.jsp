@@ -35,6 +35,11 @@
             <c:param name="teacherId" value="${tempTeacher.id}"/>
         </c:url>
 
+        <c:url var="addSickLeaveLink" value="/teacher/addSickLeave/${tempTeacher.id}">
+            <%--            <c:param name="teacherId" value="${tempTeacher.id}"/>--%>
+        </c:url>
+
+
         <tr>
             <td> ${tempTeacher.firstName} </td>
             <td> ${tempTeacher.lastName} </td>
@@ -45,6 +50,8 @@
 
             <td>
                 <a href="${updateLink}">Update</a>
+                |
+                <a href="${addSickLeaveLink}">Add sick leave</a>
                 |
                 <a href="${deleteLink}"
                    onclick="if (!(confirm('Are you sure you want to delete this teacher?'))) return false">Delete</a>

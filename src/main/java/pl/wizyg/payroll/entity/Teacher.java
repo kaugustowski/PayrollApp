@@ -1,12 +1,9 @@
 package pl.wizyg.payroll.entity;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 @Entity
 @Table(name = "teacher")
 public class Teacher extends Employee {
@@ -22,12 +19,15 @@ public class Teacher extends Employee {
     @Column(name = "education")
     private Education education;
 
-    @OneToMany(mappedBy = "teacher")
-    private List<SickLeave> sickLeaves;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
+@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "teacher")
+private List<SickLeave> sickLeaves;
 
+    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
     @OneToMany(mappedBy = "teacher")
     private List<TeachingPractice> teachingPracticeList;
 
+    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
     @OneToMany(mappedBy = "teacher")
     private List<Salary> salaries;
 
@@ -43,7 +43,7 @@ public class Teacher extends Employee {
     public Teacher() {
     }
 
-    public void add(SickLeave sickLeave) {
+    public void addSickLeave(SickLeave sickLeave) {
 
         if (sickLeaves == null) {
             sickLeaves = new ArrayList<>();
@@ -53,7 +53,7 @@ public class Teacher extends Employee {
         sickLeave.setTeacher(this);
     }
 
-    public void add(TeachingPractice teachingPractice) {
+    public void addTeachingPractice(TeachingPractice teachingPractice) {
 
         if (teachingPracticeList == null) {
             teachingPracticeList = new ArrayList<>();
@@ -64,7 +64,7 @@ public class Teacher extends Employee {
 
     }
 
-    public void add(Salary salary) {
+    public void addSalary(Salary salary) {
 
         if (salaries == null) {
             salaries = new ArrayList<>();
@@ -147,5 +147,21 @@ public class Teacher extends Employee {
 
     public void setSickLeaves(List<SickLeave> sickLeaves) {
         this.sickLeaves = sickLeaves;
+    }
+
+    public List<TeachingPractice> getTeachingPracticeList() {
+        return teachingPracticeList;
+    }
+
+    public void setTeachingPracticeList(List<TeachingPractice> teachingPracticeList) {
+        this.teachingPracticeList = teachingPracticeList;
+    }
+
+    public List<Salary> getSalaries() {
+        return salaries;
+    }
+
+    public void setSalaries(List<Salary> salaries) {
+        this.salaries = salaries;
     }
 }
