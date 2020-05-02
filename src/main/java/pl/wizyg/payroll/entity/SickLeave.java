@@ -4,7 +4,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.YearMonth;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Entity
 @Table(name = "sick_leave")
@@ -14,13 +16,13 @@ public class SickLeave {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sickLeaveId;
 
-    @Column(name = "sick_leave_from")
+    @Column(name = "start_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate sickLeaveFrom;
+    private LocalDate startDate;
 
-    @Column(name = "sick_leave_to")
+    @Column(name = "end_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate sickLeaveTo;
+    private LocalDate endDate;
 
     @Transient
     private int consecutiveDays;
@@ -34,9 +36,33 @@ public class SickLeave {
 
     public int getConsecutiveDays() {
         consecutiveDays =
-                Period.between(sickLeaveFrom, sickLeaveTo).getDays() + 1;
+                (int) DAYS.between(startDate, endDate) + 1;
 
         return consecutiveDays;
+    }
+
+    public int getNumberOfSickLeaveDaysInMonthYear(int month, int year) {
+
+        int sickLeaveDays = 0;
+
+        YearMonth yearMonth = YearMonth.of(year, month);
+
+        LocalDate begginingOfMonth = yearMonth.atDay(1);
+
+        LocalDate endOfMonth = yearMonth.atEndOfMonth();
+
+        if (startDate.isBefore(begginingOfMonth) && endDate.isAfter(endOfMonth)) {
+            sickLeaveDays = yearMonth.lengthOfMonth();
+        } else if (startDate.isAfter(begginingOfMonth) && endDate.isBefore(endOfMonth)) {
+            sickLeaveDays = (int) DAYS.between(startDate, endDate) + 1;
+        } else if (startDate.isAfter(begginingOfMonth) && endDate.isAfter((endOfMonth))) {
+            sickLeaveDays = (int) DAYS.between(startDate, endOfMonth) + 1;
+        } else if (startDate.isBefore(begginingOfMonth) && endDate.isBefore((endOfMonth))) {
+            sickLeaveDays = (int) DAYS.between(begginingOfMonth, endDate) + 1;
+        } else {
+            sickLeaveDays = 45;
+        }
+        return sickLeaveDays;
     }
 
     public int getSickLeaveId() {
@@ -48,20 +74,20 @@ public class SickLeave {
     }
 
     public LocalDate getSickLeaveFrom() {
-        return sickLeaveFrom;
+        return startDate;
     }
 
     public void setSickLeaveFrom(LocalDate sickLeaveFrom) {
-        this.sickLeaveFrom = sickLeaveFrom;
+        this.startDate = sickLeaveFrom;
     }
 
     public LocalDate getSickLeaveTo() {
-        return sickLeaveTo;
+        return endDate;
     }
 
 
     public void setSickLeaveTo(LocalDate sickLeaveTo) {
-        this.sickLeaveTo = sickLeaveTo;
+        this.endDate = sickLeaveTo;
     }
 
     public Teacher getTeacher() {

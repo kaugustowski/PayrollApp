@@ -1,6 +1,6 @@
 package pl.wizyg.payroll.entity;
 
-public class EnvironmentalVariables {
+public class SalaryConstants {
 
     protected final static double HEALTHCARE_CONTRIBUTION_PERCENT = 9;
 

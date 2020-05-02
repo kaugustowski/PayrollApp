@@ -9,7 +9,10 @@ import javax.validation.constraints.NotNull;
 @MappedSuperclass
 public abstract class Employee {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
     @Column(name = "base_salary")
     protected double baseSalary;
     @Column(name = "seniority_bonus")
@@ -18,10 +21,6 @@ public abstract class Employee {
     protected double functionalBonus;
     @Column(name = "salary")
     protected double salary;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
     @Column(name = "first_name")
     @NotNull
     private String firstName;

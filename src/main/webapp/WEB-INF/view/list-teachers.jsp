@@ -44,6 +44,7 @@
             <td> ${tempTeacher.firstName} </td>
             <td> ${tempTeacher.lastName} </td>
             <td> ${tempTeacher.email} </td>
+                ${tempTeacher.setBaseSalary()}
             <td>${tempTeacher.baseSalary}</td>
             <td>${tempTeacher.calculateSalary()}</td>
 

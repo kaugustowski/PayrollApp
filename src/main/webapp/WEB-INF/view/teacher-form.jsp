@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -39,21 +40,23 @@
                 <td><label>Choose a teacher type:</label></td>
                 <td>
                     <form:select path="teacherType">
-                        <option value="INTERN">Intern</option>
-                        <option value="CONTRACT">Contract</option>
-                        <option value="APPOINTED">Appointed</option>
-                        <option value="CERTIFIED">Certified</option>
+                        <c:forEach var="teacherType" items="${teacherTypeValues}">
+                            <option value="${teacherType}" ${teacherType == teacher.teacherType ? 'selected="selected"' : ''}>${teacherType.name()}</option>
+                        </c:forEach>
+
                     </form:select>
                 </td>
+
             </tr>
 
             <tr>
                 <td><label>Choose an education level:</label></td>
                 <td>
                     <form:select path="education">
-                        <option value="HIGHER_WITH_PEDAGOGIC_PREP">Higher with pedagogic preparation</option>
-                        <option value="HIGHER_WITHOUT_PEDAGOGIC_PREP">Higher without pedagogic preparation</option>
-                        <option value="OTHER">Other</option>
+                        <c:forEach var="education" items="${educationValues}">
+                            <option value="${education}" ${education == teacher.education ? 'selected="selected"' : ''}>${education.name()}</option>
+                        </c:forEach>
+
                     </form:select>
                 </td>
             </tr>

@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.wizyg.payroll.entity.Education;
 import pl.wizyg.payroll.entity.SickLeave;
 import pl.wizyg.payroll.entity.Teacher;
+import pl.wizyg.payroll.entity.TeacherType;
 import pl.wizyg.payroll.service.TeacherService;
 
 import java.util.List;
@@ -34,8 +36,12 @@ public class TeacherController {
     public String addTeacher(Model theModel) {
 
         Teacher teacher = new Teacher();
+        Education[] education = Education.values();
+        TeacherType[] teacherTypes = TeacherType.values();
 
         theModel.addAttribute("teacher", teacher);
+        theModel.addAttribute("educationValues", education);
+        theModel.addAttribute("teacherTypeValues", teacherTypes);
 
         return "teacher-form";
 
@@ -55,9 +61,10 @@ public class TeacherController {
                                     Model theModel) {
 
         Teacher theTeacher = teacherService.getTeacher(theId);
+        Education[] education = Education.values();
 
         theModel.addAttribute("teacher", theTeacher);
-
+        theModel.addAttribute("educationValues", education);
         return "teacher-form";
     }
 
@@ -98,6 +105,7 @@ public class TeacherController {
         Teacher theTeacher = teacherService.getTeacher(teacherId);
 
         SickLeave sickLeave = new SickLeave();
+
 
         theModel.addAttribute("teacher", theTeacher);
         theModel.addAttribute("sickLeave", sickLeave);
