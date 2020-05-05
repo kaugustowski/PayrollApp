@@ -34,17 +34,22 @@
           <element id="library" level="project" name="Gradle: org.springframework.security:spring-security-config:5.3.0.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.security:spring-security-core:5.3.0.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.security:spring-security-web:5.3.0.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-aop:5.2.4.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-beans:5.2.4.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-context:5.2.4.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-core:5.2.4.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-expression:5.2.4.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-jcl:5.2.4.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-jdbc:5.2.4.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-orm:5.2.4.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.springframework:spring-tx:5.2.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-web:5.2.4.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc:5.2.4.RELEASE" />
+          <element id="library" level="project" name="Gradle: javax.servlet:javax.servlet-api:4.0.1" />
+          <element id="library" level="project" name="Gradle: org.aspectj:aspectjrt:1.9.5" />
+          <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.26" />
+          <element id="library" level="project" name="Gradle: org.springframework.data:spring-data-commons:2.2.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework.data:spring-data-jpa:2.2.7.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-aop:5.2.6.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-beans:5.2.6.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-context:5.2.6.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-core:5.2.6.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-expression:5.2.6.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-jcl:5.2.6.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-jdbc:5.2.6.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-orm:5.2.6.RELEASE" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-tx:5.2.6.RELEASE" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="PayrollApp.main/web/Web Gradle : PayrollApp-1.0-SNAPSHOT.war" />

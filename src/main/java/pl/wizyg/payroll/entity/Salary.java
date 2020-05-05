@@ -2,6 +2,10 @@ package pl.wizyg.payroll.entity;
 
 
 import javax.persistence.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.stream.IntStream;
 
 @Entity
 @Table(name = "salary")
@@ -51,6 +55,7 @@ public class Salary {
     @ManyToOne
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
+
 
     public Salary() {
     }
@@ -246,6 +251,28 @@ public class Salary {
 
         return healthcareContribution;
 
+    }
+
+    public int getNumberOfWorkdays() {
+        int numberOfWorkDays = 0;
+        YearMonth yearMonth = YearMonth.of(year, month);
+
+        // java 8
+        LocalDate[] weekendDays =
+                (LocalDate[]) IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
+                        .mapToObj(day -> LocalDate.of(year, month, day))
+                        .filter(date -> date.getDayOfWeek() == DayOfWeek.SATURDAY ||
+                                date.getDayOfWeek() == DayOfWeek.SUNDAY).toArray();
+
+//        LocalDate[] weekendDays =
+//                (LocalDate[]) yearMonth.atDay(1).datesUntil(yearMonth.atEndOfMonth())
+//                        .filter(date -> date.getDayOfWeek() == DayOfWeek.SATURDAY ||
+//                        date.getDayOfWeek() == DayOfWeek.SUNDAY).toArray();
+//
+//        numberOfWorkDays=yearMonth.lengthOfMonth()-weekendDays.length;
+
+
+        return numberOfWorkDays;
     }
 
 

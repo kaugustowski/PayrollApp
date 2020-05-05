@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -21,6 +25,7 @@ import java.util.Properties;
 @Configuration
 @ComponentScan(basePackages = "pl.wizyg.payroll")
 @EnableTransactionManagement
+@EnableJpaRepositories("pl.wizyg.payroll.repository")
 public class PayrollConfig {
 
 
@@ -67,7 +72,7 @@ public class PayrollConfig {
         props.put(Environment.SHOW_SQL, "true");
 //        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         props.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
-        props.put(Environment.HBM2DDL_AUTO, "crate-drop");
+        props.put(Environment.HBM2DDL_AUTO, "validate");
 
         return props;
     }
@@ -83,4 +88,16 @@ public class PayrollConfig {
         return txManager;
     }
 
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean em
+                = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource());
+        em.setPackagesToScan("pl.wizyg.payroll");
+
+        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+
+        return em;
+    }
 }
