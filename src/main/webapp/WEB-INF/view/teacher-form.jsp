@@ -96,10 +96,19 @@
                 <td><form:input path="seniorityBonus"/></td>
             </tr>
 
+            <tr>
+                <td><label>Employment date:</label></td>
+                <td><form:input type="date" path="employeedOnDate"/></td>
+            </tr>
+
+            <tr>
+                <td><label>Extra tax deductibe expenses:</label></td>
+                <td><form:checkbox path="allowedForExtraTaxDeductibleExpenses" value="true"/></td>
+            </tr>
 
             <tr>
                 <td><label></label></td>
-                <td><input type="submit" value="Save" class="save" onclick="${teacher.setBaseSalary()}"/></td>
+                <td><input type="submit" value="Save" class="save"/></td>
             </tr>
 
 

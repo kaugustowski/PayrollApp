@@ -32,8 +32,8 @@
 
     <c:forEach var="sickLeave" items="${sickLeaves}">
         <tr>
-            <td>${sickLeave.sickLeaveFrom}</td>
-            <td>${sickLeave.sickLeaveTo}</td>
+            <td>${sickLeave.startDate}</td>
+            <td>${sickLeave.endDate}</td>
             <td>${sickLeave.consecutiveDays}</td>
         </tr>
     </c:forEach>

@@ -72,7 +72,7 @@ public class PayrollConfig {
         props.put(Environment.SHOW_SQL, "true");
 //        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         props.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
-        props.put(Environment.HBM2DDL_AUTO, "validate");
+        props.put(Environment.HBM2DDL_AUTO, "update");
 
         return props;
     }

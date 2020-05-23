@@ -1,0 +1,44 @@
+@startuml
+
+abstract class Pracownik{
+
+}
+class Nauczyciel extends Pracownik{
+int
+}
+
+abstract class Pensja{}
+
+enum StopienAwansuZawodowego {}
+enum Wyksztalcenie {}
+
+class ZwolnienieLekarskie{}
+
+class PraktykaZawodowa{}
+
+class PensjaZasadnicza {}
+
+class PensjaGodzinowa {}
+
+class Swieta{}
+
+Pracownik  "1" -left-- "n" Pensja
+
+Pracownik "1" -up-- "n" PraktykaZawodowa
+
+Pracownik "1" -right-- "n" ZwolnienieLekarskie
+
+PensjaZasadnicza -up--|> Pensja
+PensjaGodzinowa -up--|> Pensja
+
+Swieta -down.. PensjaZasadnicza
+
+StaleDotyczacePensji .. Pensja
+
+StopienAwansuZawodowego .. Nauczyciel
+
+Wyksztalcenie .. Nauczyciel
+
+Nauczyciel "0..*" - "1..*" PensjaGodzinowa
+(Nauczyciel, PensjaGodzinowa) .. GodzinyPonadwymiarowe
+@enduml

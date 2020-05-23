@@ -1,8 +1,6 @@
 package pl.wizyg.payroll.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "teacher")
@@ -13,23 +11,24 @@ public class Teacher extends Employee {
     private TeacherType teacherType;
 
     @Column(name = "incentive_pay")
-    private double incentivePay;
+    private int incentivePay;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "education")
     private Education education;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
-@OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "teacher")
-private List<SickLeave> sickLeaves;
 
-    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
-    @OneToMany(mappedBy = "teacher")
-    private List<TeachingPractice> teachingPracticeList;
-
-    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
-    @OneToMany(mappedBy = "teacher")
-    private List<Salary> salaries;
+////    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
+    //   @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "employee")
+    //   private List<SickLeave> sickLeaves;
+//
+//    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
+//    @OneToMany(mappedBy = "teacher")
+//    private List<EmploymentHistory> employmentHistoryList;
+//
+//    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
+//    @OneToMany(mappedBy = "teacher")
+//    private List<Salary> salaries;
 
 //    @ManyToMany
 //    @JoinTable(
@@ -38,74 +37,48 @@ private List<SickLeave> sickLeaves;
 //            inverseJoinColumns = {@JoinColumn(name="payroll_id")}
 //    )
 //    private List<Payroll> payrollList;
-
+//public void addSickLeave(SickLeave sickLeave) {
+//    if (sickLeaves == null) {
+//        sickLeaves = new ArrayList<>();
+//    }
+//    sickLeaves.add(sickLeave);
+//    sickLeave.setEmployee(this);
+//}
 
     public Teacher() {
-    }
-
-    public void addSickLeave(SickLeave sickLeave) {
-
-        if (sickLeaves == null) {
-            sickLeaves = new ArrayList<>();
-        }
-
-        sickLeaves.add(sickLeave);
-        sickLeave.setTeacher(this);
-    }
-
-    public void addTeachingPractice(TeachingPractice teachingPractice) {
-
-        if (teachingPracticeList == null) {
-            teachingPracticeList = new ArrayList<>();
-        }
-
-        teachingPracticeList.add(teachingPractice);
-        teachingPractice.setTeacher(this);
-
-    }
-
-    public void addSalary(Salary salary) {
-
-        if (salaries == null) {
-            salaries = new ArrayList<>();
-        }
-
-        salaries.add(salary);
-        salary.setTeacher(this);
-
     }
 
 
     public void setBaseSalary() {
         if (education == Education.HIGHER_WITH_PEDAGOGIC_PREP) {
             if (teacherType == TeacherType.INTERN)
-                baseSalary = 2782;
+                baseSalary = 278200;
             if (teacherType == TeacherType.CONTRACT)
-                baseSalary = 2862;
+                baseSalary = 286200;
             if (teacherType == TeacherType.APPOINTED)
-                baseSalary = 3250;
+                baseSalary = 325000;
             if (teacherType == TeacherType.CERTIFIED)
-                baseSalary = 3817;
+                baseSalary = 381700;
         }
         if (education == Education.HIGHER_WITHOUT_PEDAGOGIC_PREP) {
             if (teacherType == TeacherType.INTERN)
-                baseSalary = 2617;
+                baseSalary = 261700;
             if (teacherType == TeacherType.CONTRACT)
-                baseSalary = 2663;
+                baseSalary = 266300;
             if (teacherType == TeacherType.APPOINTED)
-                baseSalary = 2832;
+                baseSalary = 283200;
             if (teacherType == TeacherType.CERTIFIED)
-                baseSalary = 3324;
+                baseSalary = 332400;
         }
         if (education == Education.OTHER) {
             if (teacherType == TeacherType.INTERN)
-                baseSalary = 2600;
+                baseSalary = 260000;
             if (teacherType == TeacherType.CONTRACT)
-                baseSalary = 2617;
+                baseSalary = 261700;
             if (teacherType == TeacherType.APPOINTED)
-                baseSalary = 2638;
+                baseSalary = 263800;
             if (teacherType == TeacherType.CERTIFIED)
-                baseSalary = 2905;
+                baseSalary = 290500;
         }
     }
 
@@ -117,11 +90,11 @@ private List<SickLeave> sickLeaves;
         this.teacherType = teacherType;
     }
 
-    public double getIncentivePay() {
+    public int getIncentivePay() {
         return incentivePay;
     }
 
-    public void setIncentivePay(double incentivePay) {
+    public void setIncentivePay(int incentivePay) {
         this.incentivePay = incentivePay;
     }
 
@@ -133,35 +106,15 @@ private List<SickLeave> sickLeaves;
         this.education = education;
     }
 
-    @Override
-    public double calculateSalary() {
+//    @Override
+//    public double calculateSalary() {
+//
+//        int salary = 0;
+//
+//        salary = baseSalary + incentivePay + seniorityBonus;
+//
+//        return salary;
+//    }
 
-        salary = baseSalary + incentivePay + seniorityBonus;
 
-        return salary;
-    }
-
-    public List<SickLeave> getSickLeaves() {
-        return sickLeaves;
-    }
-
-    public void setSickLeaves(List<SickLeave> sickLeaves) {
-        this.sickLeaves = sickLeaves;
-    }
-
-    public List<TeachingPractice> getTeachingPracticeList() {
-        return teachingPracticeList;
-    }
-
-    public void setTeachingPracticeList(List<TeachingPractice> teachingPracticeList) {
-        this.teachingPracticeList = teachingPracticeList;
-    }
-
-    public List<Salary> getSalaries() {
-        return salaries;
-    }
-
-    public void setSalaries(List<Salary> salaries) {
-        this.salaries = salaries;
-    }
 }

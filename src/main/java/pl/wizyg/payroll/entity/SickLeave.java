@@ -16,6 +16,7 @@ public class SickLeave {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sickLeaveId;
 
+
     @Column(name = "start_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate startDate;
@@ -24,22 +25,23 @@ public class SickLeave {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate endDate;
 
-    @Transient
-    private int consecutiveDays;
+
+    //    @Transient
+//    private int consecutiveDays;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
     public SickLeave() {
+        System.out.println("Default Constructor");
     }
 
     public int getConsecutiveDays() {
-        consecutiveDays =
-                (int) DAYS.between(startDate, endDate) + 1;
-
-        return consecutiveDays;
+        // consecutiveDays
+        return (int) DAYS.between(startDate, endDate) + 1;
     }
+
 
     public int getNumberOfSickLeaveDaysInMonthYear(int month, int year) {
 
@@ -47,20 +49,20 @@ public class SickLeave {
 
         YearMonth yearMonth = YearMonth.of(year, month);
 
-        LocalDate begginingOfMonth = yearMonth.atDay(1);
+        LocalDate beginningOfMonth = yearMonth.atDay(1);
 
         LocalDate endOfMonth = yearMonth.atEndOfMonth();
 
-        if (startDate.isBefore(begginingOfMonth) && endDate.isAfter(endOfMonth)) {
+        if (startDate.isBefore(beginningOfMonth) && endDate.isAfter(endOfMonth)) {
             sickLeaveDays = yearMonth.lengthOfMonth();
-        } else if (startDate.isAfter(begginingOfMonth) && endDate.isBefore(endOfMonth)) {
+        } else if (startDate.isAfter(beginningOfMonth) && endDate.isBefore(endOfMonth)) {
             sickLeaveDays = (int) DAYS.between(startDate, endDate) + 1;
-        } else if (startDate.isAfter(begginingOfMonth) && endDate.isAfter((endOfMonth))) {
+        } else if (startDate.isAfter(beginningOfMonth) && endDate.isAfter((endOfMonth))) {
             sickLeaveDays = (int) DAYS.between(startDate, endOfMonth) + 1;
-        } else if (startDate.isBefore(begginingOfMonth) && endDate.isBefore((endOfMonth))) {
-            sickLeaveDays = (int) DAYS.between(begginingOfMonth, endDate) + 1;
+        } else if (startDate.isBefore(beginningOfMonth) && endDate.isBefore((endOfMonth))) {
+            sickLeaveDays = (int) DAYS.between(beginningOfMonth, endDate) + 1;
         } else {
-            sickLeaveDays = 45;
+            sickLeaveDays = 30;
         }
         return sickLeaveDays;
     }
@@ -73,28 +75,37 @@ public class SickLeave {
         this.sickLeaveId = sickLeaveId;
     }
 
-    public LocalDate getSickLeaveFrom() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setSickLeaveFrom(LocalDate sickLeaveFrom) {
-        this.startDate = sickLeaveFrom;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public LocalDate getSickLeaveTo() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-
-    public void setSickLeaveTo(LocalDate sickLeaveTo) {
-        this.endDate = sickLeaveTo;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    @Override
+    public String toString() {
+        return "SickLeave{" +
+                "sickLeaveId=" + sickLeaveId +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", employee=" + employee +
+                '}';
     }
 }

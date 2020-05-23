@@ -8,4 +8,6 @@ public interface SickLeaveService {
 
     List<SickLeave> getTeachersSickLeavesMonthYear(int teacherId, int mont, int year);
 
+    void addSickLeave(Integer teacherId, SickLeave sickLeave);
+
 }

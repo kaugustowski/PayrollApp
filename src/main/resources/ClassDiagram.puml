@@ -1,0 +1,43 @@
+@startuml
+
+abstract class Pracownik{
+
+}
+class Nauczyciel extends Pracownik{
+}
+
+abstract class Pensja{}
+
+enum StopienAwansuZawodowego {}
+enum Wyksztalcenie {}
+
+class ZwolnienieLekarskie{}
+
+class PraktykaZawodowa{}
+
+class PensjaZasadnicza {}
+
+class PensjaGodzinowa {}
+
+class Swieta{}
+
+Pracownik  "1" -left-- "0..n" Pensja : > otrzymuje
+
+Pracownik "1" -up-- "0..n" PraktykaZawodowa : < dotyczy
+
+Pracownik "1" -right-- "0..n" ZwolnienieLekarskie : < dotyczy
+
+PensjaZasadnicza -up--|> Pensja
+PensjaGodzinowa -up--|> Pensja
+
+Swieta -down.. PensjaZasadnicza
+
+StaleDotyczacePensji .. Pensja
+
+StopienAwansuZawodowego -right.. Nauczyciel
+
+Wyksztalcenie -left.. Nauczyciel
+
+Nauczyciel "1" --- "0..*" GodzinyPonadwymiarowe : > wypracowuje
+
+@enduml

@@ -1,26 +1,29 @@
 package pl.wizyg.payroll.entity;
 
-import org.springframework.stereotype.Component;
+import org.hibernate.validator.constraints.pl.PESEL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-@Component
-@MappedSuperclass
+//@Component
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Employee {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
     @Column(name = "base_salary")
-    protected double baseSalary;
+    int baseSalary;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "seniority_bonus")
-    protected double seniorityBonus;
+    private int seniorityBonus;
     @Column(name = "functional_bonus")
-    protected double functionalBonus;
-    @Column(name = "salary")
-    protected double salary;
+    private int functionalBonus;
     @Column(name = "first_name")
     @NotNull
     private String firstName;
@@ -28,17 +31,72 @@ public abstract class Employee {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "pesel")
+    @PESEL
     private String pesel;
     @Column(name = "email")
     private String email;
-    @Column(name = "extra_tax_deductible_expenses")
-    private boolean extraTaxDeductibleExpenses;
+    @Column(name = "birth_date")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate birthDate;
+    @Column(name = "employeed_on_date")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @NotNull
+    private LocalDate employeedOnDate;
+    @Column(name = "is_allowed_for_extra_tax_deductible_expenses")
+    private boolean isAllowedForExtraTaxDeductibleExpenses;
 
-    public int getId() {
+    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "employee")
+    private List<SickLeave> sickLeaves;
+
+    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
+//    @OneToMany(mappedBy = "employee")
+    //   private List<EmploymentHistory> employmentHistoryList;
+
+    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
+//    @OneToMany(mappedBy = "employee")
+//    private Set<Salary> salaries;
+
+//    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "employee")
+//    private Set<Overtime> overtimeList;
+
+    public void addSickLeave(SickLeave sickLeave) {
+        if (sickLeaves == null) {
+            sickLeaves = new ArrayList<>();
+        }
+        sickLeaves.add(sickLeave);
+        sickLeave.setEmployee(this);
+    }
+
+//    public void addTeachingPractice(EmploymentHistory employmentHistory) {
+//        if (employmentHistoryList == null) {
+//            employmentHistoryList = new ArrayList<>();
+//        }
+//        employmentHistoryList.add(employmentHistory);
+//        employmentHistory.setEmployee(this);
+//    }
+//
+//    public void addSalary(Salary salary) {
+//        if (salaries == null) {
+//            salaries = new HashSet<>();
+//        }
+//        salaries.add(salary);
+//        salary.setEmployee(this);
+//    }
+//
+//    public void addOvertime(Overtime overtime) {
+//        if (salaries == null) {
+//            salaries = new HashSet<>();
+//        }
+//        overtimeList.add(overtime);
+//        overtime.setEmployee(this);
+//    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -66,27 +124,27 @@ public abstract class Employee {
         this.pesel = pesel;
     }
 
-    public double getBaseSalary() {
+    public int getBaseSalary() {
         return baseSalary;
     }
 
-    public void setBaseSalary(double baseSalary) {
+    public void setBaseSalary(int baseSalary) {
         this.baseSalary = baseSalary;
     }
 
-    public double getSeniorityBonus() {
+    public int getSeniorityBonus() {
         return seniorityBonus;
     }
 
-    public void setSeniorityBonus(double seniorityBonus) {
+    public void setSeniorityBonus(int seniorityBonus) {
         this.seniorityBonus = seniorityBonus;
     }
 
-    public double getFunctionalBonus() {
+    public int getFunctionalBonus() {
         return functionalBonus;
     }
 
-    public void setFunctionalBonus(double functionalBonus) {
+    public void setFunctionalBonus(int functionalBonus) {
         this.functionalBonus = functionalBonus;
     }
 
@@ -98,95 +156,33 @@ public abstract class Employee {
         this.email = email;
     }
 
-    public double getSalary() {
-        return salary;
+
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setSalary(double salary) {
-        this.salary = salary;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public boolean isExtraTaxDeductibleExpenses() {
-        return extraTaxDeductibleExpenses;
+    public LocalDate getEmployeedOnDate() {
+        return employeedOnDate;
     }
 
-    public void setExtraTaxDeductibleExpenses(boolean extraTaxDeductibleExpenses) {
-        this.extraTaxDeductibleExpenses = extraTaxDeductibleExpenses;
+    public void setEmployeedOnDate(LocalDate employeedOnDate) {
+        this.employeedOnDate = employeedOnDate;
     }
 
-    public double calculateDeductionsFromSalary() {
-        double deductionsFromSalary;
+    public boolean isAllowedForExtraTaxDeductibleExpenses() {
+        return isAllowedForExtraTaxDeductibleExpenses;
+    }
 
-        deductionsFromSalary = calculateTax() + calculateSicknessContribution() + calculatePensionContribution()
-                + calculateDisabilityContribution() + calculateAccidentInsuranceContribution();
+    public void setAllowedForExtraTaxDeductibleExpenses(boolean allowedForExtraTaxDeductibleExpenses) {
+        isAllowedForExtraTaxDeductibleExpenses = allowedForExtraTaxDeductibleExpenses;
+    }
+
+    public int getIncentivePay() {
         return 0;
     }
 
-    public double calculateEmployerDeductions() {
-        return 0;
-    }
-
-    public double calculateTax() {
-        return 0;
-    }
-
-    //ubezpieczenie emerytalne
-    public double calculatePensionContribution() {
-        double pensionContribution;
-        final double PENSION_CONTRIBUTION_PERCENT = 9.76;
-
-        pensionContribution = salary * PENSION_CONTRIBUTION_PERCENT / 100;
-
-        return pensionContribution;
-    }
-
-    // ubezpieczenie rentowe
-    public double calculateDisabilityContribution() {
-        double disabilityContribution;
-        final double PENSION_CONTRIBUTION_PERCENT = 9.76;
-
-        disabilityContribution = salary * PENSION_CONTRIBUTION_PERCENT / 100;
-
-        return disabilityContribution;
-    }
-
-    //ubezpieczenie wypadkowe
-    public double calculateAccidentInsuranceContribution() {
-        double accidentInsuranceContribution;
-        final double ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT = 0.93;
-        accidentInsuranceContribution = salary * ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT / 100;
-
-        return accidentInsuranceContribution;
-    }
-
-    //ubezpieczenie chorobowe
-    public double calculateSicknessContribution() {
-        double sicknessContribution;
-        final double SICKNESS_CONTRIBUTION_PERCENT = 2.45;
-        sicknessContribution = salary * SICKNESS_CONTRIBUTION_PERCENT / 100;
-
-        return sicknessContribution;
-    }
-
-    //ubezpieczenie zdrowotne
-    public double calculateHealthCareContribution() {
-        double healthcareContribution;
-        final double HEALTHCAR_CONTRIBUTION_PERCENT = 9;
-        healthcareContribution = salary * HEALTHCAR_CONTRIBUTION_PERCENT / 100;
-
-        return healthcareContribution;
-    }
-
-    //
-    public double calculateHealthCareContributionDecuction() {
-        double healthcareContribution;
-        final double HEALTHCAR_CONTRIBUTION_PERCENT = 7.75;
-
-        healthcareContribution = salary * HEALTHCAR_CONTRIBUTION_PERCENT;
-
-        return healthcareContribution;
-
-    }
-
-    public abstract double calculateSalary();
 }

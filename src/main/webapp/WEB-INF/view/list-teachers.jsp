@@ -46,7 +46,7 @@
             <td> ${tempTeacher.email} </td>
                 ${tempTeacher.setBaseSalary()}
             <td>${tempTeacher.baseSalary}</td>
-            <td>${tempTeacher.calculateSalary()}</td>
+            <td></td>
 
 
             <td>

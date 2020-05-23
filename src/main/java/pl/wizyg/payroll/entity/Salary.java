@@ -5,56 +5,56 @@ import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.List;
 import java.util.stream.IntStream;
 
 @Entity
 @Table(name = "salary")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Salary {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Salary {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "gross_salary")
+    int grossSalary;
 
     @Column(name = "month")
     private int month;
 
     @Column(name = "year")
     private int year;
-
-    @Column(name = "gross_salary")
-    private double grossSalary;
-
     @Column(name = "pension_contribution_payer")
-    private double pensionContributionPayer;
-
+    int pensionContributionPayer;
     @Column(name = "disability_contribution_payer")
-    private double disabilityContributionPayer;
-
-    @Column(name = "accident_insurance_contribution_payer")
-    private double accidentInsuranceContributionPayer;
-
+    int disabilityContributionPayer;
+    @Column(name = "accident_insurance_contribution")
+    int accidentInsuranceContribution;
     @Column(name = "pension_contribution_employee")
-    private double pensionContributionEmployee;
-
+    int pensionContributionEmployee;
     @Column(name = "disability_contribution_employee")
-    private double disabilityContributionEmployee;
-
-    @Column(name = "sickness_contribution_employee")
-    private double sicknessContributionEmployee;
-
-    @Column(name = "tax")
-    private double tax;
-
-    @Column(name = "income_tax_advance")
-    private double incomeTaxAdvance;
-
-    @Column(name = "tax_deductible_expenses")
-    private double taxDeductibleExpenses;
-
+    int disabilityContributionEmployee;
+    @Column(name = "sickness_contribution")
+    int sicknessContribution;
+    @Column(name = "healthcare_contribution")
+    int healthcareContribution;
+    @Column(name = "healthcare_contribution_deduction")
+    int healthcareContributionDeduction;
     @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+    @JoinColumn(name = "employee_id")
+    Employee employee;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @Column(name = "tax")
+    private int tax;
+    @Column(name = "income_tax_advance")
+    private int incomeTaxAdvance;
+    @Column(name = "tax_deductible_expenses")
+    private int taxDeductibleExpenses;
+    @Column(name = "sick_pay")
+    private int sickPay;
+    @Column(name = "sickness_allowance")
+    private int sicknessAllowance;
+    @Transient
+    private List<SickLeave> sickLeavesInMonth;
 
 
     public Salary() {
@@ -84,173 +84,237 @@ public class Salary {
         this.year = year;
     }
 
-    public double getGrossSalary() {
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public int getHealthcareContribution() {
+        return healthcareContribution;
+    }
+
+    public void setHealthcareContribution(int healthcareContribution) {
+        this.healthcareContribution = healthcareContribution;
+    }
+
+    public int getHealthcareContributionDeduction() {
+        return healthcareContributionDeduction;
+    }
+
+    public void setHealthcareContributionDeduction(int healthcareContributionDeduction) {
+        this.healthcareContributionDeduction = healthcareContributionDeduction;
+    }
+
+    public int getSickPay() {
+        return sickPay;
+    }
+
+    public void setSickPay(int sickPay) {
+        this.sickPay = sickPay;
+    }
+
+    public int getSicknessAllowance() {
+        return sicknessAllowance;
+    }
+
+    public void setSicknessAllowance(int sicknessAllowance) {
+        this.sicknessAllowance = sicknessAllowance;
+    }
+
+    public List<SickLeave> getSickLeavesInMonth() {
+        return sickLeavesInMonth;
+    }
+
+    public void setSickLeavesInMonth(List<SickLeave> sickLeavesInMonth) {
+        this.sickLeavesInMonth = sickLeavesInMonth;
+    }
+
+    public int getGrossSalary() {
         return grossSalary;
     }
 
-    public void setGrossSalary(double grossSalary) {
+    public void setGrossSalary(int grossSalary) {
         this.grossSalary = grossSalary;
     }
 
-    public double getPensionContributionPayer() {
+    public int getPensionContributionPayer() {
         return pensionContributionPayer;
     }
 
-    public void setPensionContributionPayer(double pensionContributionPayer) {
+    public void setPensionContributionPayer(int pensionContributionPayer) {
         this.pensionContributionPayer = pensionContributionPayer;
     }
 
-    public double getDisabilityContributionPayer() {
+    public int getDisabilityContributionPayer() {
         return disabilityContributionPayer;
     }
 
-    public void setDisabilityContributionPayer(double disabilityContributionPayer) {
+    public void setDisabilityContributionPayer(int disabilityContributionPayer) {
         this.disabilityContributionPayer = disabilityContributionPayer;
     }
 
-    public double getAccidentInsuranceContributionPayer() {
-        return accidentInsuranceContributionPayer;
+    public int getAccidentInsuranceContribution() {
+        return accidentInsuranceContribution;
     }
 
-    public void setAccidentInsuranceContributionPayer(double accidentInsuranceContributionPayer) {
-        this.accidentInsuranceContributionPayer = accidentInsuranceContributionPayer;
+    public void setAccidentInsuranceContribution(int accidentInsuranceContributionPayer) {
+        this.accidentInsuranceContribution = accidentInsuranceContributionPayer;
     }
 
-    public double getPensionContributionEmployee() {
+    public int getPensionContributionEmployee() {
         return pensionContributionEmployee;
     }
 
-    public void setPensionContributionEmployee(double pensionContributionEmployee) {
+    public void setPensionContributionEmployee(int pensionContributionEmployee) {
         this.pensionContributionEmployee = pensionContributionEmployee;
     }
 
-    public double getDisabilityContributionEmployee() {
+    public int getDisabilityContributionEmployee() {
         return disabilityContributionEmployee;
     }
 
-    public void setDisabilityContributionEmployee(double disabilityContributionEmployee) {
+    public void setDisabilityContributionEmployee(int disabilityContributionEmployee) {
         this.disabilityContributionEmployee = disabilityContributionEmployee;
     }
 
-    public double getSicknessContributionEmployee() {
-        return sicknessContributionEmployee;
+    public int getSicknessContribution() {
+        return sicknessContribution;
     }
 
-    public void setSicknessContributionEmployee(double sicknessContributionEmployee) {
-        this.sicknessContributionEmployee = sicknessContributionEmployee;
+    public void setSicknessContribution(int sicknessContributionEmployee) {
+        this.sicknessContribution = sicknessContributionEmployee;
     }
 
-    public double getTax() {
+    public int getTax() {
         return tax;
     }
 
-    public void setTax(double tax) {
+    public void setTax(int tax) {
         this.tax = tax;
     }
 
-    public double getIncomeTaxAdvance() {
+    public int getIncomeTaxAdvance() {
         return incomeTaxAdvance;
     }
 
-    public void setIncomeTaxAdvance(double incomeTaxAdvance) {
+    public void setIncomeTaxAdvance(int incomeTaxAdvance) {
         this.incomeTaxAdvance = incomeTaxAdvance;
     }
 
-    public double getTaxDeductibleExpenses() {
+    public int getTaxDeductibleExpenses() {
         return taxDeductibleExpenses;
     }
 
-    public void setTaxDeductibleExpenses(double taxDeductibleExpenses) {
+    public void setTaxDeductibleExpenses(int taxDeductibleExpenses) {
         this.taxDeductibleExpenses = taxDeductibleExpenses;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public int getIncentivePay() {
+        return 0;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public int getNumberOfSickLeaveDaysInCurrentMonth() {
+        int sickLeaveDaysInMonthYear = 0;
+        for (SickLeave sickLeave : sickLeavesInMonth) {
+            sickLeaveDaysInMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(month, year);
+        }
+        return sickLeaveDaysInMonthYear;
     }
 
 
-    public double calculateGrossSalary() {
-        grossSalary = teacher.getBaseSalary() + teacher.getIncentivePay() + teacher.getSeniorityBonus();
+    public int calculateGrossSalary() {
+        grossSalary = employee.getBaseSalary() + employee.getSeniorityBonus() + employee.getIncentivePay() + employee.getFunctionalBonus();
+
+        grossSalary *= (double) (30 - getNumberOfSickLeaveDaysInCurrentMonth()) / 30;
+
         return grossSalary;
     }
 
 
-    public double calculateDeductionsFromSalary() {
-        double deductionsFromSalary;
+    public int calculateEmployeeDeductionsFromSalary() {
+        int deductionsFromSalary;
 
-        deductionsFromSalary = calculateTax() + calculateSicknessContribution() + calculatePensionContribution()
-                + calculateDisabilityContribution() + calculateAccidentInsuranceContribution();
+        deductionsFromSalary = calculateIncomeTaxAdvance() + calculateSicknessContribution() + calculatePensionContributionEmployee()
+                + calculateDisabilityContributionEmployee();
         return 0;
     }
 
-    public double calculatePayerDeductions() {
+    public int calculatePayerDeductions() {
         return 0;
     }
 
-    public double calculateTax() {
+    public int calculateTax() {
         return 0;
     }
 
-    //ubezpieczenie emerytalne
-    public double calculatePensionContribution() {
-        double pensionContribution;
-        final double PENSION_CONTRIBUTION_PERCENT = 9.76;
+    public int calculateIncomeTaxAdvance() {
 
-        pensionContribution = grossSalary * PENSION_CONTRIBUTION_PERCENT / 100;
-
-        return pensionContribution;
+        return 0;
     }
 
-    // ubezpieczenie rentowe
-    public double calculateDisabilityContribution() {
-        double disabilityContribution;
-        final double DISABILITY_CONTRIBUTION_PERCENT = 9.76;
+    //ubezpieczenie emerytalne pracownika
+    public int calculatePensionContributionEmployee() {
+        pensionContributionEmployee = (int) (grossSalary * SalaryConstants.PENSION_CONTRIBUTION_EMPLOYEE_PERCENT / 100);
 
-        disabilityContribution = grossSalary * DISABILITY_CONTRIBUTION_PERCENT / 100;
+        return pensionContributionEmployee;
+    }
 
-        return disabilityContribution;
+    //ubezpieczenie emerytalne platnika
+    public int calculatePensionContributionPayer() {
+        pensionContributionPayer = (int) (grossSalary * SalaryConstants.PENSION_CONTRIBUTION_PAYER_PERCENT / 100);
+
+        return pensionContributionPayer;
+    }
+
+    // ubezpieczenie rentowe pracownika
+    public int calculateDisabilityContributionEmployee() {
+        disabilityContributionEmployee = (int) (grossSalary * SalaryConstants.DISABILITY_CONTRIBUTION_EMPLOYEE_PERCENT / 100);
+
+        return disabilityContributionEmployee;
+    }
+
+    // ubezpieczenie rentowe platnika
+    public int calculateDisabilityContributionPayer() {
+        disabilityContributionEmployee = (int) (grossSalary * SalaryConstants.DISABILITY_CONTRIBUTION_EMPLOYEE_PERCENT / 100);
+
+        return disabilityContributionEmployee;
     }
 
     //ubezpieczenie wypadkowe
-    public double calculateAccidentInsuranceContribution() {
-        double accidentInsuranceContribution;
-        final double ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT = 0.93;
-        accidentInsuranceContribution = grossSalary * ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT / 100;
+    public int calculateAccidentInsuranceContribution() {
+        accidentInsuranceContribution = (int) (grossSalary * SalaryConstants.ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT / 100);
 
         return accidentInsuranceContribution;
     }
 
     //ubezpieczenie chorobowe
-    public double calculateSicknessContribution() {
-        double sicknessContribution;
-        final double SICKNESS_CONTRIBUTION_PERCENT = 2.45;
-        sicknessContribution = grossSalary * SICKNESS_CONTRIBUTION_PERCENT / 100;
+    public int calculateSicknessContribution() {
+
+        sicknessContribution = (int) (grossSalary * SalaryConstants.ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT / 100);
 
         return sicknessContribution;
     }
 
+    //podstawa ubezpieczenia zdrowotnego
+    public int getHealthcareContributionBase() {
+        return grossSalary - calculateEmployeeDeductionsFromSalary() - sicknessAllowance;
+    }
+
     //ubezpieczenie zdrowotne
-    public double calculateHealthCareContribution() {
-        double healthcareContribution;
-        final double HEALTHCAR_CONTRIBUTION_PERCENT = 9;
-        healthcareContribution = grossSalary * HEALTHCAR_CONTRIBUTION_PERCENT / 100;
+    public int calculateHealthCareContribution() {
+        healthcareContribution = (int) (getHealthcareContributionBase() * SalaryConstants.HEALTHCARE_CONTRIBUTION_PERCENT / 100);
 
         return healthcareContribution;
     }
 
     //
-    public double calculateHealthCareContributionDecuction() {
-        double healthcareContribution;
-        final double HEALTHCARE_CONTRIBUTION_DEDUCTION_PERCENT = 7.75;
+    public int calculateHealthCareContributionDeduction() {
+        healthcareContributionDeduction = (int) (getHealthcareContributionBase() * SalaryConstants.HEALTHCARE_CONTRIBUTION_DEDUCTION_PERCENT / 100);
 
-        healthcareContribution = grossSalary * HEALTHCARE_CONTRIBUTION_DEDUCTION_PERCENT;
-
-        return healthcareContribution;
-
+        return healthcareContributionDeduction;
     }
 
     public int getNumberOfWorkdays() {
@@ -258,21 +322,39 @@ public class Salary {
         YearMonth yearMonth = YearMonth.of(year, month);
 
         // java 8
-        LocalDate[] weekendDays =
+        LocalDate[] freeDays =
                 (LocalDate[]) IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
                         .mapToObj(day -> LocalDate.of(year, month, day))
-                        .filter(date -> date.getDayOfWeek() == DayOfWeek.SATURDAY ||
-                                date.getDayOfWeek() == DayOfWeek.SUNDAY).toArray();
+                        .filter(date -> isWeekend(date) || Holidays.getHolidaysInYear(year).contains(date)).toArray();
 
+        numberOfWorkDays = yearMonth.lengthOfMonth() - freeDays.length;
+
+        //java 11+
 //        LocalDate[] weekendDays =
 //                (LocalDate[]) yearMonth.atDay(1).datesUntil(yearMonth.atEndOfMonth())
-//                        .filter(date -> date.getDayOfWeek() == DayOfWeek.SATURDAY ||
-//                        date.getDayOfWeek() == DayOfWeek.SUNDAY).toArray();
+//                        .filter(date -> isWeekend(date)).toArray();
 //
 //        numberOfWorkDays=yearMonth.lengthOfMonth()-weekendDays.length;
 
 
         return numberOfWorkDays;
+    }
+
+    public boolean
+    isWeekend(LocalDate date) {
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        return dayOfWeek == DayOfWeek.SUNDAY || dayOfWeek == DayOfWeek.SATURDAY;
+
+    }
+
+    public boolean isFreeDay(LocalDate date) {
+        return isWeekend(date) || Holidays.getHolidaysInYear(year).contains(date);
+    }
+
+    public int getNumberOfSickleaveDaysUpToMonth() {
+        int numberOfSickleaveDaysThisYear = 0;
+
+        return numberOfSickleaveDaysThisYear;
     }
 
 

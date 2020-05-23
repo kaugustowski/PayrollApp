@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import pl.wizyg.payroll.entity.AdministrativeEmployee;
 import pl.wizyg.payroll.entity.Employee;
 import pl.wizyg.payroll.entity.Teacher;
 
@@ -24,19 +23,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
         Session currentSession = sessionFactory.getCurrentSession();
 
-        Query<Teacher> teacherQuery = currentSession.createQuery(" from Teacher ", Teacher.class);
+        Query<Teacher> teacherQuery = currentSession.createQuery(" from Employee ", Teacher.class);
 
         List<Teacher> teachers = teacherQuery.getResultList();
 
-        Query<AdministrativeEmployee> administrativeEmployeeQuery = currentSession.createQuery("from AdministrativeEmployee ", AdministrativeEmployee.class);
-
-        List<AdministrativeEmployee> administrativeEmployees = administrativeEmployeeQuery.getResultList();
 
         List<Employee> employees = new ArrayList<>();
 
         employees.addAll(teachers);
 
-        employees.addAll(administrativeEmployees);
 
         return employees;
     }

@@ -7,48 +7,52 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Save Sick leave</title>
+    <title>Save Customer</title>
 </head>
 
 <body>
 
 <div id="wrapper">
     <div id="header">
-        <h2>Sick leave form</h2>
+        <h2>Test form</h2>
     </div>
 </div>
 
 <div id="container">
-    <h3>Save Sick Leave</h3>
+    <h3>Save Test</h3>
 
-    <h2>${teacher.firstName } ${teacher.lastName }</h2>
 
-    <form:form action="${pageContext.request.contextPath}/teacher/saveSickLeave/${employeeId}"
-               modelAttribute="sickLeave" method="POST">
+    <form:form action="${pageContext.request.contextPath}/saveTest" modelAttribute="testObj" method="POST">
 
-        <%--        <form:hidden path="sickLeaveId"/>--%>
 
         <table>
             <tbody>
-            <tr>
-                <td><label>Sick leave start date:</label></td>
-                <td><form:input type="date" path="startDate"/></td>
-            </tr>
+
 
             <tr>
-                <td><label>Sick leave end date:</label></td>
-                <td><form:input type="date" path="endDate"/></td>
+                <td><label>test value:</label></td>
+                <td><form:input path="testValue"/></td>
             </tr>
+
+
+            <tr>
+                <td><label>date:</label></td>
+                <td><form:input type="date" path="date"/></td>
+            </tr>
+
 
             <tr>
                 <td><label></label></td>
                 <td><input type="submit" value="Save" class="save"/></td>
             </tr>
+
+
             </tbody>
         </table>
 
