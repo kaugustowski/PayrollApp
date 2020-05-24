@@ -106,7 +106,12 @@ public class Teacher extends Employee {
         this.education = education;
     }
 
-//    @Override
+    @Override
+    public int getOvertimeHourRate() {
+        return 7615; //TODO sprawdzic ile ma byc
+    }
+
+    //    @Override
 //    public double calculateSalary() {
 //
 //        int salary = 0;

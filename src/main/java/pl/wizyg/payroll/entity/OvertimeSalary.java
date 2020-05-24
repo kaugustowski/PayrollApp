@@ -19,15 +19,10 @@ public class OvertimeSalary extends Salary {
         this.numberOfOvertimeHours = numberOfOvertimeHours;
     }
 
-    @Override
-    public int calculateGrossSalary() {
-        grossSalary = employee.getBaseSalary() + employee.getSeniorityBonus();
 
-        if (employee instanceof Teacher) {
-            grossSalary += employee.getIncentivePay();
-        }
-
-        grossSalary *= (double) (30 - getNumberOfSickLeaveDaysInCurrentMonth()) / 30;
+    public int calculateGrossSalaryOvertime(Overtime overtime) {
+        int overtimeHours = overtime.getNumberOfOverTimeHoursInCurrentMonth();
+        grossSalary = employee.getOvertimeHourRate()*overtimeHours;
 
         return grossSalary;
     }
@@ -67,7 +62,7 @@ public class OvertimeSalary extends Salary {
         return healthcareContribution;
     }
 
-    //
+    //ubezpieczenie zdrowotne odejmowane od podatku
     public int calculateHealthCareContributionDeduction() {
         healthcareContributionDeduction = (int) (getHealthcareContributionBase() * SalaryConstants.HEALTHCARE_CONTRIBUTION_DEDUCTION_PERCENT / 100);
 

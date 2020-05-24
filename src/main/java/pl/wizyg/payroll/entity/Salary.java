@@ -357,5 +357,29 @@ public abstract class Salary {
         return numberOfSickleaveDaysThisYear;
     }
 
+    public int calculateSickPay(){
+
+        if(getNumberOfSickleaveDaysUpToMonth()+getNumberOfSickLeaveDaysInCurrentMonth()>= employee.getSickLeaveLimit())
+
+
+        return sickPay;
+    }
+
+    public void performSocialContibutionsCalculations(){
+        calculateEmployeeDeductionsFromSalary();
+        calculatePayerDeductions();
+    }
+
+
+    public void performCalculations(){
+        calculateGrossSalary();
+        performSocialContibutionsCalculations();
+        calculateTax();
+
+    }
+
+    public int getSickLeaveLimit(){
+
+    }
 
 }
