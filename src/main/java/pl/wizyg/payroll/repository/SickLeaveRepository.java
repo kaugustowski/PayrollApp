@@ -13,4 +13,5 @@ public interface SickLeaveRepository extends JpaRepository<SickLeave, Integer> {
     List<SickLeave> findAllByEmployeeId(int employeeId);
 
     List<SickLeave> findAllByEmployeeIdAndStartDateBeforeAndEndDateAfter(int employeeId, LocalDate firstDayOfNextMonth, LocalDate lastDayOfPreviousMonth);
+
 }

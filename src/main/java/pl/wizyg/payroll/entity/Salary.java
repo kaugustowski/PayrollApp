@@ -53,6 +53,9 @@ public abstract class Salary {
     private int sickPay;
     @Column(name = "sickness_allowance")
     private int sicknessAllowance;
+    @Column(name = "labor_fund")
+    private int laborFund;
+
     @Transient
     private List<SickLeave> sickLeavesInMonth;
 
@@ -90,6 +93,14 @@ public abstract class Salary {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public int getLaborFund() {
+        return laborFund;
+    }
+
+    public void setLaborFund(int laborFund) {
+        this.laborFund = laborFund;
     }
 
     public int getHealthcareContribution() {
@@ -205,6 +216,12 @@ public abstract class Salary {
     }
 
     public int getTaxDeductibleExpenses() {
+        if (employee.isAllowedForExtraTaxDeductibleExpenses()){
+            taxDeductibleExpenses=SalaryConstants.EXTRA_TAX_DEDUCTIBLE_COST;
+        }
+        else {
+            taxDeductibleExpenses=SalaryConstants.TAX_DEDUCTIBLE_COST;
+        }
         return taxDeductibleExpenses;
     }
 
@@ -217,6 +234,14 @@ public abstract class Salary {
     }
 
     public int getNumberOfSickLeaveDaysInCurrentMonth() {
+        int sickLeaveDaysInMonthYear = 0;
+        for (SickLeave sickLeave : sickLeavesInMonth) {
+            sickLeaveDaysInMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(month, year);
+        }
+        return sickLeaveDaysInMonthYear;
+    }
+
+    public int getNumberOfSickLeaveDaysUpToMonth() {
         int sickLeaveDaysInMonthYear = 0;
         for (SickLeave sickLeave : sickLeavesInMonth) {
             sickLeaveDaysInMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(month, year);
@@ -239,7 +264,7 @@ public abstract class Salary {
 
         deductionsFromSalary = calculateIncomeTaxAdvance() + calculateSicknessContribution() + calculatePensionContributionEmployee()
                 + calculateDisabilityContributionEmployee();
-        return 0;
+        return deductionsFromSalary;
     }
 
     public int calculatePayerDeductions() {
@@ -247,12 +272,22 @@ public abstract class Salary {
     }
 
     public int calculateTax() {
-        return 0;
+        int tax =  (int) (calculateTaxBase()*SalaryConstants.TAX_PERCENT/100);
+
+        return tax;
+    }
+
+    public int calculateTaxBase(){
+        int taxBase=0;
+        taxBase = grossSalary - pensionContributionEmployee - disabilityContributionEmployee - sicknessContribution- getTaxDeductibleExpenses();
+
+        return taxBase;
     }
 
     public int calculateIncomeTaxAdvance() {
-
-        return 0;
+        incomeTaxAdvance=
+                (int) (calculateTax()-calculateHealthCareContributionDeduction()-SalaryConstants.TAX_DEDUCTION);
+        return incomeTaxAdvance;
     }
 
     //ubezpieczenie emerytalne pracownika
@@ -293,7 +328,7 @@ public abstract class Salary {
     //ubezpieczenie chorobowe
     public int calculateSicknessContribution() {
 
-        sicknessContribution = (int) (grossSalary * SalaryConstants.ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT / 100);
+        sicknessContribution = (int) Math.round(grossSalary * SalaryConstants.ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT / 100);
 
         return sicknessContribution;
     }
@@ -317,6 +352,10 @@ public abstract class Salary {
         return healthcareContributionDeduction;
     }
 
+    public int calculateSickPay(int sickPayBase){
+        return (int) (sickPayBase*((double)getNumberOfSickLeaveDaysInCurrentMonth()/30));
+    }
+
     public int getNumberOfWorkdays() {
         int numberOfWorkDays = 0;
         YearMonth yearMonth = YearMonth.of(year, month);
@@ -325,7 +364,7 @@ public abstract class Salary {
         LocalDate[] freeDays =
                 (LocalDate[]) IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
                         .mapToObj(day -> LocalDate.of(year, month, day))
-                        .filter(date -> isWeekend(date) || Holidays.getHolidaysInYear(year).contains(date)).toArray();
+                        .filter(this::isFreeDay).toArray();
 
         numberOfWorkDays = yearMonth.lengthOfMonth() - freeDays.length;
 
@@ -340,6 +379,31 @@ public abstract class Salary {
         return numberOfWorkDays;
     }
 
+
+    //TODO
+    public int getNumberOfWorkedDaysWithSickLeave(List<SickLeave> sickLeavesInMonth) {
+        int numberOfUnworkedDays = 0;
+        YearMonth yearMonth = YearMonth.of(year, month);
+
+        // java 8
+        LocalDate[] skippedDays =
+                (LocalDate[]) IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
+                        .mapToObj(day -> LocalDate.of(year, month, day))
+                        .filter(date ->isFreeDay(date)||getSickLeavesInMonth().contains(date)).toArray();
+
+        numberOfUnworkedDays = yearMonth.lengthOfMonth() - skippedDays.length;
+
+        //java 11+
+//        LocalDate[] weekendDays =
+//                (LocalDate[]) yearMonth.atDay(1).datesUntil(yearMonth.atEndOfMonth())
+//                        .filter(date -> isWeekend(date)).toArray();
+//
+//        numberOfWorkDays=yearMonth.lengthOfMonth()-weekendDays.length;
+
+
+        return numberOfUnworkedDays;
+    }
+
     public boolean
     isWeekend(LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
@@ -351,18 +415,31 @@ public abstract class Salary {
         return isWeekend(date) || Holidays.getHolidaysInYear(year).contains(date);
     }
 
-    public int getNumberOfSickleaveDaysUpToMonth() {
-        int numberOfSickleaveDaysThisYear = 0;
+//    public int getNumberOfSickLeaveDaysUpToMonth() {
+//        int numberOfSickleaveDaysThisYear = 0;
+//
+//        for(int i=1; i <= month; i++){
+//            numberOfSickleaveDaysThisYear += getNumberOfSickLeaveDaysInMonthYear();
+//        }
+//        return numberOfSickleaveDaysThisYear;
+//    }
 
-        return numberOfSickleaveDaysThisYear;
-    }
+    public int calculateSicknessAllowance(){
 
-    public int calculateSickPay(){
+        int sickLeaveDaysThisYear = getNumberOfSickLeaveDaysUpToMonth()+getNumberOfSickLeaveDaysInCurrentMonth();
 
-        if(getNumberOfSickleaveDaysUpToMonth()+getNumberOfSickLeaveDaysInCurrentMonth()>= employee.getSickLeaveLimit())
+        int daysOverLimit = sickLeaveDaysThisYear - getSickLeaveLimit();
 
+        if(daysOverLimit>0){
+         sicknessAllowance = (int)(sickPay*((double)daysOverLimit/getNumberOfSickLeaveDaysInCurrentMonth()));
+        }
+        else {
+            sicknessAllowance=0;
+        }
 
-        return sickPay;
+        sickPay-=sicknessAllowance;
+
+        return sicknessAllowance;
     }
 
     public void performSocialContibutionsCalculations(){
@@ -379,7 +456,14 @@ public abstract class Salary {
     }
 
     public int getSickLeaveLimit(){
-
+        int limit;
+        if(employee.isOver55inYear(year)){
+            limit = 14;
+        }
+        else {
+            limit = 33;
+        }
+        return limit;
     }
 
 }

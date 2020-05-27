@@ -3,8 +3,11 @@ package pl.wizyg.payroll.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -34,7 +37,7 @@ public class SickLeave {
     private Employee employee;
 
     public SickLeave() {
-        System.out.println("Default Constructor");
+
     }
 
     public int getConsecutiveDays() {
@@ -66,6 +69,50 @@ public class SickLeave {
         }
         return sickLeaveDays;
     }
+
+    public int getNumberOfSickLeaveDaysOnWorkdaysInMonthYear(int month, int year){
+
+        int numberOfSickleaveDaysOnWorkdays = 0;
+
+        YearMonth yearMonth = YearMonth.of(year, month);
+
+        LocalDate beginningOfMonth = yearMonth.atDay(1);
+
+        LocalDate endOfMonth = yearMonth.atEndOfMonth();
+
+       // LocalDate[] sickLeaveWorkdays = new LocalDate[0];
+
+
+        //TODO
+        if (startDate.isBefore(beginningOfMonth) && endDate.isAfter(endOfMonth)) {
+            numberOfSickleaveDaysOnWorkdays =
+                     IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
+                            .mapToObj(day -> LocalDate.of(year, month, day))
+                            .filter(date ->!isFreeDay(date)).toArray().length;
+        } else if (startDate.isAfter(beginningOfMonth) && endDate.isBefore(endOfMonth)) {
+            numberOfSickleaveDaysOnWorkdays =
+                     IntStream.rangeClosed(startDate.getDayOfMonth(), endDate.getDayOfMonth())
+                            .mapToObj(day -> LocalDate.of(year, month, day))
+                            .filter(date ->!isFreeDay(date)).toArray().length;
+        } else if (startDate.isAfter(beginningOfMonth) && endDate.isAfter((endOfMonth))) {
+            numberOfSickleaveDaysOnWorkdays =
+                     IntStream.rangeClosed(startDate.getDayOfMonth(), yearMonth.lengthOfMonth())
+                            .mapToObj(day -> LocalDate.of(year, month, day))
+                            .filter(date ->!isFreeDay(date)).toArray().length;
+        } else if (startDate.isBefore(beginningOfMonth) && endDate.isBefore((endOfMonth))) {
+            numberOfSickleaveDaysOnWorkdays =  IntStream.rangeClosed(1, endDate.getDayOfMonth())
+                    .mapToObj(day -> LocalDate.of(year, month, day))
+                    .filter(date -> !isFreeDay(date)).toArray().length;
+        } else {
+            System.out.println("??????????");
+        }
+
+//        numberOfSickleaveDaysOnWorkdays = sickLeaveWorkdays.length;
+
+        return numberOfSickleaveDaysOnWorkdays;
+    }
+
+
 
     public int getSickLeaveId() {
         return sickLeaveId;
@@ -107,5 +154,16 @@ public class SickLeave {
                 ", endDate=" + endDate +
                 ", employee=" + employee +
                 '}';
+    }
+
+    public boolean
+    isWeekend(LocalDate date) {
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        return dayOfWeek == DayOfWeek.SUNDAY || dayOfWeek == DayOfWeek.SATURDAY;
+
+    }
+
+    public boolean isFreeDay(LocalDate date) {
+        return isWeekend(date) || Holidays.getHolidaysInYear(date.getYear()).contains(date);
     }
 }
