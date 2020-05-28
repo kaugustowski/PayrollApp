@@ -50,6 +50,11 @@ Welcome to my payroll app
 
 
 <p>
+    <a href="http://localhost:8080/payrollApp/salary/details/2020/5?employeeId=1">employeeId details may 2020 salary</a>
+</p>
+
+
+<p>
     <form:form action="${pageContext.request.contextPath}/logout" method="POST">
         <input type="submit" name="logout" value="logout">
     </form:form>

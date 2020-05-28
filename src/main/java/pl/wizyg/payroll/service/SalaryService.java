@@ -8,15 +8,15 @@ public interface SalaryService {
 
     public void calculateSalary(int employeeId, int month, int year);
 
-    public void calculateSalariesForActiveEmployees();
+    public void calculateSalariesForActiveEmployees(int month, int year);
 
-    public void calculateOvertimeSalaryForActiveEmployees();
+    public void calculateOvertimeSalaryForActiveEmployees(int month, int year);
 
     public void saveSalary(Salary salary);
 
     public void saveSalaries(List<Salary> salaries);
 
-    public Salary getEssentialSalary();
+    public Salary getEssentialSalary(int employeeId, int month, int year);
 
     public Salary getOvertimeSalary();
 

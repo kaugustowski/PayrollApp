@@ -59,8 +59,16 @@ public abstract class Salary {
     @Transient
     private List<SickLeave> sickLeavesInMonth;
 
+    @Transient
+    private List<SickLeave> sickLeavesUpToMonth;
 
     public Salary() {
+    }
+
+    public Salary(Employee employee, List<SickLeave> sickLeavesInMonth,List<SickLeave> sickLeavesUpToMonth ){
+        this.employee=employee;
+        this.sickLeavesInMonth=sickLeavesInMonth;
+        this.sickLeavesUpToMonth=sickLeavesUpToMonth;
     }
 
     public int getId() {
@@ -69,6 +77,10 @@ public abstract class Salary {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setSickLeavesUpToMonth(List<SickLeave> sickLeavesUpToMonth) {
+        this.sickLeavesUpToMonth = sickLeavesUpToMonth;
     }
 
     public int getMonth() {
@@ -241,12 +253,32 @@ public abstract class Salary {
         return sickLeaveDaysInMonthYear;
     }
 
-    public int getNumberOfSickLeaveDaysUpToMonth() {
+    public int getNumberOfSickLeaveDaysInCurrentMonth(List<SickLeave> sickLeavesInMonth) {
         int sickLeaveDaysInMonthYear = 0;
         for (SickLeave sickLeave : sickLeavesInMonth) {
             sickLeaveDaysInMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(month, year);
         }
         return sickLeaveDaysInMonthYear;
+    }
+    //TODO
+    public int getNumberOfSickLeaveDaysUpToMonth(List<SickLeave> sickLeavesUpToMonth) {
+        int sickLeaveDaysUpToMonthYear = 0;
+        for (SickLeave sickLeave : sickLeavesUpToMonth) {
+            for(int i =1; i<month; i++){
+                sickLeaveDaysUpToMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(i, year);
+            }
+        }
+        return sickLeaveDaysUpToMonthYear;
+    }
+
+    public int getNumberOfSickLeaveDaysUpToMonth() {
+        int sickLeaveDaysUpToMonthYear = 0;
+        for (SickLeave sickLeave : sickLeavesUpToMonth) {
+            for(int i =1; i<month; i++){
+                sickLeaveDaysUpToMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(i, year);
+            }
+        }
+        return sickLeaveDaysUpToMonthYear;
     }
 
 
@@ -335,7 +367,7 @@ public abstract class Salary {
 
     //podstawa ubezpieczenia zdrowotnego
     public int getHealthcareContributionBase() {
-        return grossSalary - calculateEmployeeDeductionsFromSalary() - sicknessAllowance;
+        return grossSalary - calculatePensionContributionEmployee()-calculateDisabilityContributionEmployee()-calculateSicknessContribution() - sicknessAllowance;
     }
 
     //ubezpieczenie zdrowotne
@@ -442,7 +474,7 @@ public abstract class Salary {
         return sicknessAllowance;
     }
 
-    public void performSocialContibutionsCalculations(){
+    public void performSocialContributionsCalculations(){
         calculateEmployeeDeductionsFromSalary();
         calculatePayerDeductions();
     }
@@ -450,8 +482,8 @@ public abstract class Salary {
 
     public void performCalculations(){
         calculateGrossSalary();
-        performSocialContibutionsCalculations();
-        calculateTax();
+        performSocialContributionsCalculations();
+        calculateIncomeTaxAdvance();
 
     }
 
@@ -466,4 +498,35 @@ public abstract class Salary {
         return limit;
     }
 
+    @Override
+    public String toString() {
+        return "Salary{" +
+                "grossSalary=" + grossSalary +
+                ", month=" + month +
+                ", year=" + year +
+                ", pensionContributionPayer=" + pensionContributionPayer +
+                ", disabilityContributionPayer=" + disabilityContributionPayer +
+                ", accidentInsuranceContribution=" + accidentInsuranceContribution +
+                ", pensionContributionEmployee=" + pensionContributionEmployee +
+                ", disabilityContributionEmployee=" + disabilityContributionEmployee +
+                ", sicknessContribution=" + sicknessContribution +
+                ", healthcareContribution=" + healthcareContribution +
+                ", healthcareContributionDeduction=" + healthcareContributionDeduction +
+                ", employee=" + employee +
+                ", id=" + id +
+                ", tax=" + tax +
+                ", incomeTaxAdvance=" + incomeTaxAdvance +
+                ", taxDeductibleExpenses=" + taxDeductibleExpenses +
+                ", sickPay=" + sickPay +
+                ", sicknessAllowance=" + sicknessAllowance +
+                ", laborFund=" + laborFund +
+                '}';
+    }
 }
+
+
+
+//		at pl.wizyg.payroll.entity.Salary.getHealthcareContributionBase(Salary.java:370)
+//		at pl.wizyg.payroll.entity.Salary.calculateHealthCareContributionDeduction(Salary.java:382)
+//		at pl.wizyg.payroll.entity.Salary.calculateIncomeTaxAdvance(Salary.java:321)
+//		at pl.wizyg.payroll.entity.Salary.calculateEmployeeDeductionsFromSalary(Salary.java:297)

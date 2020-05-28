@@ -45,11 +45,11 @@ public abstract class Employee {
     private LocalDate birthDate;
     @Column(name = "employeed_on_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @NotNull
     private LocalDate employeedOnDate;
     @Column(name = "is_allowed_for_extra_tax_deductible_expenses")
     private boolean isAllowedForExtraTaxDeductibleExpenses;
-    private boolean isActive;
+    @Column(name = "active")
+    private boolean active;
 
     //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "employee")
@@ -105,11 +105,11 @@ public abstract class Employee {
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
     public void setActive(boolean active) {
-        isActive = active;
+        active = active;
     }
 
     public List<SickLeave> getSickLeaves() {

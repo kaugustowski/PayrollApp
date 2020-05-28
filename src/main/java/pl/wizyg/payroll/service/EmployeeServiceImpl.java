@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wizyg.payroll.DAO.EmployeeDAO;
 import pl.wizyg.payroll.entity.Employee;
+import pl.wizyg.payroll.repository.EmployeeRepository;
 
 import java.util.List;
 
@@ -13,15 +14,15 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
-    private EmployeeDAO employeeDAO;
+    private EmployeeRepository employeeRepository;
 
     @Override
     public List<Employee> getEmployees() {
-        return employeeDAO.getEmployees();
+        return employeeRepository.findAll();
     }
 
     @Override
     public Employee getEmployee(int id) {
-        return null;
+        return employeeRepository.findById(id).get();
     }
 }
