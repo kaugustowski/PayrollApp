@@ -49,7 +49,7 @@ public class Teacher extends Employee {
     }
 
 
-    public void setBaseSalary() {
+    public int getBaseSalary() {
         if (education == Education.HIGHER_WITH_PEDAGOGIC_PREP) {
             if (teacherType == TeacherType.INTERN)
                 baseSalary = 278200;
@@ -80,6 +80,7 @@ public class Teacher extends Employee {
             if (teacherType == TeacherType.CERTIFIED)
                 baseSalary = 290500;
         }
+        return baseSalary;
     }
 
     public TeacherType getTeacherType() {

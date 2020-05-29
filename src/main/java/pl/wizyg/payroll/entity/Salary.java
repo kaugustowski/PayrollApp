@@ -1,6 +1,8 @@
 package pl.wizyg.payroll.entity;
 
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -11,7 +13,21 @@ import java.util.stream.IntStream;
 @Entity
 @Table(name = "salary")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@MappedSuperclass
 public abstract class Salary {
+
+
+
+    @Id
+    @GeneratedValue(
+            strategy= GenerationType.SEQUENCE,
+            generator = "salary-generator"
+    )
+    @SequenceGenerator(
+            name = "salary-generator",
+    sequenceName = "salary_sequence"
+    )
+    private int id;
 
     @Column(name = "gross_salary")
     int grossSalary;
@@ -40,9 +56,7 @@ public abstract class Salary {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     Employee employee;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+
     @Column(name = "tax")
     private int tax;
     @Column(name = "income_tax_advance")
@@ -65,8 +79,10 @@ public abstract class Salary {
     public Salary() {
     }
 
-    public Salary(Employee employee, List<SickLeave> sickLeavesInMonth,List<SickLeave> sickLeavesUpToMonth ){
+    public Salary(Employee employee, int month, int year, List<SickLeave> sickLeavesInMonth,List<SickLeave> sickLeavesUpToMonth ){
         this.employee=employee;
+        this.month=month;
+        this.year=year;
         this.sickLeavesInMonth=sickLeavesInMonth;
         this.sickLeavesUpToMonth=sickLeavesUpToMonth;
     }

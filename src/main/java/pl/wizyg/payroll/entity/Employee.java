@@ -22,9 +22,27 @@ public abstract class Employee {
     @Column(name = "base_salary")
     int baseSalary;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy= GenerationType.AUTO
+    )
     @Column(name = "id")
     private Integer id;
+
+
+//    @Id
+//    @GeneratedValue(
+//            strategy= GenerationType.SEQUENCE,
+//            generator = "sequence-generator"
+//    )
+//    @SequenceGenerator(
+//            name = "sequence-generator",
+//            sequenceName = "employee_sequence"
+//    )
+//    @Column(name = "id")
+//    private Integer id;
+
+
+
     @Column(name = "seniority_bonus")
     private int seniorityBonus;
     @Column(name = "functional_bonus")
@@ -60,6 +78,7 @@ public abstract class Employee {
 
     @OneToMany(mappedBy = "employee")
     private Set<Salary> salaries;
+
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "employee")
     private Set<Overtime> overtimeSet;

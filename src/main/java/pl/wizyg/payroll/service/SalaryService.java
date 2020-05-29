@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SalaryService {
 
-    public void calculateSalary(int employeeId, int month, int year);
+    public Salary calculateSalary(int employeeId, int month, int year);
 
     public void calculateSalariesForActiveEmployees(int month, int year);
 

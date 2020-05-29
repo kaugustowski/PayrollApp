@@ -43,10 +43,16 @@ public class PayrollConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        dataSource.setUrl("jdbc:sqlserver://localhost;DatabaseName=payroll");
+//        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//        dataSource.setUrl("jdbc:sqlserver://localhost;DatabaseName=payroll");
+//
+//        dataSource.setUsername("wizyg");
+//        dataSource.setPassword("wizyg");
 
-        dataSource.setUsername("wizyg");
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl("jdbc:postgresql://localhost:32772/payroll");
+
+        dataSource.setUsername("postgres");
         dataSource.setPassword("wizyg");
 
         return dataSource;
@@ -71,7 +77,9 @@ public class PayrollConfig {
 
         props.put(Environment.SHOW_SQL, "true");
 //        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-        props.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
+//        props.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
+        props.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL9Dialect");
+
         props.put(Environment.HBM2DDL_AUTO, "update");
 
         return props;

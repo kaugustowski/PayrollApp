@@ -49,6 +49,7 @@
           <element id="library" level="project" name="Gradle: org.jvnet.staxex:stax-ex:1.8" />
           <element id="library" level="project" name="Gradle: com.sun.xml.fastinfoset:FastInfoset:1.2.15" />
           <element id="library" level="project" name="Gradle: javax.servlet:javax.servlet-api:4.0.1" />
+          <element id="library" level="project" name="Gradle: org.postgresql:postgresql:42.2.12" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="PayrollApp.main/web/Web Gradle : PayrollApp-1.0-SNAPSHOT.war" />

@@ -10,7 +10,7 @@ public class EssentialSalary extends Salary {
 
     public EssentialSalary(){}
 
-    public EssentialSalary(Employee employee, List<SickLeave> employeesSickLeavesMonthYear, List<SickLeave> employeesSickLeavesUpToMonthInYear) {
-        super(employee,employeesSickLeavesMonthYear,employeesSickLeavesUpToMonthInYear);
+    public EssentialSalary(Employee employee, int month, int year, List<SickLeave> employeesSickLeavesMonthYear, List<SickLeave> employeesSickLeavesUpToMonthInYear) {
+        super(employee, month, year, employeesSickLeavesMonthYear,employeesSickLeavesUpToMonthInYear);
     }
 }

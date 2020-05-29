@@ -32,10 +32,12 @@ public class SalaryController {
 
     @RequestMapping("/details/{year}/{month}")
     public String showSalaryDetails(Model model, @PathVariable int month, @PathVariable int year, @RequestParam int employeeId){
-        salaryService.calculateSalary(employeeId, month, year);
-        Salary salary = salaryService.getEssentialSalary(employeeId, month, year);
+        Salary salary = salaryService.calculateSalary(employeeId, month, year);
+
 
         model.addAttribute("salary", salary);
+
+        salaryService.saveSalary(salary);
 
         return "salary-details";
 

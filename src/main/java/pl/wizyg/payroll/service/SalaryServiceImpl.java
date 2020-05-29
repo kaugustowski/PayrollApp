@@ -25,13 +25,14 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public void calculateSalary(int employeeId, int month, int year) {
+    public Salary calculateSalary(int employeeId, int month, int year) {
         Salary salary;
-        salary = new EssentialSalary(employeeService.getEmployee(employeeId),
+        salary = new EssentialSalary(employeeService.getEmployee(employeeId), month, year,
                 sickLeaveService.getEmployeesSickLeavesMonthYear(employeeId, month, year),
         sickLeaveService.getEmployeesSickLeavesUpToMonthInYear(employeeId, month, year));
         salary.performCalculations();
-        saveSalary(salary);
+
+        return salary;
     }
 
     @Override
