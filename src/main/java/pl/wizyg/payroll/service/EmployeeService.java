@@ -5,7 +5,10 @@ import pl.wizyg.payroll.entity.Employee;
 import java.util.List;
 
 public interface EmployeeService {
+
     List<Employee> getEmployees();
+
+    List<Employee> getActiveEmployees();
 
     //    void saveEmployee(Employee employee);
 //

@@ -10,7 +10,16 @@ public class EssentialSalary extends Salary {
 
     public EssentialSalary(){}
 
-    public EssentialSalary(Employee employee, int month, int year, List<SickLeave> employeesSickLeavesMonthYear, List<SickLeave> employeesSickLeavesUpToMonthInYear) {
-        super(employee, month, year, employeesSickLeavesMonthYear,employeesSickLeavesUpToMonthInYear);
+    public EssentialSalary(Employee employee, int month, int year, List<SickLeave> employeesSickLeavesMonthYear, List<SickLeave> employeesSickLeavesUpToMonthInYear, List<Salary> salariesFromLast12Months) {
+        super(employee, month, year, employeesSickLeavesMonthYear,employeesSickLeavesUpToMonthInYear, salariesFromLast12Months);
+    }
+
+    @Override
+    public boolean isAllowedForSickPayBaseCalculation() {
+          return workedDaysRatio() >= 0.5;
+    }
+
+    public double workedDaysRatio(){
+        return (double)getNumberOfWorkedDaysWithSickLeave()/getNumberOfWorkdays();
     }
 }

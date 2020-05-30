@@ -56,6 +56,16 @@ public class SickLeaveServiceImpl implements SickLeaveService {
         sickLeaveRepository.save(sickLeave);
     }
 
+    @Override
+    public List<SickLeave> getEmployeesSickLeaves(int employeeId) {
+        return sickLeaveRepository.findAllByEmployeeId(employeeId);
+    }
+
+    @Override
+    public void saveSickLeave(SickLeave sickLeave) {
+        sickLeaveRepository.save(sickLeave);
+    }
+
     public int getNumberOfAbsenceDays(int employeeId, int month, int year) {
         int absenceDays = 0;
         List<SickLeave> sickLeaveList = getEmployeesSickLeavesMonthYear(employeeId, month, year);

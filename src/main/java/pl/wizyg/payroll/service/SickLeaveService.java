@@ -12,4 +12,8 @@ public interface SickLeaveService {
 
     void addSickLeave(Integer teacherId, SickLeave sickLeave);
 
+    List<SickLeave> getEmployeesSickLeaves(int employeeId);
+
+    void saveSickLeave(SickLeave sickLeave);
+
 }

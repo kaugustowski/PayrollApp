@@ -1,7 +1,7 @@
 package pl.wizyg.payroll.entity;
 
 
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
@@ -13,30 +13,12 @@ import java.util.stream.IntStream;
 @Entity
 @Table(name = "salary")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Component
 //@MappedSuperclass
 public abstract class Salary {
 
-
-
-    @Id
-    @GeneratedValue(
-            strategy= GenerationType.SEQUENCE,
-            generator = "salary-generator"
-    )
-    @SequenceGenerator(
-            name = "salary-generator",
-    sequenceName = "salary_sequence"
-    )
-    private int id;
-
     @Column(name = "gross_salary")
     int grossSalary;
-
-    @Column(name = "month")
-    private int month;
-
-    @Column(name = "year")
-    private int year;
     @Column(name = "pension_contribution_payer")
     int pensionContributionPayer;
     @Column(name = "disability_contribution_payer")
@@ -56,7 +38,20 @@ public abstract class Salary {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     Employee employee;
-
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "salary-generator"
+    )
+    @SequenceGenerator(
+            name = "salary-generator",
+            sequenceName = "salary_sequence"
+    )
+    private int id;
+    @Column(name = "month")
+    private int month;
+    @Column(name = "year")
+    private int year;
     @Column(name = "tax")
     private int tax;
     @Column(name = "income_tax_advance")
@@ -76,15 +71,19 @@ public abstract class Salary {
     @Transient
     private List<SickLeave> sickLeavesUpToMonth;
 
+    @Transient
+    private List<Salary> salariesFromLast12Months;
+
     public Salary() {
     }
 
-    public Salary(Employee employee, int month, int year, List<SickLeave> sickLeavesInMonth,List<SickLeave> sickLeavesUpToMonth ){
-        this.employee=employee;
-        this.month=month;
-        this.year=year;
-        this.sickLeavesInMonth=sickLeavesInMonth;
-        this.sickLeavesUpToMonth=sickLeavesUpToMonth;
+    public Salary(Employee employee, int month, int year, List<SickLeave> sickLeavesInMonth, List<SickLeave> sickLeavesUpToMonth, List<Salary> salariesFromLast12Months) {
+        this.employee = employee;
+        this.month = month;
+        this.year = year;
+        this.sickLeavesInMonth = sickLeavesInMonth;
+        this.sickLeavesUpToMonth = sickLeavesUpToMonth;
+        this.salariesFromLast12Months = salariesFromLast12Months;
     }
 
     public int getId() {
@@ -244,11 +243,10 @@ public abstract class Salary {
     }
 
     public int getTaxDeductibleExpenses() {
-        if (employee.isAllowedForExtraTaxDeductibleExpenses()){
-            taxDeductibleExpenses=SalaryConstants.EXTRA_TAX_DEDUCTIBLE_COST;
-        }
-        else {
-            taxDeductibleExpenses=SalaryConstants.TAX_DEDUCTIBLE_COST;
+        if (employee.isAllowedForExtraTaxDeductibleExpenses()) {
+            taxDeductibleExpenses = SalaryConstants.EXTRA_TAX_DEDUCTIBLE_COST;
+        } else {
+            taxDeductibleExpenses = SalaryConstants.TAX_DEDUCTIBLE_COST;
         }
         return taxDeductibleExpenses;
     }
@@ -269,6 +267,7 @@ public abstract class Salary {
         return sickLeaveDaysInMonthYear;
     }
 
+    //TODO
     public int getNumberOfSickLeaveDaysInCurrentMonth(List<SickLeave> sickLeavesInMonth) {
         int sickLeaveDaysInMonthYear = 0;
         for (SickLeave sickLeave : sickLeavesInMonth) {
@@ -276,11 +275,12 @@ public abstract class Salary {
         }
         return sickLeaveDaysInMonthYear;
     }
+
     //TODO
     public int getNumberOfSickLeaveDaysUpToMonth(List<SickLeave> sickLeavesUpToMonth) {
         int sickLeaveDaysUpToMonthYear = 0;
         for (SickLeave sickLeave : sickLeavesUpToMonth) {
-            for(int i =1; i<month; i++){
+            for (int i = 1; i < month; i++) {
                 sickLeaveDaysUpToMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(i, year);
             }
         }
@@ -290,7 +290,7 @@ public abstract class Salary {
     public int getNumberOfSickLeaveDaysUpToMonth() {
         int sickLeaveDaysUpToMonthYear = 0;
         for (SickLeave sickLeave : sickLeavesUpToMonth) {
-            for(int i =1; i<month; i++){
+            for (int i = 1; i < month; i++) {
                 sickLeaveDaysUpToMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(i, year);
             }
         }
@@ -316,59 +316,62 @@ public abstract class Salary {
     }
 
     public int calculatePayerDeductions() {
-        return 0;
+        int payerDeductions;
+
+        payerDeductions = calculateDisabilityContributionPayer() + calculatePensionContributionPayer() + calculateAccidentInsuranceContribution() + calculateLabourFund();
+        return payerDeductions;
     }
 
     public int calculateTax() {
-        int tax =  (int) (calculateTaxBase()*SalaryConstants.TAX_PERCENT/100);
+        int tax = (int) Math.round((calculateTaxBase() * SalaryConstants.TAX_PERCENT / 100));
 
         return tax;
     }
 
-    public int calculateTaxBase(){
-        int taxBase=0;
-        taxBase = grossSalary - pensionContributionEmployee - disabilityContributionEmployee - sicknessContribution- getTaxDeductibleExpenses();
+    public int calculateTaxBase() {
+        int taxBase = 0;
+        taxBase = grossSalary - pensionContributionEmployee - disabilityContributionEmployee - sicknessContribution - getTaxDeductibleExpenses();
 
         return taxBase;
     }
 
     public int calculateIncomeTaxAdvance() {
-        incomeTaxAdvance=
-                (int) (calculateTax()-calculateHealthCareContributionDeduction()-SalaryConstants.TAX_DEDUCTION);
+        incomeTaxAdvance =
+                (int) Math.round(calculateTax() - calculateHealthCareContributionDeduction() - SalaryConstants.TAX_DEDUCTION);
         return incomeTaxAdvance;
     }
 
     //ubezpieczenie emerytalne pracownika
     public int calculatePensionContributionEmployee() {
-        pensionContributionEmployee = (int) (grossSalary * SalaryConstants.PENSION_CONTRIBUTION_EMPLOYEE_PERCENT / 100);
+        pensionContributionEmployee = (int) Math.round(grossSalary * SalaryConstants.PENSION_CONTRIBUTION_EMPLOYEE_PERCENT / 100);
 
         return pensionContributionEmployee;
     }
 
     //ubezpieczenie emerytalne platnika
     public int calculatePensionContributionPayer() {
-        pensionContributionPayer = (int) (grossSalary * SalaryConstants.PENSION_CONTRIBUTION_PAYER_PERCENT / 100);
+        pensionContributionPayer = (int) Math.round(grossSalary * SalaryConstants.PENSION_CONTRIBUTION_PAYER_PERCENT / 100);
 
         return pensionContributionPayer;
     }
 
     // ubezpieczenie rentowe pracownika
     public int calculateDisabilityContributionEmployee() {
-        disabilityContributionEmployee = (int) (grossSalary * SalaryConstants.DISABILITY_CONTRIBUTION_EMPLOYEE_PERCENT / 100);
+        disabilityContributionEmployee = (int) Math.round(grossSalary * SalaryConstants.DISABILITY_CONTRIBUTION_EMPLOYEE_PERCENT / 100);
 
         return disabilityContributionEmployee;
     }
 
     // ubezpieczenie rentowe platnika
     public int calculateDisabilityContributionPayer() {
-        disabilityContributionEmployee = (int) (grossSalary * SalaryConstants.DISABILITY_CONTRIBUTION_EMPLOYEE_PERCENT / 100);
+        disabilityContributionEmployee = (int) Math.round(grossSalary * SalaryConstants.DISABILITY_CONTRIBUTION_EMPLOYEE_PERCENT / 100);
 
         return disabilityContributionEmployee;
     }
 
     //ubezpieczenie wypadkowe
     public int calculateAccidentInsuranceContribution() {
-        accidentInsuranceContribution = (int) (grossSalary * SalaryConstants.ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT / 100);
+        accidentInsuranceContribution = (int) Math.round(grossSalary * SalaryConstants.ACCIDENT_INSURANCE_CONTRIBUTION_PERCENT / 100);
 
         return accidentInsuranceContribution;
     }
@@ -383,26 +386,47 @@ public abstract class Salary {
 
     //podstawa ubezpieczenia zdrowotnego
     public int getHealthcareContributionBase() {
-        return grossSalary - calculatePensionContributionEmployee()-calculateDisabilityContributionEmployee()-calculateSicknessContribution() - sicknessAllowance;
+        return grossSalary - calculatePensionContributionEmployee() - calculateDisabilityContributionEmployee() - calculateSicknessContribution() - sicknessAllowance;
     }
 
     //ubezpieczenie zdrowotne
     public int calculateHealthCareContribution() {
-        healthcareContribution = (int) (getHealthcareContributionBase() * SalaryConstants.HEALTHCARE_CONTRIBUTION_PERCENT / 100);
+        healthcareContribution = (int) Math.round(getHealthcareContributionBase() * SalaryConstants.HEALTHCARE_CONTRIBUTION_PERCENT / 100);
 
         return healthcareContribution;
     }
 
     //
     public int calculateHealthCareContributionDeduction() {
-        healthcareContributionDeduction = (int) (getHealthcareContributionBase() * SalaryConstants.HEALTHCARE_CONTRIBUTION_DEDUCTION_PERCENT / 100);
+        healthcareContributionDeduction = (int) Math.round(getHealthcareContributionBase() * SalaryConstants.HEALTHCARE_CONTRIBUTION_DEDUCTION_PERCENT / 100);
 
         return healthcareContributionDeduction;
     }
 
-    public int calculateSickPay(int sickPayBase){
-        return (int) (sickPayBase*((double)getNumberOfSickLeaveDaysInCurrentMonth()/30));
+    public int calculateSickPay(int sickPayBase) {
+        return (int) Math.round(sickPayBase * ((double) getNumberOfSickLeaveDaysInCurrentMonth() / 30));
     }
+
+    //TODO
+    public int calculateSickPayBase2() {
+        return grossSalary;
+    }
+
+
+    public int calculateSickPayBase() {
+        int sickPayBaseSum = 0;
+        int i = 0;
+
+        for (Salary salary : salariesFromLast12Months) {
+            if (salary.isAllowedForSickPayBaseCalculation()) {
+                sickPayBaseSum += salary.getHealthcareContributionBase();
+                i++;
+            }
+        }
+        return (int) Math.round((double) sickPayBaseSum / i);
+    }
+
+    protected abstract boolean isAllowedForSickPayBaseCalculation();
 
     public int getNumberOfWorkdays() {
         int numberOfWorkDays = 0;
@@ -428,8 +452,8 @@ public abstract class Salary {
     }
 
 
-    //TODO
-    public int getNumberOfWorkedDaysWithSickLeave(List<SickLeave> sickLeavesInMonth) {
+    //TODO jkbjjjh
+    public int getNumberOfWorkedDaysWithSickLeave() {
         int numberOfUnworkedDays = 0;
         YearMonth yearMonth = YearMonth.of(year, month);
 
@@ -437,7 +461,7 @@ public abstract class Salary {
         LocalDate[] skippedDays =
                 (LocalDate[]) IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
                         .mapToObj(day -> LocalDate.of(year, month, day))
-                        .filter(date ->isFreeDay(date)||getSickLeavesInMonth().contains(date)).toArray();
+                        .filter(date -> isFreeDay(date) || getSickLeavesInMonth().contains(date)).toArray();
 
         numberOfUnworkedDays = yearMonth.lengthOfMonth() - skippedDays.length;
 
@@ -447,7 +471,6 @@ public abstract class Salary {
 //                        .filter(date -> isWeekend(date)).toArray();
 //
 //        numberOfWorkDays=yearMonth.lengthOfMonth()-weekendDays.length;
-
 
         return numberOfUnworkedDays;
     }
@@ -472,43 +495,45 @@ public abstract class Salary {
 //        return numberOfSickleaveDaysThisYear;
 //    }
 
-    public int calculateSicknessAllowance(){
+    public int calculateSicknessAllowance() {
 
-        int sickLeaveDaysThisYear = getNumberOfSickLeaveDaysUpToMonth()+getNumberOfSickLeaveDaysInCurrentMonth();
+        int sickLeaveDaysThisYear = getNumberOfSickLeaveDaysUpToMonth() + getNumberOfSickLeaveDaysInCurrentMonth();
 
         int daysOverLimit = sickLeaveDaysThisYear - getSickLeaveLimit();
 
-        if(daysOverLimit>0){
-         sicknessAllowance = (int)(sickPay*((double)daysOverLimit/getNumberOfSickLeaveDaysInCurrentMonth()));
-        }
-        else {
-            sicknessAllowance=0;
+        if (daysOverLimit > 0) {
+            sicknessAllowance = (int) Math.round(sickPay * ((double) daysOverLimit / getNumberOfSickLeaveDaysInCurrentMonth()));
+        } else {
+            sicknessAllowance = 0;
         }
 
-        sickPay-=sicknessAllowance;
+        sickPay -= sicknessAllowance;
 
         return sicknessAllowance;
     }
 
-    public void performSocialContributionsCalculations(){
-        calculateEmployeeDeductionsFromSalary();
-        calculatePayerDeductions();
-    }
 
-
-    public void performCalculations(){
+    public void performCalculations() {
         calculateGrossSalary();
-        performSocialContributionsCalculations();
+        calculateEmployeeDeductionsFromSalary();
+        calculateSicknessContribution();
+        calculatePayerDeductions();
+        calculateSickPay(calculateSickPayBase());
+        calculateSicknessAllowance();
+        calculateHealthCareContribution();
         calculateIncomeTaxAdvance();
-
     }
 
-    public int getSickLeaveLimit(){
+    private int calculateLabourFund() {
+        laborFund = (int) Math.round(grossSalary * SalaryConstants.LABOUR_FUND_PERCENT / 100);
+        return laborFund;
+    }
+
+    public int getSickLeaveLimit() {
         int limit;
-        if(employee.isOver55inYear(year)){
+        if (employee.isOver55inYear(year)) {
             limit = 14;
-        }
-        else {
+        } else {
             limit = 33;
         }
         return limit;
@@ -540,9 +565,3 @@ public abstract class Salary {
     }
 }
 
-
-
-//		at pl.wizyg.payroll.entity.Salary.getHealthcareContributionBase(Salary.java:370)
-//		at pl.wizyg.payroll.entity.Salary.calculateHealthCareContributionDeduction(Salary.java:382)
-//		at pl.wizyg.payroll.entity.Salary.calculateIncomeTaxAdvance(Salary.java:321)
-//		at pl.wizyg.payroll.entity.Salary.calculateEmployeeDeductionsFromSalary(Salary.java:297)

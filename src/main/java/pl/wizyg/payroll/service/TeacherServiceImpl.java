@@ -8,6 +8,7 @@ import pl.wizyg.payroll.DAO.TeacherDAO;
 import pl.wizyg.payroll.entity.Overtime;
 import pl.wizyg.payroll.entity.SickLeave;
 import pl.wizyg.payroll.entity.Teacher;
+import pl.wizyg.payroll.repository.TeacherRepository;
 
 import java.util.List;
 
@@ -15,48 +16,40 @@ import java.util.List;
 @Transactional
 public class TeacherServiceImpl implements TeacherService {
 
-    private final TeacherDAO teacherDAO;
+    final
+    TeacherRepository teacherRepository;
 
 
-    public TeacherServiceImpl(@Autowired TeacherDAO teacherDAO) {
-        this.teacherDAO = teacherDAO;
-    }
+    public TeacherServiceImpl(@Autowired TeacherRepository teacherRepository) {
 
-    @Override
-    public List<SickLeave> getSickLeaves(Integer teacherId) {
-        return teacherDAO.getSickLeaves(teacherId);
+        this.teacherRepository = teacherRepository;
     }
 
     @Override
     public List<Teacher> getTeachers() {
-        return teacherDAO.getTeachers();
+        return teacherRepository.findAll();
     }
 
     @Override
-    public void saveTeacher(Teacher teacher) {
+    public List<Teacher> getActiveTeachers(){return teacherRepository.findAllByActiveTrue();}
 
-        teacherDAO.saveTeacher(teacher);
+    @Override
+    public void saveTeacher(Teacher teacher) {
+        teacherRepository.save(teacher);
     }
 
     @Override
     public Teacher getTeacher(Integer id) {
-        return teacherDAO.getTeacher(id);
+        return teacherRepository.findById(id).get();
     }
 
     @Override
     public void deleteTeacher(Integer id) {
-        teacherDAO.deleteTeacher(id);
+        teacherRepository.delete(getTeacher(id));
     }
 
     @Override
-    public void saveTeachersSickLeave(Integer teacherId, SickLeave sickLeave) {
-        teacherDAO.addTeachersSickLeave(teacherId, sickLeave);
-    }
-
-    @Override
-    public void saveTeachersOvertime(Integer teacherId, Overtime overtime) {
-        teacherDAO.addTeachersOvertime(teacherId, overtime);
-    }
+    public void setInactiveTeacher(Integer id){teacherRepository.findById(id).get().setActive(false);}
 
 
 }

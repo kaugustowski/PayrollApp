@@ -19,7 +19,7 @@
 </head>
 <body>
 <h1>Sick leaves</h1>
-<h2>${teacher.firstName} ${teacher.lastName}</h2>
+<h2>${employee.firstName} ${employee.lastName}</h2>
 
 <table>
 

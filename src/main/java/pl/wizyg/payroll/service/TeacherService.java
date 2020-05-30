@@ -7,9 +7,10 @@ import pl.wizyg.payroll.entity.Teacher;
 import java.util.List;
 
 public interface TeacherService {
-    List<SickLeave> getSickLeaves(Integer teacherId);
 
     List<Teacher> getTeachers();
+
+    List<Teacher> getActiveTeachers();
 
     void saveTeacher(Teacher teacher);
 
@@ -17,8 +18,7 @@ public interface TeacherService {
 
     void deleteTeacher(Integer id);
 
-    void saveTeachersSickLeave(Integer teacherId, SickLeave sickLeave);
+    void setInactiveTeacher(Integer id);
 
-    void saveTeachersOvertime(Integer teacherId, Overtime overtime);
 
 }

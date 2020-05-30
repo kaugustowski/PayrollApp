@@ -1,6 +1,7 @@
 package pl.wizyg.payroll.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
+@Component
 public class Test {
 
     @Id

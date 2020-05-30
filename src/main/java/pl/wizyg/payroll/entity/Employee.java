@@ -19,8 +19,7 @@ import static java.util.Calendar.YEAR;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Employee {
 
-    @Column(name = "base_salary")
-    int baseSalary;
+
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO
@@ -42,7 +41,8 @@ public abstract class Employee {
 //    private Integer id;
 
 
-
+    @Column(name = "base_salary")
+    int baseSalary;
     @Column(name = "seniority_bonus")
     private int seniorityBonus;
     @Column(name = "functional_bonus")

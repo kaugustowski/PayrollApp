@@ -22,6 +22,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> getActiveEmployees() {
+        List<Employee> employees = employeeRepository.findAllByActiveTrue();
+        return employees;
+    }
+
+    @Override
     public Employee getEmployee(int id) {
         return employeeRepository.findById(id).get();
     }

@@ -1,40 +1,37 @@
 package pl.wizyg.payroll.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.wizyg.payroll.entity.Employee;
 import pl.wizyg.payroll.entity.SickLeave;
-import pl.wizyg.payroll.entity.Teacher;
-import pl.wizyg.payroll.repository.EmployeeRepository;
-import pl.wizyg.payroll.repository.SickLeaveRepository;
-import pl.wizyg.payroll.service.TeacherService;
+import pl.wizyg.payroll.service.EmployeeService;
+import pl.wizyg.payroll.service.SickLeaveService;
 
 import java.util.List;
-import java.util.Optional;
-
-//import pl.wizyg.payroll.repository.SickLeaveRepository;
 
 @Controller
 @RequestMapping("/sickLeave")
 public class SickLeaveController {
 
-    @Autowired
-    TeacherService teacherService;
-    @Autowired
-    SickLeaveRepository sickLeaveRepository;
-    @Autowired
-    EmployeeRepository employeeRepository;
+    final
+    EmployeeService employeeService;
+    final
+    SickLeaveService sickLeaveService;
+
+    public SickLeaveController(EmployeeService employeeService, SickLeaveService sickLeaveService) {
+        this.employeeService = employeeService;
+        this.sickLeaveService = sickLeaveService;
+    }
 
     @GetMapping("/list/{employeeId}")
     public String showSickLeaves(@PathVariable int employeeId, Model theModel) {
 
-        Teacher teacher = teacherService.getTeacher(employeeId);
+        Employee employee = employeeService.getEmployee(employeeId);
 
-        List<SickLeave> sickLeaveList = sickLeaveRepository.findAllByEmployeeId(employeeId);
+        List<SickLeave> sickLeaveList = sickLeaveService.getEmployeesSickLeaves(employeeId);
 
-        theModel.addAttribute("teacher", teacher);
+        theModel.addAttribute("employee", employee);
         theModel.addAttribute("sickLeaves", sickLeaveList);
 
         return "sick-leaves";
@@ -43,27 +40,21 @@ public class SickLeaveController {
     @GetMapping("/add/{employeeId}")
     public String showSickLeaveForm(@PathVariable int employeeId, Model theModel) {
 
-        Employee theTeacher = employeeRepository.findById(employeeId).get();
+        Employee employee = employeeService.getEmployee(employeeId);
 
         SickLeave sickLeave = new SickLeave();
 
-
-        theModel.addAttribute("teacher", theTeacher);
+        theModel.addAttribute("employee", employee);
         theModel.addAttribute("sickLeave", sickLeave);
 
-        System.out.println("FORM fsdfzs");
-
-        return "sickleave-form2";
+        return "sickleave-form";
     }
 
     @PostMapping("/save/{employeeId}")
     public String saveSickLeave(@ModelAttribute("sickLeave") SickLeave sickLeave, @PathVariable int employeeId) {
-        System.out.println("Saving nr 1!!!!!  From:" + sickLeave.getStartDate() + "  to: " + sickLeave.getEndDate());
 
+        sickLeaveService.saveSickLeave(sickLeave);
 
-        teacherService.saveTeachersSickLeave(employeeId, sickLeave);
-
-        System.out.println("Saving!!!!!  From:" + sickLeave.getStartDate() + "  to: " + sickLeave.getEndDate());
-        return "redirect:/teacher/sickLeaves/{employeeId}";
+        return "redirect:/sickLeaves/list/{employeeId}";
     }
 }

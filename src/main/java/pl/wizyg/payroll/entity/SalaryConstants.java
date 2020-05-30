@@ -2,6 +2,8 @@ package pl.wizyg.payroll.entity;
 
 public class SalaryConstants {
 
+    public static final double LABOUR_FUND_PERCENT = 2.45;
+
     protected final static double HEALTHCARE_CONTRIBUTION_PERCENT = 9;
 
     protected final static double HEALTHCARE_CONTRIBUTION_DEDUCTION_PERCENT = 7.75;

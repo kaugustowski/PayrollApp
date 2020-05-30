@@ -14,9 +14,12 @@ public interface SalaryRepository extends JpaRepository<Salary, Integer> {
 
   Salary findByEmployee_IdAndMonthAndYear(Integer employee_id, int month, int year);
 
-    Salary findByEmployeeIdAndMonthAndYear(Integer employee_id, int month, int year);
+  Salary findByEmployeeIdAndMonthAndYear(Integer employee_id, int month, int year);
 
+  List<Salary> findAllByMonthAndYear(int month, int year);
 
-    List<Salary> findAllByMonthAndYear(int month, int year);
+  List<Salary> findAllByMonthAndYearAndEmployee_ActiveTrue(int month, int year);
+
+  List<Salary> findAllByMonthIsLessThanAndYearOrMonthGreaterThanEqualAndYear(int month, int thisYear, int sameMonth, int prevYear);
 
 }

@@ -11,6 +11,9 @@ public class OvertimeSalary extends Salary {
     @Column(name = "number_of_overtime_hours")
     private int numberOfOvertimeHours;
 
+    public OvertimeSalary(Employee employee, int month, int year) {
+    }
+
     public int getNumberOfOvertimeHours() {
         return numberOfOvertimeHours;
     }
@@ -67,5 +70,10 @@ public class OvertimeSalary extends Salary {
         healthcareContributionDeduction = (int) (getHealthcareContributionBase() * SalaryConstants.HEALTHCARE_CONTRIBUTION_DEDUCTION_PERCENT / 100);
 
         return healthcareContributionDeduction;
+    }
+
+    @Override
+    protected boolean isAllowedForSickPayBaseCalculation() {
+        return true;
     }
 }

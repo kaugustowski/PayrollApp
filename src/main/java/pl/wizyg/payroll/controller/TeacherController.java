@@ -24,10 +24,13 @@ public class TeacherController {
     // private static final Logger logger = Logger.getLogger(TeacherController.class);
 
 
-    @Autowired
-    private SickLeaveRepository sickLeaveRepository;
-    @Autowired
-    private TeacherService teacherService;
+    private final SickLeaveRepository sickLeaveRepository;
+    private final TeacherService teacherService;
+
+    public TeacherController(SickLeaveRepository sickLeaveRepository, TeacherService teacherService) {
+        this.sickLeaveRepository = sickLeaveRepository;
+        this.teacherService = teacherService;
+    }
 
 
     @GetMapping("/list")
@@ -52,7 +55,6 @@ public class TeacherController {
         theModel.addAttribute("teacherTypeValues", teacherTypes);
 
         return "teacher-form";
-
     }
 
     @PostMapping("/saveTeacher")
@@ -87,86 +89,12 @@ public class TeacherController {
         return "redirect:/teacher/list";
     }
 
-//    @PostMapping("/calculate")
-//    public String calculate() {
-//
-//        List<Teacher> teachers = teacherService.getTeachers();
-//        //teachers.forEach(Teacher::calculateSalary);
-//
-//        return "redirect:/teacher/list";
-//    }
-
-    @GetMapping("/sickLeaves/{employeeId}")
-    public String showSickLeaves(@PathVariable int employeeId, Model theModel) {
-
-        Teacher teacher = teacherService.getTeacher(employeeId);
-
-        List<SickLeave> sickLeaveList = sickLeaveRepository.findAllByEmployeeId(employeeId);
-
-        theModel.addAttribute("teacher", teacher);
-        theModel.addAttribute("sickLeaves", sickLeaveList);
-
-        return "sick-leaves";
-    }
-
-    @GetMapping("/addSickLeave/{employeeId}")
-    public String showSickLeaveForm(@PathVariable int employeeId, Model theModel) {
-
-        Teacher theTeacher = teacherService.getTeacher(employeeId);
-
-        SickLeave sickLeave = new SickLeave();
-
-
-        theModel.addAttribute("teacher", theTeacher);
-        theModel.addAttribute("sickLeave", sickLeave);
-
-        System.out.println("FORM fsdfzs");
-
-        return "sickleave-form";
-    }
-
-    @PostMapping("/saveSickLeave/{employeeId}")
-    public String saveSickLeave(@ModelAttribute("sickLeave") SickLeave sickLeave, @PathVariable int employeeId) {
-        System.out.println("Saving nr 1!!!!!  From:" + sickLeave.getStartDate() + "  to: " + sickLeave.getEndDate());
-
-        teacherService.saveTeachersSickLeave(employeeId, sickLeave);
-
-        System.out.println("Saving!!!!!  From:" + sickLeave.getStartDate() + "  to: " + sickLeave.getEndDate());
-        return "redirect:/teacher/sickLeaves/{employeeId}";
-    }
-
-    @GetMapping("/addOvertime/{employeeId}")
-    public String showOvertimeForm(@PathVariable int employeeId, Model theModel) {
-
-        Teacher theTeacher = teacherService.getTeacher(employeeId);
-
-        Overtime ot = new Overtime();
-
-
-        theModel.addAttribute("teacher", theTeacher);
-        theModel.addAttribute("overtime", ot);
-
-        System.out.println("FORM fsdfzs");
-
-        return "overtime-form";
-    }
-
-    @PostMapping("/saveOvertime/{employeeId}")
-    public String saveOvertime(@ModelAttribute("sickLeave") Overtime overtime, @PathVariable int employeeId) {
-
-        teacherService.saveTeachersOvertime(employeeId, overtime);
-
-        return "redirect:/addOvertime/{employeeId}";
-    }
-
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void handle(HttpMessageNotReadableException e) {
         logger.warn("Returning HTTP 400 Bad Request", e);
         System.out.println((e.getMessage() + Arrays.toString(e.getStackTrace()) + "Returning HTTP 400 Bad Request" + e));
     }
-
-
 }
 
 

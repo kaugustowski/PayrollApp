@@ -8,12 +8,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.wizyg.payroll.DAO.TestDAO;
 import pl.wizyg.payroll.entity.Test;
+import pl.wizyg.payroll.repository.TestRepository;
+import pl.wizyg.payroll.service.TestService;
 
 @Controller
 public class TestController {
 
     @Autowired
     TestDAO testDAO;
+    @Autowired
+    TestService testService;
+    @Autowired
+    TestRepository testRepository;
 
     @GetMapping("/testForm")
     public String showTestForm(Model model) {
@@ -30,7 +36,9 @@ public class TestController {
     @PostMapping("/saveTest")
     public String addTest(@ModelAttribute Test test) {
 
-        testDAO.saveTest(test);
+      //  testService.saveTest(test);
+
+        testRepository.save(test);
 
         System.out.println(test.getDate());
         return "redirect:/testForm";

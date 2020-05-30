@@ -47,8 +47,6 @@ public class Holidays {
 
     public static LocalDate getEasterDayInYear(int year) {
 
-        LocalDate easter = null;
-
         int a = year % 19;
 
         int b = year / 100;
@@ -82,7 +80,7 @@ public class Holidays {
         int easterMonth = z / 31;
 
 
-        easter = LocalDate.of(year, easterMonth, easterDay);
+        LocalDate easter = LocalDate.of(year, easterMonth, easterDay);
 
         return easter;
     }
