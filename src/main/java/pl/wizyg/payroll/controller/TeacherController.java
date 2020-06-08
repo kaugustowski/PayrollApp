@@ -23,7 +23,6 @@ public class TeacherController {
     Logger logger = LoggerFactory.getLogger(TeacherController.class);
     // private static final Logger logger = Logger.getLogger(TeacherController.class);
 
-
     private final SickLeaveRepository sickLeaveRepository;
     private final TeacherService teacherService;
 
@@ -37,6 +36,16 @@ public class TeacherController {
     public String listTeachers(Model theModel) {
 
         List<Teacher> theTeachers = teacherService.getTeachers();
+
+        theModel.addAttribute("teachers", theTeachers);
+
+        return "list-teachers";
+    }
+
+    @GetMapping("/list/active")
+    public String listActiveTeachers(Model theModel) {
+
+        List<Teacher> theTeachers = teacherService.getActiveTeachers();
 
         theModel.addAttribute("teachers", theTeachers);
 
@@ -60,7 +69,6 @@ public class TeacherController {
     @PostMapping("/saveTeacher")
     public String saveTeacher(@ModelAttribute("teacher") Teacher teacher) {
 
-        // save the customer using our service
         teacherService.saveTeacher(teacher);
 
         return "redirect:/teacher/addTeacher";

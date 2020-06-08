@@ -36,30 +36,6 @@
         <table>
             <tbody>
 
-            <tr>
-                <td><label>Choose a teacher type:</label></td>
-                <td>
-                    <form:select path="teacherType">
-                        <c:forEach var="teacherType" items="${teacherTypeValues}">
-                            <option value="${teacherType}" ${teacherType == teacher.teacherType ? 'selected="selected"' : ''}>${teacherType.name()}</option>
-                        </c:forEach>
-
-                    </form:select>
-                </td>
-
-            </tr>
-
-            <tr>
-                <td><label>Choose an education level:</label></td>
-                <td>
-                    <form:select path="education">
-                        <c:forEach var="education" items="${educationValues}">
-                            <option value="${education}" ${education == teacher.education ? 'selected="selected"' : ''}>${education.name()}</option>
-                        </c:forEach>
-
-                    </form:select>
-                </td>
-            </tr>
 
             <tr>
                 <td><label>First name:</label></td>
@@ -103,12 +79,12 @@
 
             <tr>
                 <td><label>Extra tax deductible expenses:</label></td>
-                <td><form:checkbox path="allowedForExtraTaxDeductibleExpenses"/></td>
+                <td><form:checkbox path="allowedForExtraTaxDeductibleExpenses" value="true"/></td>
             </tr>
 
             <tr>
                 <td><label>Is active:</label></td>
-                <td><form:checkbox path="active"/></td>
+                <td><form:checkbox path="active" value="true"/></td>
             </tr>
 
             <tr>

@@ -6,13 +6,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static java.util.Calendar.YEAR;
 
 //@Component
 @Entity
@@ -22,24 +19,10 @@ public abstract class Employee {
 
     @Id
     @GeneratedValue(
-            strategy= GenerationType.AUTO
+            strategy = GenerationType.AUTO
     )
     @Column(name = "id")
     private Integer id;
-
-
-//    @Id
-//    @GeneratedValue(
-//            strategy= GenerationType.SEQUENCE,
-//            generator = "sequence-generator"
-//    )
-//    @SequenceGenerator(
-//            name = "sequence-generator",
-//            sequenceName = "employee_sequence"
-//    )
-//    @Column(name = "id")
-//    private Integer id;
-
 
     @Column(name = "base_salary")
     int baseSalary;
@@ -70,13 +53,13 @@ public abstract class Employee {
     private boolean active;
 
     //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "employee")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "employee")
     private List<SickLeave> sickLeaves;
 
-    @OneToMany(mappedBy = "employee")
-       private List<EmploymentHistory> employmentHistoryList;
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "employee")
+    private List<EmploymentHistory> employmentHistoryList;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "employee")
     private Set<Salary> salaries;
 
 
@@ -91,7 +74,7 @@ public abstract class Employee {
         sickLeave.setEmployee(this);
     }
 
-    public void addTeachingPractice(EmploymentHistory employmentHistory) {
+    public void addEmploymentHistory(EmploymentHistory employmentHistory) {
         if (employmentHistoryList == null) {
             employmentHistoryList = new ArrayList<>();
         }
@@ -128,7 +111,7 @@ public abstract class Employee {
     }
 
     public void setActive(boolean active) {
-        active = active;
+        this.active = active;
     }
 
     public List<SickLeave> getSickLeaves() {
@@ -244,19 +227,19 @@ public abstract class Employee {
         isAllowedForExtraTaxDeductibleExpenses = allowedForExtraTaxDeductibleExpenses;
     }
 
-    public boolean isOver55YearsOld(LocalDate date){
+    public boolean isOver55YearsOld(LocalDate date) {
         boolean isOver55;
-        isOver55=birthDate.plusYears(55).isBefore(date);
+        isOver55 = birthDate.plusYears(55).isBefore(date);
         return isOver55;
     }
-    public boolean isOver18onEmployeedDate(){
+
+    public boolean isOver18onEmployeedDate() {
         return !employeedOnDate.isBefore(birthDate.plusYears(18));
     }
 
 
-
-    public boolean isOver55inYear(int year){
-        return year>birthDate.getYear()+55;
+    public boolean isOver55inYear(int year) {
+        return (year > (birthDate.getYear() + 55));
     }
 
     public int getIncentivePay() {
@@ -265,3 +248,4 @@ public abstract class Employee {
 
     public abstract int getOvertimeHourRate();
 }
+

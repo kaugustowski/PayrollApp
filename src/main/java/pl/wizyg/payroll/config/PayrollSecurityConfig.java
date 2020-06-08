@@ -13,8 +13,12 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class PayrollSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+    final
     DataSource dataSource;
+
+    public PayrollSecurityConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
 
     @Override

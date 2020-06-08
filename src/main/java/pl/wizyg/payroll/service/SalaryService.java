@@ -7,25 +7,31 @@ import java.util.List;
 
 public interface SalaryService {
 
-    public Salary calculateSalary(int employeeId, int month, int year);
+    Salary calculateSalary(int employeeId, int month, int year);
 
-    public List<Salary> calculateSalariesForActiveEmployees(int month, int year);
+    List<Salary> calculateSalariesForActiveEmployees(int month, int year);
 
     Salary calculateOvertimeSalary(int employeeId, int month, int year);
 
-    public List<Salary> calculateOvertimeSalaryForActiveEmployees(int month, int year);
+    List<Salary> calculateOvertimeSalaryForActiveEmployees(int month, int year);
 
-    public void saveSalary(Salary salary);
+    List<Salary> getSalariesForActiveEmployeesInMonthYear(int month, int year);
 
-    public void saveSalaries(List<Salary> salaries);
+    void saveSalary(Salary salary, int employeeId);
 
-    public Salary getEssentialSalary(int employeeId, int month, int year);
+    void saveSalaries(List<Salary> salaries);
 
-    Salary getOvertimeSalary(int id);
+    Salary getEmployeeEssentialSalary(int employeeId, int month, int year);
 
-    public List<Salary> getEssentialSalariesInMonthYear(int month, int year);
+    Salary getEssentialSalary(int id);
 
-    public List<OvertimeSalary> getOvertimeSalariesInMonthYear(int month, int year);
+    OvertimeSalary getOvertimeSalary(int id);
 
-    List<Salary> getSalariesFromLast12Months(int month, int year);
+    abstract Salary getEmployeeOvertimeSalary(int employeeId, int month, int year);
+
+    List<Salary> getEssentialSalariesInMonthYear(int month, int year);
+
+    List<OvertimeSalary> getOvertimeSalariesInMonthYear(int month, int year);
+
+    List<Salary> getEmployeeSalariesFromPrevious12Months(int employeeId, int month, int year);
 }

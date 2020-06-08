@@ -23,6 +23,12 @@ public class Overtime {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
+    public Overtime(){};
+
+    public Overtime(Employee employee) {
+        this.employee=employee;
+    }
+
     public Integer getId() {
         return id;
     }

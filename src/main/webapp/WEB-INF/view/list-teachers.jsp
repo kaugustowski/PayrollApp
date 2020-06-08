@@ -35,7 +35,7 @@
             <c:param name="teacherId" value="${tempTeacher.id}"/>
         </c:url>
 
-        <c:url var="addSickLeaveLink" value="/teacher/addSickLeave/${tempTeacher.id}">
+        <c:url var="addSickLeaveLink" value="/sickLeave/add/${tempTeacher.id}">
             <%--            <c:param name="teacherId" value="${tempTeacher.id}"/>--%>
         </c:url>
 
@@ -44,7 +44,6 @@
             <td> ${tempTeacher.firstName} </td>
             <td> ${tempTeacher.lastName} </td>
             <td> ${tempTeacher.email} </td>
-                ${tempTeacher.setBaseSalary()}
             <td>${tempTeacher.baseSalary}</td>
             <td></td>
 
@@ -62,12 +61,6 @@
 
     </c:forEach>
 
-    <c:url var="calculateLink" value="/teacher/calculate">
-        <%--            <c:param name="teacherId" value="${tempTeacher.id}"/>--%>
-    </c:url>
-
-
-    <button onclick="${calculateLink}"> Calculate</button>
 </table>
 
 

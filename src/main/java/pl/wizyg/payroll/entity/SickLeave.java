@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -36,7 +35,9 @@ public class SickLeave {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    public SickLeave() {
+    public SickLeave(){};
+
+    public SickLeave(Employee employee) {
 
     }
 

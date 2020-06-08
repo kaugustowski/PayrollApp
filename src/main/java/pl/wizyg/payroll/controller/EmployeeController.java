@@ -46,6 +46,6 @@ public class EmployeeController {
 
         model.addAttribute("teacher", teacher);
 
-        return "teacher-form";
+        return "employee-form";
     }
 }

@@ -6,7 +6,8 @@ import pl.wizyg.payroll.entity.Teacher;
 
 import java.util.List;
 
-public interface TeacherService {
+public interface
+TeacherService {
 
     List<Teacher> getTeachers();
 
