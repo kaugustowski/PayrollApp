@@ -26,6 +26,8 @@ public class EmploymentHistory {
     @Column(name = "institution_name")
     private String institutionName;
 
+
+    @Column(name = "unpaid_leave_days")
     private int numberOfDaysOnUnpaidLeave;
 
 

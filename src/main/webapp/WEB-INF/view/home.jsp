@@ -28,7 +28,7 @@ Welcome to my payroll app
 </p>
 
 <p>
-    <a href="${pageContext.request.contextPath}/teacher/addOvertime/1">add overtime for teacher with id =1</a>
+    <a href="${pageContext.request.contextPath}/overtime/add/1">add overtime for teacher with id =1</a>
 </p>
 
 <%--<p>--%>
@@ -40,7 +40,11 @@ Welcome to my payroll app
 <%--</p>--%>
 
 <p>
-    <a href="${pageContext.request.contextPath}/teacher/sickLeaves/1">sick leaves list for teacher with id = 1</a>
+    <a href="${pageContext.request.contextPath}/sickLeave/list/1">sick leaves list for teacher with id = 1</a>
+</p>
+
+<p>
+    <a href="${pageContext.request.contextPath}/sickLeave/add/1">add sick leave for teacher with id = 1</a>
 </p>
 
 
@@ -48,11 +52,17 @@ Welcome to my payroll app
     <a href="${pageContext.request.contextPath}/testForm">testForm</a>
 </p>
 
+<p>
+    <a href="${pageContext.request.contextPath}/overtime/add/1">add Overtime for emp with id=1</a>
+</p>
 
 <p>
     <a href="http://localhost:8080/payrollApp/salary/details/2020/5?employeeId=1">employeeId details may 2020 salary</a>
 </p>
 
+<p>
+    <a href="http://localhost:8080/payrollApp/salary/list/2020/5">essential salaries may 2020</a>
+</p>
 
 <p>
     <form:form action="${pageContext.request.contextPath}/logout" method="POST">

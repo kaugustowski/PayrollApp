@@ -42,7 +42,7 @@ public class SickLeaveController {
 
         Employee employee = employeeService.getEmployee(employeeId);
 
-        SickLeave sickLeave = new SickLeave();
+        SickLeave sickLeave = new SickLeave(employee);
 
         theModel.addAttribute("employee", employee);
         theModel.addAttribute("sickLeave", sickLeave);
@@ -53,7 +53,7 @@ public class SickLeaveController {
     @PostMapping("/save/{employeeId}")
     public String saveSickLeave(@ModelAttribute("sickLeave") SickLeave sickLeave, @PathVariable int employeeId) {
 
-        sickLeaveService.saveSickLeave(sickLeave);
+        sickLeaveService.saveSickLeave(sickLeave, employeeId);
 
         return "redirect:/sickLeaves/list/{employeeId}";
     }

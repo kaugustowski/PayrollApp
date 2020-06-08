@@ -25,7 +25,8 @@ public class SalaryServiceImpl implements SalaryService {
     final
     SalaryRepository salaryRepository;
 
-    final OvertimeSalaryRepository overtimeSalaryRepository;
+    final
+    OvertimeSalaryRepository overtimeSalaryRepository;
 
     public SalaryServiceImpl(SickLeaveService sickLeaveService, EmployeeService employeeService, SalaryRepository salaryRepository, OvertimeSalaryRepository overtimeSalaryRepository) {
         this.sickLeaveService = sickLeaveService;
@@ -44,9 +45,9 @@ public class SalaryServiceImpl implements SalaryService {
         }
         Salary salary
          = new EssentialSalary(employeeService.getEmployee(employeeId), month, year,
-                sickLeaveService.getEmployeesSickLeavesMonthYear(employeeId, sickLeaveMonth, sickLeaveYear),
-                sickLeaveService.getEmployeesSickLeavesUpToMonthInYear(employeeId, sickLeaveMonth, sickLeaveYear),
-                getSalariesFromLast12Months(month,year));
+                sickLeaveService.getEmployeeSickLeavesMonthYear(employeeId, sickLeaveMonth, sickLeaveYear),
+                sickLeaveService.getEmployeeSickLeavesUpToMonthInYear(employeeId, sickLeaveMonth, sickLeaveYear),
+                getEmployeeSalariesFromPrevious12Months(employeeId,month,year));
         salary.performCalculations();
 
         return salary;
@@ -57,7 +58,9 @@ public class SalaryServiceImpl implements SalaryService {
         List<Employee> employees = employeeService.getActiveEmployees();
         List<Salary> salaries = new ArrayList<Salary>();
         for (Employee employee:employees) {
-            salaries.add(calculateSalary(employee.getId(), month, year));
+            Salary salary = calculateSalary(employee.getId(), month, year);
+           // employee.addSalary(salary);
+            salaries.add(salary);
         }
         return salaries;
     }
@@ -84,7 +87,13 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public void saveSalary(Salary salary) {
+    public List<Salary> getSalariesForActiveEmployeesInMonthYear(int month, int year) {
+        return salaryRepository.findAllByMonthAndYearAndEmployee_ActiveTrue(month, year);
+    }
+
+    @Override
+    public void saveSalary(Salary salary, int employeeId) {
+        employeeService.getEmployee(employeeId).addSalary(salary);
         salaryRepository.save(salary);
     }
 
@@ -94,15 +103,25 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public Salary getEssentialSalary(int employeeId,int month,int year) {
+    public Salary getEmployeeEssentialSalary(int employeeId, int month, int year) {
         return salaryRepository.findByEmployee_IdAndMonthAndYear(employeeId,month,year);
     }
 
+    @Override
+    public Salary getEssentialSalary(int id) {
+        return salaryRepository.findById(id).get();
+    }
 
     @Override
-    public Salary getOvertimeSalary(int id) {
+    public OvertimeSalary getEmployeeOvertimeSalary(int employeeId,int month,int year) {
+        return overtimeSalaryRepository.findByEmployee_IdAndMonthAndYear(employeeId,month,year);
+    }
+
+    @Override
+    public OvertimeSalary getOvertimeSalary(int id) {
         return overtimeSalaryRepository.findById(id).get();
     }
+
 
     @Override
     public List<Salary> getEssentialSalariesInMonthYear(int month, int year) {
@@ -115,8 +134,10 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public List<Salary> getSalariesFromLast12Months(int month, int year) {
+    public List<Salary> getEmployeeSalariesFromPrevious12Months(int employeeId, int month, int year) {
         int prevYear=year-1;
-        return salaryRepository.findAllByMonthIsLessThanAndYearOrMonthGreaterThanEqualAndYear(month,year,month,prevYear);
+        return salaryRepository.findAllByEmployeeIdAndMonthIsLessThanAndYearOrMonthGreaterThanEqualAndYear(employeeId,month ,year,month,prevYear);
     }
+
+
 }

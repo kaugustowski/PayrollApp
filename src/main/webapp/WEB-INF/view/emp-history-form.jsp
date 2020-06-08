@@ -12,37 +12,47 @@
 <html>
 
 <head>
-    <title>Save Sick leave</title>
+    <title>Save Employment History</title>
 </head>
 
 <body>
 
 <div id="wrapper">
     <div id="header">
-        <h2>Sick leave form</h2>
+        <h2>Employment history form</h2>
     </div>
 </div>
 
 <div id="container">
-    <h3>Save Sick Leave</h3>
+    <h3>Save Employment history</h3>
 
     <h2>${employee.firstName } ${employee.lastName }</h2>
 
-    <form:form action="${pageContext.request.contextPath}/sickLeave/save/${employeeId}"
-               modelAttribute="sickLeave" method="POST">
+    <form:form action="${pageContext.request.contextPath}/history/save/${employeeId}"
+               modelAttribute="empHistory" method="POST">
 
         <%--        <form:hidden path="sickLeaveId"/>--%>
 
         <table>
             <tbody>
             <tr>
-                <td><label>Sick leave start date:</label></td>
+                <td><label>Institution name:</label></td>
+                <td><form:input path="institutionName"/></td>
+            </tr>
+
+            <tr>
+                <td><label>Start date:</label></td>
                 <td><form:input type="date" path="startDate"/></td>
             </tr>
 
             <tr>
-                <td><label>Sick leave end date:</label></td>
+                <td><label>End date:</label></td>
                 <td><form:input type="date" path="endDate"/></td>
+            </tr>
+
+            <tr>
+                <td><label>Number of unpaid leave days:</label></td>
+                <td><form:input path="numberOfDaysOnUnpaidLeave"/></td>
             </tr>
 
             <tr>

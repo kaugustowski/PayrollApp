@@ -1,9 +1,7 @@
 package pl.wizyg.payroll.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.wizyg.payroll.DAO.EmployeeDAO;
 import pl.wizyg.payroll.entity.Employee;
 import pl.wizyg.payroll.repository.EmployeeRepository;
 
@@ -13,8 +11,11 @@ import java.util.List;
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
+
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     @Override
     public List<Employee> getEmployees() {
@@ -23,8 +24,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getActiveEmployees() {
-        List<Employee> employees = employeeRepository.findAllByActiveTrue();
-        return employees;
+        return employeeRepository.findAllByActiveTrue();
     }
 
     @Override

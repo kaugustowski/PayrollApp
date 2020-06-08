@@ -14,7 +14,6 @@ import java.util.stream.IntStream;
 @Table(name = "salary")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Component
-//@MappedSuperclass
 public abstract class Salary {
 
     @Column(name = "gross_salary")
@@ -64,6 +63,17 @@ public abstract class Salary {
     private int sicknessAllowance;
     @Column(name = "labor_fund")
     private int laborFund;
+    @Column(name = "base_salary")
+    private int baseSalary;
+
+    public int getBaseSalary() {
+        return baseSalary;
+    }
+
+    public void setBaseSalary(int baseSalary){
+        this.baseSalary=baseSalary;
+    }
+
 
     @Transient
     private List<SickLeave> sickLeavesInMonth;
@@ -81,6 +91,7 @@ public abstract class Salary {
         this.employee = employee;
         this.month = month;
         this.year = year;
+        this.baseSalary=employee.getBaseSalary();
         this.sickLeavesInMonth = sickLeavesInMonth;
         this.sickLeavesUpToMonth = sickLeavesUpToMonth;
         this.salariesFromLast12Months = salariesFromLast12Months;
@@ -522,6 +533,10 @@ public abstract class Salary {
         calculateSicknessAllowance();
         calculateHealthCareContribution();
         calculateIncomeTaxAdvance();
+    }
+
+    public int getNetSalary(){
+        return grossSalary+ sickPay+sicknessAllowance-calculateEmployeeDeductionsFromSalary();
     }
 
     private int calculateLabourFund() {

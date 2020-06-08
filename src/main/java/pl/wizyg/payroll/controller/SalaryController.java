@@ -1,10 +1,13 @@
 package pl.wizyg.payroll.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.wizyg.payroll.entity.EssentialSalary;
+import pl.wizyg.payroll.entity.OvertimeSalary;
 import pl.wizyg.payroll.entity.Salary;
+import pl.wizyg.payroll.service.EmployeeService;
 import pl.wizyg.payroll.service.SalaryService;
 
 import java.util.List;
@@ -12,8 +15,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/salary")
 public class SalaryController {
+
     final
     SalaryService salaryService;
+
+    @Autowired
+    EmployeeService employeeService;
 
     public SalaryController(SalaryService salaryService) {
         this.salaryService = salaryService;
@@ -21,7 +28,7 @@ public class SalaryController {
     @RequestMapping("list/{year}/{month}")
     public String listSalaries(Model model, @PathVariable int month,@PathVariable int year ){
 
-        List<Salary> salaries = salaryService.getEssentialSalariesInMonthYear(month,year);
+        List<Salary> salaries = salaryService.getSalariesForActiveEmployeesInMonthYear(month,year);
 
         model.addAttribute("salaries", salaries);
 
@@ -31,9 +38,9 @@ public class SalaryController {
     @RequestMapping("/overtimeList/{year}/{month}")
     public String listOvertimeSalaries(Model model, @PathVariable int month,@PathVariable int year ){
 
-        List<Salary> salaries = salaryService.getOvertimeSalariesInMonthYear(month,year);
+        List<OvertimeSalary> salaries = salaryService.getOvertimeSalariesInMonthYear(month,year);
 
-        model.addAttribute("salaries", salaries);
+        model.addAttribute("overtimeSalaries", salaries);
 
         return "salary-list";
     }
@@ -45,23 +52,23 @@ public class SalaryController {
 
         model.addAttribute("salary", salary);
 
-        salaryService.saveSalary(salary);
+        salaryService.saveSalary(salary, employeeId );
 
         return "salary-details";
 
     }
 
-    @PostMapping("/saveSalary")
-    public String showSalaryDetails(@ModelAttribute("salary") EssentialSalary salary){
+    @PostMapping("/saveSalary/{employeeId}")
+    public String showSalaryDetails(@ModelAttribute("salary") EssentialSalary salary, @PathVariable int employeeId){
 
-        salaryService.saveSalary(salary);
+        employeeService.getEmployee(employeeId).addSalary(salary);
+        salaryService.saveSalary(salary, employeeId );
 
         return "redirect:salary/list/2020/5";
     }
 
     @PostMapping("/calculateSalaries/{year}/{month}")
     public String calculateSalaries(@PathVariable int year, @PathVariable int month){
-
 
         salaryService.saveSalaries(salaryService.calculateSalariesForActiveEmployees(month, year));
 
