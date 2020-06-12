@@ -29,7 +29,7 @@
     <tr>
         <td>${salary.employee.firstName} ${salary.employee.lastName}</td>
         <td> ${salary.baseSalary} </td>
-        <td> ${salary.grossSalary} </td>
+        <td> ${salary.contributionBase} </td>
         <td> ${salary.netSalary} </td>
         <td> ${salary.sicknessContribution} </td>
         <td>${salary.pensionContributionEmployee}</td>

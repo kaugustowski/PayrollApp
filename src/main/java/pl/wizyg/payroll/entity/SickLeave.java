@@ -59,14 +59,15 @@ public class SickLeave {
 
         if (startDate.isBefore(beginningOfMonth) && endDate.isAfter(endOfMonth)) {
             sickLeaveDays = yearMonth.lengthOfMonth();
-        } else if (startDate.isAfter(beginningOfMonth) && endDate.isBefore(endOfMonth)) {
-            sickLeaveDays = (int) DAYS.between(startDate, endDate) + 1;
-        } else if (startDate.isAfter(beginningOfMonth) && endDate.isAfter((endOfMonth))) {
+        }  else if (startDate.isAfter(beginningOfMonth) && endDate.isAfter((endOfMonth))) {
             sickLeaveDays = (int) DAYS.between(startDate, endOfMonth) + 1;
         } else if (startDate.isBefore(beginningOfMonth) && endDate.isBefore((endOfMonth))) {
             sickLeaveDays = (int) DAYS.between(beginningOfMonth, endDate) + 1;
-        } else {
+        } else if (startDate.isBefore(beginningOfMonth) && endDate.isAfter((endOfMonth))){
             sickLeaveDays = 30;
+        }
+        else {
+            sickLeaveDays = (int) DAYS.between(startDate, endDate) + 1;
         }
         return sickLeaveDays;
     }

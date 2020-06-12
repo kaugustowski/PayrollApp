@@ -26,5 +26,10 @@ public class SalaryConstants {
 
     protected final static int EXTRA_TAX_DEDUCTIBLE_COST = 30000;
 
-    protected final static double TAX_DEDUCTION = 43.76;
+    protected final static int TAX_DEDUCTION = 4376;
+
+    protected final static double SICKPAY_BASE_NET_RATE=0.8629;
+
+    protected final static double SICKPAY_RATE=0.8;
+
 }

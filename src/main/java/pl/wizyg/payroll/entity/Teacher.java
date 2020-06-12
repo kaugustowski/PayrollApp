@@ -109,7 +109,7 @@ public class Teacher extends Employee {
 
     @Override
     public int getOvertimeHourRate() {
-        return 7615; //TODO sprawdzic ile ma byc
+        return (int) ((double) getBaseSalary()/7500); //TODO sprawdzic ile ma byc
     }
 
     //    @Override

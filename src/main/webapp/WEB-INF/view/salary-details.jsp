@@ -14,8 +14,8 @@
 </head>
 
 <body>
-<p>${salary.employee.firstName} + ${salary.employee.lastName}</p>
-<p>${salary.toString()}</p>
+<p>${salary.employee.firstName} ${salary.employee.lastName}</p>
+
 
 <form:form action="${pageContext.request.contextPath}/salary/saveSalary" modelAttribute="salary" method="POST">
 

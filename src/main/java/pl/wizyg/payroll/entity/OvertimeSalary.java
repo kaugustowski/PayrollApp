@@ -11,6 +11,8 @@ public class OvertimeSalary extends Salary {
     @Column(name = "number_of_overtime_hours")
     private int numberOfOvertimeHours;
 
+    public OvertimeSalary() {}
+
     public OvertimeSalary(Employee employee, int month, int year) {
     }
 
@@ -23,57 +25,58 @@ public class OvertimeSalary extends Salary {
     }
 
 
+    public int calculateContributionBaseOvertime(Overtime overtime) {
+        int overtimeHours = overtime.getNumberOfOverTimeHoursInCurrentMonth();
+        contributionBase = employee.getOvertimeHourRate()*overtimeHours;
+
+        return contributionBase;
+    }
+
     public int calculateGrossSalaryOvertime(Overtime overtime) {
         int overtimeHours = overtime.getNumberOfOverTimeHoursInCurrentMonth();
         grossSalary = employee.getOvertimeHourRate()*overtimeHours;
 
-        return grossSalary;
+        return contributionBase;
     }
 
 
-    public int calculateEmployeeDeductionsFromSalary() {
-        int deductionsFromSalary;
 
-        deductionsFromSalary = calculateIncomeTaxAdvance() + calculateSicknessContribution() + calculatePensionContributionEmployee()
-                + calculateDisabilityContributionEmployee();
-        return 0;
-    }
-
-    public int calculatePayerDeductions() {
-        return 0;
-    }
-
+    @Override
     public int calculateTax() {
-        return 0;
+        return (int) Math.round((roundToHundreds(calculateTaxBase()) * SalaryConstants.TAX_PERCENT / 100));
     }
 
+    @Override
+    public int calculateTaxBase() {
+        int taxBase = 0;
+        taxBase = grossSalary - pensionContributionEmployee - disabilityContributionEmployee - sicknessContribution;
+
+        return taxBase;
+    }
+
+    @Override
     public int calculateIncomeTaxAdvance() {
-
-        return 0;
-    }
-
-
-    //podstawa ubezpieczenia zdrowotnego
-    public int getHealthcareContributionBase() {
-        return grossSalary;
-    }
-
-    //ubezpieczenie zdrowotne
-    public int calculateHealthCareContribution() {
-        healthcareContribution = (int) (getHealthcareContributionBase() * SalaryConstants.HEALTHCARE_CONTRIBUTION_PERCENT / 100);
-
-        return healthcareContribution;
-    }
-
-    //ubezpieczenie zdrowotne odejmowane od podatku
-    public int calculateHealthCareContributionDeduction() {
-        healthcareContributionDeduction = (int) (getHealthcareContributionBase() * SalaryConstants.HEALTHCARE_CONTRIBUTION_DEDUCTION_PERCENT / 100);
-
-        return healthcareContributionDeduction;
+        incomeTaxAdvance =
+                roundToHundreds(Math.round(calculateTax() - calculateHealthCareContributionDeduction()));
+        return incomeTaxAdvance;
     }
 
     @Override
     protected boolean isAllowedForSickPayBaseCalculation() {
         return true;
+    }
+
+    @Override
+    public void performCalculations() {
+        calculateContributionBase();
+        calculateEmployeeContribution();
+        calculatePayerDeductions();
+        calculateSickPay(calculateSickPayBase());
+        calculateSicknessAllowance();
+        calculateGrossSalary();
+        calculateHealthCareContribution();
+        calculateIncomeTaxAdvance();
+        calculateEmployeeDeductionsFromSalary();
+        getNetSalary();
     }
 }

@@ -16,8 +16,37 @@ class SickLeaveTest {
     }
 
     @Test
+    void getNumberOfSickLeaveDaysInMonthYearFrom1stDayOfMonth() {
+        SickLeave sickLeave = new SickLeave();
+        LocalDate startDate = LocalDate.of(2020, 4, 1);
+        LocalDate endDate = LocalDate.of(2020, 4, 10);
+        sickLeave.setStartDate(startDate);
+        sickLeave.setEndDate(endDate);
+
+        int expected1 = 10;
+        int actual1 = sickLeave.getNumberOfSickLeaveDaysInMonthYear(4, 2020);
+
+        assertThat(actual1).isEqualTo(expected1);
+    }
+
+    @Test
+    void getNumberOfSickLeaveDaysInMonthYearToLastDayOfMonth() {
+        SickLeave sickLeave = new SickLeave();
+        LocalDate startDate = LocalDate.of(2020, 4, 22);
+        LocalDate endDate = LocalDate.of(2020, 4, 30);
+        sickLeave.setStartDate(startDate);
+        sickLeave.setEndDate(endDate);
+
+        int expected1 = 9;
+        int actual1 = sickLeave.getNumberOfSickLeaveDaysInMonthYear(4, 2020);
+
+        assertThat(actual1).isEqualTo(expected1);
+    }
+
+
+    @Test
     void getNumberOfSickLeaveDaysInMonthYearInsideMonth() {
-        SickLeave sickLeave = new SickLeave(employee);
+        SickLeave sickLeave = new SickLeave();
         LocalDate startDate = LocalDate.of(2020, 4, 2);
         LocalDate endDate = LocalDate.of(2020, 4, 12);
         sickLeave.setStartDate(startDate);
@@ -31,7 +60,7 @@ class SickLeaveTest {
 
     @Test
     void getNumberOfSickLeaveDaysInMonthYearOutsideMonth() {
-        SickLeave sickLeave2 = new SickLeave(employee);
+        SickLeave sickLeave2 = new SickLeave();
         LocalDate startDate2 = LocalDate.of(2020, 3, 27);
         LocalDate endDate2 = LocalDate.of(2020, 5, 2);
         sickLeave2.setStartDate(startDate2);
@@ -47,7 +76,7 @@ class SickLeaveTest {
     @Test
     void getNumberOfSickLeaveDaysInMonthYearStartBefore() {
 
-        SickLeave sickLeave3 = new SickLeave(employee);
+        SickLeave sickLeave3 = new SickLeave();
         LocalDate startDate3 = LocalDate.of(2020, 3, 27);
         LocalDate endDate3 = LocalDate.of(2020, 4, 5);
         sickLeave3.setStartDate(startDate3);
@@ -62,7 +91,7 @@ class SickLeaveTest {
     @Test
     void getNumberOfSickLeaveDaysInMonthYearEndAfter() {
 
-        SickLeave sickLeave4 = new SickLeave(employee);
+        SickLeave sickLeave4 = new SickLeave();
         LocalDate startDate4 = LocalDate.of(2020, 4, 27);
         LocalDate endDate4 = LocalDate.of(2020, 5, 2);
         sickLeave4.setStartDate(startDate4);
@@ -77,7 +106,7 @@ class SickLeaveTest {
     @Test
     void getNumberOfSickLeaveDaysInMonthYearOneDay() {
 
-        SickLeave sickLeave5 = new SickLeave(employee);
+        SickLeave sickLeave5 = new SickLeave();
         LocalDate startDate5 = LocalDate.of(2020, 4, 25);
         LocalDate endDate5 = LocalDate.of(2020, 4, 25);
         sickLeave5.setStartDate(startDate5);
@@ -91,7 +120,7 @@ class SickLeaveTest {
 
     @Test
     void getNumberOfSickLeaveDaysOnWorkdaysInMonthYear() {
-        SickLeave sickLeave6 = new SickLeave(employee);
+        SickLeave sickLeave6 = new SickLeave();
         LocalDate startDate6 = LocalDate.of(2020, 4, 25);
         LocalDate endDate6 = LocalDate.of(2020, 5, 10);
         sickLeave6.setStartDate(startDate6);
@@ -106,7 +135,7 @@ class SickLeaveTest {
 
     @Test
     void getNumberOfSickLeaveDaysOnWorkdaysInMonthYear2() {
-        SickLeave sickLeave7 = new SickLeave(employee);
+        SickLeave sickLeave7 = new SickLeave();
         LocalDate startDate7 = LocalDate.of(2020, 6, 3);
         LocalDate endDate7 = LocalDate.of(2020, 6, 12);
         sickLeave7.setStartDate(startDate7);
@@ -121,7 +150,7 @@ class SickLeaveTest {
 
     @Test
     void getNumberOfSickLeaveDaysOnWorkdaysInMonthYear3() {
-        SickLeave sickLeave7 = new SickLeave(employee);
+        SickLeave sickLeave7 = new SickLeave();
         LocalDate startDate7 = LocalDate.of(2020, 5, 30);
         LocalDate endDate7 = LocalDate.of(2020, 6, 22);
         sickLeave7.setStartDate(startDate7);
