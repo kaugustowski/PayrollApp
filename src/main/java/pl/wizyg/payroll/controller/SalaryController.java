@@ -20,11 +20,12 @@ public class SalaryController {
     final
     SalaryService salaryService;
 
-    @Autowired
+    final
     EmployeeService employeeService;
 
-    public SalaryController(SalaryService salaryService) {
+    public SalaryController(SalaryService salaryService, EmployeeService employeeService) {
         this.salaryService = salaryService;
+        this.employeeService = employeeService;
     }
     @RequestMapping("list/{year}/{month}")
     public String listSalaries(Model model, @PathVariable int month,@PathVariable int year ){
@@ -34,6 +35,16 @@ public class SalaryController {
         model.addAttribute("salaries", salaries);
 
         return "salary-list";
+    }
+
+    @RequestMapping("list/employee/{employeeId}")
+    public String listSalaries(Model model, @PathVariable int employeeId){
+
+        List<Salary> salaries = salaryService.getEmployeeSalaries(employeeId);
+
+        model.addAttribute("salaries", salaries);
+
+        return "salary-list-employee";
     }
 
     @RequestMapping("/overtimeList/{year}/{month}")
@@ -47,25 +58,37 @@ public class SalaryController {
     }
 
     @RequestMapping("/calculateSalary/{year}/{month}")
-    public String showSalaryDetails(Model model, @PathVariable int month, @PathVariable int year, @RequestParam int employeeId){
+    public String showSalaryDetails(@PathVariable int month, @PathVariable int year, @RequestParam int employeeId, RedirectAttributes redirectAttrs){
         Salary salary = salaryService.calculateSalary(employeeId, month, year);
-
-        model.addAttribute("salary", salary);
-
-        return "redirect:/salary/saveSalary/{employeeId}";
-
-    }
-
-    @PostMapping("/saveSalary/{employeeId}")
-    public String showSalaryDetails(@ModelAttribute("salary") EssentialSalary salary, @PathVariable int employeeId, RedirectAttributes redirectAttrs){
 
         employeeService.getEmployee(employeeId).addSalary(salary);
         salaryService.saveSalary(salary, employeeId );
+        System.out.println(salary.getYear() + salary.getMonth());
 
         redirectAttrs.addAttribute("year", salary.getYear());
         redirectAttrs.addAttribute("month", salary.getMonth());
 
-        return "redirect:salary/list/{year}/{month}" ;
+        return "redirect:/salary/list/{year}/{month}" ;
+
+
+    }
+
+    @GetMapping("/saveSalary/{employeeId}")
+    public String showSalaryDetails(@ModelAttribute("salary") EssentialSalary salary, @PathVariable int employeeId, RedirectAttributes redirectAttrs){
+
+        salaryService.getEmployeeSalaries(employeeId);
+        employeeService.getEmployee(employeeId).addSalary(salary);
+        salaryService.saveSalary(salary, employeeId );
+        System.out.println(salary.getYear() + salary.getMonth());
+
+        redirectAttrs.addAttribute("year", salary.getYear());
+        redirectAttrs.addAttribute("month", salary.getMonth());
+
+        redirectAttrs.addAttribute("salary", salary);
+        redirectAttrs.addAttribute("employeeId", employeeId);
+
+        return "redirect:/salary/saveSalary/{employeeId}";
+
     }
 
     @PostMapping("/calculateSalaries/{year}/{month}")

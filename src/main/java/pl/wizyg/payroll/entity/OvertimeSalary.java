@@ -79,4 +79,23 @@ public class OvertimeSalary extends Salary {
         calculateEmployeeDeductionsFromSalary();
         getNetSalary();
     }
+
+    @Override
+    public String toString() {
+        return "OvertimeSalary{" +
+                "numberOfOvertimeHours=" + numberOfOvertimeHours +
+                ", grossSalary=" + grossSalary +
+                ", contributionBase=" + contributionBase +
+                ", pensionContributionPayer=" + pensionContributionPayer +
+                ", disabilityContributionPayer=" + disabilityContributionPayer +
+                ", accidentInsuranceContribution=" + accidentInsuranceContribution +
+                ", pensionContributionEmployee=" + pensionContributionEmployee +
+                ", disabilityContributionEmployee=" + disabilityContributionEmployee +
+                ", sicknessContribution=" + sicknessContribution +
+                ", healthcareContribution=" + healthcareContribution +
+                ", healthcareContributionDeduction=" + healthcareContributionDeduction +
+                ", employee=" + employee +
+                ", incomeTaxAdvance=" + incomeTaxAdvance +
+                '}';
+    }
 }

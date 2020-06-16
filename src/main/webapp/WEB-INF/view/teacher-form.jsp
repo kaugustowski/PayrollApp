@@ -14,6 +14,15 @@
 
 <head>
     <title>Save Teacher</title>
+
+    <script>
+        function MyFunction() {
+            var minuteValue = document.getElementById("minutes").value;
+            if (minuteValue.length < 2) {
+                minuteValue = "0" + minuteValue;
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -83,17 +92,17 @@
 
             <tr>
                 <td><label>Functional bonus:</label></td>
-                <td><form:input path="functionalBonus"/></td>
+                <td><form:input type="number" step="0.01" path="functionalBonusString"/></td>
             </tr>
 
             <tr>
                 <td><label>Incentive pay:</label></td>
-                <td><form:input path="incentivePay"/></td>
+                <td><form:input type="number" step="0.01" path="incentivePayString"/></td>
             </tr>
 
             <tr>
                 <td><label>Seniority bonus:</label></td>
-                <td><form:input path="seniorityBonus"/></td>
+                <td><form:input type="number" step="0.01" path="seniorityBonusString"/></td>
             </tr>
 
             <tr>

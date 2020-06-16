@@ -2,7 +2,6 @@ package pl.wizyg.payroll.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
@@ -10,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.wizyg.payroll.entity.*;
 import pl.wizyg.payroll.repository.SickLeaveRepository;
+import pl.wizyg.payroll.service.EmployeeService;
 import pl.wizyg.payroll.service.TeacherService;
 
 import java.util.Arrays;
@@ -25,10 +25,13 @@ public class TeacherController {
 
     private final SickLeaveRepository sickLeaveRepository;
     private final TeacherService teacherService;
+    private final EmployeeService employeeServiceService;
 
-    public TeacherController(SickLeaveRepository sickLeaveRepository, TeacherService teacherService) {
+
+    public TeacherController(SickLeaveRepository sickLeaveRepository, TeacherService teacherService, EmployeeService employeeServiceService) {
         this.sickLeaveRepository = sickLeaveRepository;
         this.teacherService = teacherService;
+        this.employeeServiceService = employeeServiceService;
     }
 
 
@@ -69,6 +72,7 @@ public class TeacherController {
     @PostMapping("/saveTeacher")
     public String saveTeacher(@ModelAttribute("teacher") Teacher teacher) {
 
+        employeeServiceService.createEmployeeAccountIfDoesNotExist(teacher);
         teacherService.saveTeacher(teacher);
 
         return "redirect:/teacher/addTeacher";

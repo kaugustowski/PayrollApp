@@ -17,9 +17,9 @@ test {
 }
 
 dependencies {
-    
+
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-  //  compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+    //  compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
     // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.2.4.RELEASE'
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
@@ -68,6 +68,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.12'
+
+// https://mvnrepository.com/artifact/org.antlr/antlr
+    compile group: 'org.antlr', name: 'antlr', version: '3.5.2'
 
 
 
