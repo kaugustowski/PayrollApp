@@ -1,15 +1,13 @@
 package pl.wizyg.payroll.entity;
 
+import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.pl.PESEL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 //@Component
 @Entity
@@ -39,7 +37,7 @@ public abstract class Employee {
     @Column(name = "pesel")
     @PESEL
     private String pesel;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
     @Column(name = "birth_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -59,7 +57,7 @@ public abstract class Employee {
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "employee")
     private List<EmploymentHistory> employmentHistoryList;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "employee")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "employee")
     private Set<Salary> salaries;
 
 
@@ -247,5 +245,28 @@ public abstract class Employee {
     }
 
     public abstract int getOvertimeHourRate();
+
+    public void setSeniorityBonusString (String senBonus){
+
+        seniorityBonus = (int) Math.round(Double.parseDouble(senBonus)*100);
+    }
+    public String getSeniorityBonusString(){
+
+        double sb = (double)seniorityBonus/100;
+
+        return String.format(Locale.ROOT,"%.2f",sb);
+    }
+
+    public void setFunctionalBonusString (String senBonus){
+
+        functionalBonus = (int) Math.round(Double.parseDouble(senBonus)*100);
+    }
+    public String getFunctionalBonusString(){
+
+        double sb = (double)functionalBonus/100;
+
+        return String.format(Locale.ROOT,"%.2f",sb);
+    }
+
 }
 

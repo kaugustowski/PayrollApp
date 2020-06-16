@@ -6,11 +6,13 @@ import pl.wizyg.payroll.entity.Employee;
 import pl.wizyg.payroll.entity.EssentialSalary;
 import pl.wizyg.payroll.entity.OvertimeSalary;
 import pl.wizyg.payroll.entity.Salary;
+import pl.wizyg.payroll.repository.EssentialSalaryRepository;
 import pl.wizyg.payroll.repository.OvertimeSalaryRepository;
 import pl.wizyg.payroll.repository.SalaryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,26 +30,32 @@ public class SalaryServiceImpl implements SalaryService {
     final
     OvertimeSalaryRepository overtimeSalaryRepository;
 
-    public SalaryServiceImpl(SickLeaveService sickLeaveService, EmployeeService employeeService, SalaryRepository salaryRepository, OvertimeSalaryRepository overtimeSalaryRepository) {
+    final
+    EssentialSalaryRepository essentialSalaryRepository;
+
+    public SalaryServiceImpl(SickLeaveService sickLeaveService, EmployeeService employeeService, SalaryRepository salaryRepository, OvertimeSalaryRepository overtimeSalaryRepository, EssentialSalaryRepository essentialSalaryRepository) {
         this.sickLeaveService = sickLeaveService;
         this.employeeService = employeeService;
         this.salaryRepository = salaryRepository;
         this.overtimeSalaryRepository = overtimeSalaryRepository;
+        this.essentialSalaryRepository = essentialSalaryRepository;
     }
 
     @Override
     public Salary calculateSalary(int employeeId, int month, int year) {
+
         int sickLeaveMonth = month-1;
         int sickLeaveYear = year;
         if(month==1){
             sickLeaveMonth = 12;
             sickLeaveYear=year-1;
         }
-        Salary salary
-         = new EssentialSalary(employeeService.getEmployee(employeeId), month, year,
+        Salary salary = getEmployeeEssentialSalary(employeeId,month,year)
+                .orElse( new EssentialSalary(employeeService.getEmployee(employeeId), month, year,
                 sickLeaveService.getEmployeeSickLeavesMonthYear(employeeId, sickLeaveMonth, sickLeaveYear),
                 sickLeaveService.getEmployeeSickLeavesUpToMonthInYear(employeeId, sickLeaveMonth, sickLeaveYear),
-                getEmployeeSalariesFromPrevious12Months(employeeId,month,year));
+                getEmployeeSalariesFromPrevious12Months(employeeId,month,year)))
+         ;
         salary.performCalculations();
 
         return salary;
@@ -100,8 +108,8 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public Salary getEmployeeEssentialSalary(int employeeId, int month, int year) {
-        return salaryRepository.findByEmployee_IdAndMonthAndYear(employeeId,month,year);
+    public Optional<EssentialSalary> getEmployeeEssentialSalary(int employeeId, int month, int year) {
+        return essentialSalaryRepository.findByEmployee_IdAndMonthAndYear(employeeId,month,year);
     }
 
     @Override
@@ -134,6 +142,11 @@ public class SalaryServiceImpl implements SalaryService {
     public List<Salary> getEmployeeSalariesFromPrevious12Months(int employeeId, int month, int year) {
         int prevYear=year-1;
         return salaryRepository.findAllByEmployeeIdAndMonthIsLessThanAndYearOrMonthGreaterThanEqualAndYear(employeeId,month ,year,month,prevYear);
+    }
+
+    @Override
+    public List<Salary> getEmployeeSalaries(int employeeId) {
+        return salaryRepository.findByEmployee_Id(employeeId);
     }
 
 

@@ -380,4 +380,14 @@ class SalaryTest {
 
 
     }
+
+    @Test
+    void stringTest(){
+        Salary salary = new EssentialSalary();
+        salary.setEmployee(employee);
+        salary.setMonth(5);
+        salary.setYear(2020);
+        System.out.println("sfsfasdasString "+ salary.getBaseSalaryString());
+        salary.getBaseSalaryString();
+    }
 }

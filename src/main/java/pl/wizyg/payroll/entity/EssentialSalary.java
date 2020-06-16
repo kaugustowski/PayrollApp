@@ -22,4 +22,22 @@ public class EssentialSalary extends Salary {
     public double workedDaysRatio(){
         return (double)getNumberOfWorkedDaysWithSickLeave()/getNumberOfWorkdays();
     }
+
+    @Override
+    public String toString() {
+        return "EssentialSalary{" +
+                "grossSalary=" + grossSalary +
+                ", contributionBase=" + contributionBase +
+                ", pensionContributionPayer=" + pensionContributionPayer +
+                ", disabilityContributionPayer=" + disabilityContributionPayer +
+                ", accidentInsuranceContribution=" + accidentInsuranceContribution +
+                ", pensionContributionEmployee=" + pensionContributionEmployee +
+                ", disabilityContributionEmployee=" + disabilityContributionEmployee +
+                ", sicknessContribution=" + sicknessContribution +
+                ", healthcareContribution=" + healthcareContribution +
+                ", healthcareContributionDeduction=" + healthcareContributionDeduction +
+                ", employee=" + employee +
+                ", incomeTaxAdvance=" + incomeTaxAdvance +
+                '}';
+    }
 }

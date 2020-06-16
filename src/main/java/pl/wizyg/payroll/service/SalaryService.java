@@ -1,9 +1,11 @@
 package pl.wizyg.payroll.service;
 
+import pl.wizyg.payroll.entity.EssentialSalary;
 import pl.wizyg.payroll.entity.OvertimeSalary;
 import pl.wizyg.payroll.entity.Salary;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SalaryService {
 
@@ -21,7 +23,7 @@ public interface SalaryService {
 
     void saveSalaries(List<Salary> salaries);
 
-    Salary getEmployeeEssentialSalary(int employeeId, int month, int year);
+    Optional<EssentialSalary> getEmployeeEssentialSalary(int employeeId, int month, int year);
 
     Salary getEssentialSalary(int id);
 
@@ -34,4 +36,6 @@ public interface SalaryService {
     List<OvertimeSalary> getOvertimeSalariesInMonthYear(int month, int year);
 
     List<Salary> getEmployeeSalariesFromPrevious12Months(int employeeId, int month, int year);
+
+    List<Salary> getEmployeeSalaries(int employeeId);
 }

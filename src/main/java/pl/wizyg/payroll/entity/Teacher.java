@@ -1,6 +1,7 @@
 package pl.wizyg.payroll.entity;
 
 import javax.persistence.*;
+import java.util.Locale;
 
 @Entity
 @Table(name = "teacher")
@@ -112,15 +113,15 @@ public class Teacher extends Employee {
         return (int) ((double) getBaseSalary()/7500); //TODO sprawdzic ile ma byc
     }
 
-    //    @Override
-//    public double calculateSalary() {
-//
-//        int salary = 0;
-//
-//        salary = baseSalary + incentivePay + seniorityBonus;
-//
-//        return salary;
-//    }
+    public void setIncentivePayString (String senBonus){
 
+        incentivePay = (int) Math.round(Double.parseDouble(senBonus)*100);
+    }
+    public String getIncentivePayString(){
+
+        double sb = (double)incentivePay/100;
+
+        return String.format(Locale.ROOT,"%.2f",sb);
+    }
 
 }

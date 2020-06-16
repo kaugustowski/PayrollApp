@@ -648,5 +648,14 @@ public abstract class Salary {
                 ", baseSalary=" + baseSalary +
                 '}';
     }
+
+    public String getBaseSalaryString(){
+
+        double bs = baseSalary;
+
+        return String.format("%.2f", bs);
+    }
+
+
 }
 
