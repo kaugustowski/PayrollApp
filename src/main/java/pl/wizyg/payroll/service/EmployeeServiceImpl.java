@@ -9,7 +9,6 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wizyg.payroll.entity.Employee;
-import pl.wizyg.payroll.entity.Teacher;
 import pl.wizyg.payroll.repository.EmployeeRepository;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
 
     @Autowired
     JdbcUserDetailsManager jdbcUserDetailsManager;
@@ -46,10 +46,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findById(id).get();
     }
 
-
+//TODO
     @Override
     public void createEmployeeAccountIfDoesNotExist(Employee employee){
-        if(!employeeRepository.findById(employee.getId()).isPresent()){
+        if(!employeeRepository.findByEmail(employee.getEmail()).isPresent()){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("USER"));
 

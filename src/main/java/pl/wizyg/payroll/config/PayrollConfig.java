@@ -28,12 +28,10 @@ import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
-//@ComponentScan({"pl.wizyg.payroll.config","pl.wizyg.payroll.controller","pl.wizyg.payroll.entity"})
 @ComponentScan(basePackages = "pl.wizyg.payroll")
 @EnableTransactionManagement
 @EnableJpaRepositories("pl.wizyg.payroll.repository")
 public class PayrollConfig {
-
 
     @Bean
     public ViewResolver viewResolver() {

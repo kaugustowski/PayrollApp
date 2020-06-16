@@ -15,14 +15,11 @@
 <head>
     <title>Save Teacher</title>
 
-    <script>
-        function MyFunction() {
-            var minuteValue = document.getElementById("minutes").value;
-            if (minuteValue.length < 2) {
-                minuteValue = "0" + minuteValue;
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -42,99 +39,115 @@
 
         <form:hidden path="id"/>
 
-        <table>
-            <tbody>
-
-            <tr>
-                <td><label>Choose a teacher type:</label></td>
-                <td>
-                    <form:select path="teacherType">
-                        <c:forEach var="teacherType" items="${teacherTypeValues}">
-                            <option value="${teacherType}" ${teacherType == teacher.teacherType ? 'selected="selected"' : ''}>${teacherType.name()}</option>
-                        </c:forEach>
-
-                    </form:select>
-                </td>
-
-            </tr>
-
-            <tr>
-                <td><label>Choose an education level:</label></td>
-                <td>
-                    <form:select path="education">
-                        <c:forEach var="education" items="${educationValues}">
-                            <option value="${education}" ${education == teacher.education ? 'selected="selected"' : ''}>${education.name()}</option>
-                        </c:forEach>
-
-                    </form:select>
-                </td>
-            </tr>
-
-            <tr>
-                <td><label>First name:</label></td>
-                <td><form:input path="firstName"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Last name:</label></td>
-                <td><form:input path="lastName"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Email:</label></td>
-                <td><form:input path="email"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Pesel:</label></td>
-                <td><form:input path="pesel"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Functional bonus:</label></td>
-                <td><form:input type="number" step="0.01" path="functionalBonusString"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Incentive pay:</label></td>
-                <td><form:input type="number" step="0.01" path="incentivePayString"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Seniority bonus:</label></td>
-                <td><form:input type="number" step="0.01" path="seniorityBonusString"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Employment date:</label></td>
-                <td><form:input type="date" path="employeedOnDate"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Extra tax deductible expenses:</label></td>
-                <td><form:checkbox path="allowedForExtraTaxDeductibleExpenses"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Is active:</label></td>
-                <td><form:checkbox path="active"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Birth date:</label></td>
-                <td><form:input type="date" path="birthDate"/></td>
-            </tr>
+        <div class="form-group row">
+            <label for="firstName" class="col-sm-2 col-form-label">First name:</label>
+            <div class="col-sm-10">
+                <form:input path="firstName" id="firstName"/>
+            </div>
+        </div>
 
 
+        <div class="form-group row">
+            <label for="lastName" class="col-sm-2 col-form-label">Last name:</label>
+            <div class="col-sm-10">
+                <form:input path="lastName" id="lastName"/>
+            </div>
+        </div>
 
-            <tr>
-                <td><label></label></td>
-                <td><input type="submit" value="Save" class="save"/></td>
-            </tr>
+        <div class="form-group row">
+            <label for="email" class="col-sm-2 col-form-label">Email:</label>
+            <div class="col-sm-10">
+                <form:input path="email" id="email"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="pesel" class="col-sm-2 col-form-label">Pesel:</label>
+            <div class="col-sm-10">
+                <form:input path="pesel" id="pesel"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="teacher_type" class="col-sm-2 col-form-label">Teacher type:</label>
+            <div class="col-sm-10">
+                <form:select path="teacherType" id="teacher_type">
+                    <c:forEach var="teacherType" items="${teacherTypeValues}">
+                        <option value="${teacherType}" ${teacherType == teacher.teacherType ? 'selected="selected"' : ''}>${teacherType.name()}</option>
+                    </c:forEach>
+
+                </form:select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="education" class="col-sm-2 col-form-label">Education:</label>
+            <div class="col-sm-10">
+                <form:select path="education">
+                    <c:forEach var="education" items="${educationValues}">
+                        <option value="${education}" ${education == teacher.education ? 'selected="selected"' : ''}>${education.name()}</option>
+                    </c:forEach>
+
+                </form:select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="funcBonus" class="col-sm-2 col-form-label">Functional bonus:</label>
+            <div class="col-sm-10">
+                <form:input id="funcBonus" type="number" step="0.01" path="functionalBonusString"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="seniorityBonus" class="col-sm-2 col-form-label">Seniority bonus:</label>
+            <div class="col-sm-10">
+                <form:input id="seniorityBonus" type="number" step="0.01" path="seniorityBonusString"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="incPay" class="col-sm-2 col-form-label">Incentive pay:</label>
+            <div class="col-sm-10">
+                <form:input id="incPay" type="number" step="0.01" path="incentivePayString"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="birthDate" class="col-sm-2 col-form-label">Birth date:</label>
+            <div class="col-sm-10">
+                <form:input id="birthDate" type="date" path="birthDate"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="employeedOnDate" class="col-sm-2 col-form-label">Employed on date:</label>
+            <div class="col-sm-10">
+                <form:input id="employeedOnDate" type="date" path="employeedOnDate"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="active" class="col-sm-2 col-form-label">Is Active:</label>
+            <div class="col-sm-10">
+                <form:checkbox id="active" path="active"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="extraExpenses" class="col-sm-2 col-form-label">Extra tax deductible expenses:</label>
+            <div class="col-sm-10">
+                <form:checkbox id="extraExpenses" path="allowedForExtraTaxDeductibleExpenses"/>
+            </div>
+        </div>
 
 
-            </tbody>
-        </table>
+
+            <div class="form-group row">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                </div>
+            </div>
 
 
     </form:form>

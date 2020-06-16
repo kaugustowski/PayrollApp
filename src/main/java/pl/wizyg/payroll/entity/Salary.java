@@ -289,6 +289,7 @@ public abstract class Salary {
 
         if(prevmonth==0){
             yearPrevMonth=year-1;
+            prevmonth=12;
         }
         int sickLeaveDaysInMonthYear = 0;
         if(sickLeavesInMonth!=null){

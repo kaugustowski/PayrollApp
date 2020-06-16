@@ -2,6 +2,7 @@ package pl.wizyg.payroll.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.wizyg.payroll.DTO.SalaryListDTO;
 import pl.wizyg.payroll.entity.Employee;
 import pl.wizyg.payroll.entity.EssentialSalary;
 import pl.wizyg.payroll.entity.OvertimeSalary;
@@ -32,6 +33,7 @@ public class SalaryServiceImpl implements SalaryService {
 
     final
     EssentialSalaryRepository essentialSalaryRepository;
+
 
     public SalaryServiceImpl(SickLeaveService sickLeaveService, EmployeeService employeeService, SalaryRepository salaryRepository, OvertimeSalaryRepository overtimeSalaryRepository, EssentialSalaryRepository essentialSalaryRepository) {
         this.sickLeaveService = sickLeaveService;
@@ -97,6 +99,15 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
+    public List<Salary> getSalariesInMonthYear(int month, int year) {
+        return salaryRepository.findAllByMonthAndYear(month, year);
+    }
+
+
+
+
+
+    @Override
     public void saveSalary(Salary salary, int employeeId) {
         employeeService.getEmployee(employeeId).addSalary(salary);
         salaryRepository.save(salary);
@@ -129,8 +140,8 @@ public class SalaryServiceImpl implements SalaryService {
 
 
     @Override
-    public List<Salary> getEssentialSalariesInMonthYear(int month, int year) {
-        return salaryRepository.findAllByMonthAndYear(month,year);
+    public List<EssentialSalary> getEssentialSalariesInMonthYear(int month, int year) {
+        return essentialSalaryRepository.findAllByMonthAndYear(month,year);
     }
 
     @Override
@@ -149,5 +160,19 @@ public class SalaryServiceImpl implements SalaryService {
         return salaryRepository.findByEmployee_Id(employeeId);
     }
 
+    @Override
+    public List<SalaryListDTO> getSalaryListDTO(){
+        return salaryRepository.getAllPayrollMonths();
+    }
+
+    @Override
+    public List<SalaryListDTO> getOvertimeSalaryListDTO(){
+        return salaryRepository.getAllOVertimePayrollMonths();
+    }
+
+    @Override
+    public List<SalaryListDTO> getEssentialSalaryListDTO(){
+        return salaryRepository.getAllEssentialPayrollMonths();
+    }
 
 }

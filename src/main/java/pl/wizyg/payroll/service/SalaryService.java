@@ -1,5 +1,6 @@
 package pl.wizyg.payroll.service;
 
+import pl.wizyg.payroll.DTO.SalaryListDTO;
 import pl.wizyg.payroll.entity.EssentialSalary;
 import pl.wizyg.payroll.entity.OvertimeSalary;
 import pl.wizyg.payroll.entity.Salary;
@@ -19,6 +20,8 @@ public interface SalaryService {
 
     List<Salary> getSalariesForActiveEmployeesInMonthYear(int month, int year);
 
+    List<Salary> getSalariesInMonthYear(int month, int year);
+
     void saveSalary(Salary salary, int employeeId);
 
     void saveSalaries(List<Salary> salaries);
@@ -31,11 +34,17 @@ public interface SalaryService {
 
     abstract Salary getEmployeeOvertimeSalary(int employeeId, int month, int year);
 
-    List<Salary> getEssentialSalariesInMonthYear(int month, int year);
+    List<EssentialSalary> getEssentialSalariesInMonthYear(int month, int year);
 
     List<OvertimeSalary> getOvertimeSalariesInMonthYear(int month, int year);
 
     List<Salary> getEmployeeSalariesFromPrevious12Months(int employeeId, int month, int year);
 
     List<Salary> getEmployeeSalaries(int employeeId);
+
+    List<SalaryListDTO> getSalaryListDTO();
+
+    List<SalaryListDTO> getOvertimeSalaryListDTO();
+
+    List<SalaryListDTO> getEssentialSalaryListDTO();
 }

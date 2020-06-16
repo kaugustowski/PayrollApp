@@ -31,40 +31,30 @@
 <table class="table table-responsive table-bordered">
     <thead class="thead-light">
     <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
+        <th>Year</th>
+        <th>Month</th>
         <th>Actions</th>
     </tr>
     </thead>
 
 
-    <c:forEach var="tempTeacher" items="${teachers}">
+    <c:forEach var="month" items="${salaryMonths}">
 
 
-        <c:url var="updateLink" value="/teacher/showFormForUpdate">
-            <c:param name="teacherId" value="${tempTeacher.id}"/>
+        <c:url var="showList" value="/salary/list/${month.year}/${month.month}">
+
         </c:url>
 
 
-        <c:url var="deleteLink" value="/teacher/delete">
-            <c:param name="teacherId" value="${tempTeacher.id}"/>
+        <c:url var="recalculate" value="/salary/calculateSalaries/${month.year}/${month.month}">
+
         </c:url>
 
-        <c:url var="addSickLeaveLink" value="/sickLeave/add/${tempTeacher.id}">
-        </c:url>
-
-        <c:url var="addOvertimeLink" value="/overtime/add/${tempTeacher.id}">
-        </c:url>
-
-        <c:url var="salaryList" value="/salary/list/employee/${tempTeacher.id}">
-        </c:url>
 
 
         <tr class="d-table-row">
-            <td> ${tempTeacher.firstName} </td>
-            <td> ${tempTeacher.lastName} </td>
-            <td> ${tempTeacher.email} </td>
+            <td> ${month.year} </td>
+            <td> ${month.month} </td>
             <td>
 
                 <div class="dropdown">
@@ -74,14 +64,8 @@
                         Action
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <a class="dropdown-item" href="${updateLink}">Update</a>
-                        <a class="dropdown-item" href="${addSickLeaveLink}">Add sick leave</a>
-                        <a class="dropdown-item" href="${deleteLink}"
-                           onclick="if (!(confirm('Are you sure you want to delete this teacher?' +
-                            ' It will also remove payroll history! Consider setting as inactive'))) return false">Delete</a>
-                        <a class="dropdown-item" href="${addOvertimeLink}">Add overtime</a>
-                        <a class="dropdown-item" href="${salaryList}">Salary List</a>
-
+                        <a class="dropdown-item" href="${showList}">List</a>
+                        <a class="dropdown-item" href="${recalculate}">Recalculate</a>
                     </div>
                 </div>
                </td>

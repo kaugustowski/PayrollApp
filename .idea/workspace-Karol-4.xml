@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="payrollApp" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d38ddf7b-1175-4e63-98d0-3592cc33fa5c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules/PayrollApp.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/PayrollApp.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/wizyg/payroll/entity/Salary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/wizyg/payroll/entity/Salary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/wizyg/payroll/entity/SalaryConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/wizyg/payroll/entity/SalaryConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/wizyg/payroll/repository/SalaryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/wizyg/payroll/repository/SalaryRepository.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="Jsp File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="false" />
+    <option name="FILTER_DEBUG" value="false" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProjectId" id="1cMgKGqGAnwtAbaAwTaB8Uw0ftd" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="postgresql" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.26731795" />
+    <property name="settings.editor.selected.configurable" value="Docker" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="pl.wizyg.payroll.entity" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="pl.wizyg.payroll.repository" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Wizyg\OneDrive\PayrollApp\src\main\webapp\WEB-INF\view" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.30">
+    <configuration name="SickLeaveTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;pl.wizyg.payroll.entity.SickLeaveTest&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="SickLeaveTest.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;pl.wizyg.payroll.entity.SickLeaveTest.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="SickLeaveTest.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear2" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;pl.wizyg.payroll.entity.SickLeaveTest.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear2&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tomcat 9.0.30" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.30" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/payrollApp/" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="payrollApp">
+          <settings>
+            <option name="CONTEXT_PATH" value="/payrollApp" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_PayrollApp_2" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="52116" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="payrollApp" />
+        </option>
+      </method>
+    </configuration>
+    <configuration name="Docker Image" type="docker-deploy" factoryName="docker-image" temporary="true" server-name="Docker">
+      <deployment type="docker-image">
+        <settings>
+          <option name="imageTag" value="postgres:latest" />
+          <option name="command" value="" />
+          <option name="containerName" value="" />
+          <option name="entrypoint" value="" />
+          <option name="publishAllPorts" value="true" />
+          <option name="commandLineOptions" value="" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.Docker Image" />
+        <item itemvalue="Gradle.SickLeaveTest" />
+        <item itemvalue="Gradle.SickLeaveTest.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear" />
+        <item itemvalue="Gradle.SickLeaveTest.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear2" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task id="LOCAL-00001" summary="added convinience methods for Salary">
+      <created>1590343519912</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1590343519912</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d38ddf7b-1175-4e63-98d0-3592cc33fa5c" name="Default Changelist" comment="" />
+      <created>1590343813342</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590343813342</updated>
+      <workItem from="1590343818539" duration="4804000" />
+      <workItem from="1590423798903" duration="9467000" />
+      <workItem from="1590582279427" duration="6623000" />
+      <workItem from="1590592810269" duration="5425000" />
+      <workItem from="1590602738764" duration="1235000" />
+      <workItem from="1590679197250" duration="7290000" />
+      <workItem from="1590687236550" duration="6151000" />
+      <workItem from="1590697129648" duration="3510000" />
+      <workItem from="1590744558013" duration="9180000" />
+      <workItem from="1590771236043" duration="7577000" />
+      <workItem from="1590835960878" duration="902000" />
+      <workItem from="1590839571830" duration="744000" />
+      <workItem from="1590840803749" duration="12511000" />
+    </task>
+    <task id="LOCAL-00002" summary="added SickLeaveService">
+      <created>1590589592023</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1590589592023</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added SickLeaveService">
+      <created>1590603636746</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1590603636746</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added SickLeaveController">
+      <created>1590700641382</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1590700641382</updated>
+    </task>
+    <task id="LOCAL-00005" summary="sequence test">
+      <created>1590771370452</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1590771370452</updated>
+    </task>
+    <task id="LOCAL-00006" summary="migration to postgres">
+      <created>1590851100479</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1590851100479</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added convinience methods for Salary" />
+    <MESSAGE value="added SickLeaveService" />
+    <MESSAGE value="added SickLeaveController" />
+    <MESSAGE value="sequence test" />
+    <MESSAGE value="migration to postgres" />
+    <option name="LAST_COMMIT_MESSAGE" value="migration to postgres" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="668" y="303" width="553" height="350" key="#Assign_Data_Sources" timestamp="1590852079668">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="668" y="303" width="553" height="350" key="#Assign_Data_Sources/0.0.1536.824@0.0.1536.824" timestamp="1590852079668" />
+    <state x="2469" y="126" key="#Docker_Image" timestamp="1590776480637">
+      <screen x="1920" y="0" width="1680" height="1010" />
+    </state>
+    <state x="2469" y="126" key="#Docker_Image/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590776480637" />
+    <state x="656" y="340" key="#Environment_variables" timestamp="1590842793670">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="656" y="340" key="#Environment_variables/0.0.1536.824@0.0.1536.824" timestamp="1590842793670" />
+    <state x="2638" y="417" key="#Environment_variables/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590777977987" />
+    <state x="536" y="135" width="631" height="554" key="#New_Docker_Connection" timestamp="1590840232606">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="536" y="135" width="631" height="554" key="#New_Docker_Connection/0.0.1536.824@0.0.1536.824" timestamp="1590840232606" />
+    <state x="654" y="275" key="#Notifications" timestamp="1590842691316">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="654" y="275" key="#Notifications/0.0.1536.824@0.0.1536.824" timestamp="1590842691316" />
+    <state x="473" y="61" key="#Plugins" timestamp="1590841482423">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="473" y="61" key="#Plugins/0.0.1536.824@0.0.1536.824" timestamp="1590841482423" />
+    <state x="625" y="289" key="#Port_bindings" timestamp="1590842292229">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="625" y="289" key="#Port_bindings/0.0.1536.824@0.0.1536.824" timestamp="1590842292229" />
+    <state x="330" y="138" width="1134" height="683" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590842058954">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="330" y="138" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1590842058954" />
+    <state x="105" y="238" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778571488" />
+    <state x="2281" y="169" width="1134" height="683" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590778895403" />
+    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser" timestamp="1590684463406">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="574" y="96" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1590684463406" />
+    <state x="718" y="121" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590602835369" />
+    <state x="499" y="159" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog" timestamp="1590698983792">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="499" y="159" key="#com.intellij.refactoring.typeMigration.ui.FailedConversionsDialog/0.0.1536.824@0.0.1536.824" timestamp="1590698983792" />
+    <state x="33" y="110" key="#xdebugger.evaluate" timestamp="1590848525300">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="33" y="110" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1590848525300" />
+    <state x="374" y="0" key="CommitChangelistDialog2" timestamp="1590851096780">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="374" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1590851096780" />
+    <state x="468" y="0" key="CommitChangelistDialog2/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590771369852" />
+    <state x="520" y="110" key="FileChooserDialogImpl" timestamp="1590841650546">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="520" y="110" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1590841650546" />
+    <state width="1195" height="159" key="GridCell.Tab.0.bottom" timestamp="1590858556875">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590858556875" />
+    <state width="1401" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683498" />
+    <state width="1219" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314342" />
+    <state width="1195" height="159" key="GridCell.Tab.0.center" timestamp="1590858556874">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1590858556874" />
+    <state width="1401" height="348" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683498" />
+    <state width="1219" height="348" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314341" />
+    <state width="1195" height="159" key="GridCell.Tab.0.left" timestamp="1590858556874">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1590858556874" />
+    <state width="1401" height="348" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683498" />
+    <state width="1219" height="348" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314341" />
+    <state width="1195" height="159" key="GridCell.Tab.0.right" timestamp="1590858556875">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1590858556875" />
+    <state width="1401" height="348" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683498" />
+    <state width="1219" height="348" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314342" />
+    <state width="1195" height="159" key="GridCell.Tab.1.bottom" timestamp="1590858556875">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590858556875" />
+    <state width="1401" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683435" />
+    <state width="1219" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314342" />
+    <state width="1195" height="159" key="GridCell.Tab.1.center" timestamp="1590858556875">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1590858556875" />
+    <state width="1401" height="348" key="GridCell.Tab.1.center/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683435" />
+    <state width="1219" height="348" key="GridCell.Tab.1.center/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314342" />
+    <state width="1195" height="159" key="GridCell.Tab.1.left" timestamp="1590858556875">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1590858556875" />
+    <state width="1401" height="348" key="GridCell.Tab.1.left/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683435" />
+    <state width="1219" height="348" key="GridCell.Tab.1.left/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314342" />
+    <state width="1195" height="159" key="GridCell.Tab.1.right" timestamp="1590858556875">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1590858556875" />
+    <state width="1401" height="348" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683435" />
+    <state width="1219" height="348" key="GridCell.Tab.1.right/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314342" />
+    <state width="1195" height="159" key="GridCell.Tab.2.bottom" timestamp="1590858556876">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590858556876" />
+    <state width="1401" height="348" key="GridCell.Tab.2.bottom/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683436" />
+    <state width="1219" height="348" key="GridCell.Tab.2.bottom/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314342" />
+    <state width="1195" height="159" key="GridCell.Tab.2.center" timestamp="1590858556876">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1590858556876" />
+    <state width="1401" height="348" key="GridCell.Tab.2.center/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683436" />
+    <state width="1219" height="348" key="GridCell.Tab.2.center/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314342" />
+    <state width="1195" height="159" key="GridCell.Tab.2.left" timestamp="1590858556875">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1590858556875" />
+    <state width="1401" height="348" key="GridCell.Tab.2.left/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683436" />
+    <state width="1219" height="348" key="GridCell.Tab.2.left/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314342" />
+    <state width="1195" height="159" key="GridCell.Tab.2.right" timestamp="1590858556876">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="159" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1590858556876" />
+    <state width="1401" height="348" key="GridCell.Tab.2.right/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778683436" />
+    <state width="1219" height="348" key="GridCell.Tab.2.right/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590784314342" />
+    <state width="1195" height="284" key="GridCell.Tab.3.bottom" timestamp="1590849359607">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="284" key="GridCell.Tab.3.bottom/0.0.1536.824@0.0.1536.824" timestamp="1590849359607" />
+    <state width="1293" height="411" key="GridCell.Tab.3.bottom/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590694700517" />
+    <state width="1125" height="411" key="GridCell.Tab.3.bottom/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590696199479" />
+    <state width="1195" height="284" key="GridCell.Tab.3.center" timestamp="1590849359607">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="284" key="GridCell.Tab.3.center/0.0.1536.824@0.0.1536.824" timestamp="1590849359607" />
+    <state width="1293" height="411" key="GridCell.Tab.3.center/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590694700517" />
+    <state width="1125" height="411" key="GridCell.Tab.3.center/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590696199479" />
+    <state width="1195" height="284" key="GridCell.Tab.3.left" timestamp="1590849359607">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="284" key="GridCell.Tab.3.left/0.0.1536.824@0.0.1536.824" timestamp="1590849359607" />
+    <state width="1293" height="411" key="GridCell.Tab.3.left/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590694700517" />
+    <state width="1125" height="411" key="GridCell.Tab.3.left/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590696199479" />
+    <state width="1195" height="284" key="GridCell.Tab.3.right" timestamp="1590849359607">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1195" height="284" key="GridCell.Tab.3.right/0.0.1536.824@0.0.1536.824" timestamp="1590849359607" />
+    <state width="1293" height="411" key="GridCell.Tab.3.right/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590694700517" />
+    <state width="1125" height="411" key="GridCell.Tab.3.right/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590696199479" />
+    <state width="224" height="471" key="HiddenNamespacesPopup" timestamp="1590778580451">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="224" height="471" key="HiddenNamespacesPopup/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778580451" />
+    <state width="196" height="457" key="HiddenNamespacesPopup/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590777499020" />
+    <state x="249" y="0" key="SettingsEditor" timestamp="1590841753512">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1590841753512" />
+    <state x="311" y="0" key="SettingsEditor/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590778677355" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1590603640185">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590603640185" />
+    <state x="723" y="202" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1590434804544">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="723" y="202" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590434804544" />
+    <state x="1920" y="0" width="1412" height="976" maximized="true" key="dock-window-1" timestamp="1590771544844">
+      <screen x="1920" y="0" width="1680" height="1010" />
+    </state>
+    <state x="1920" y="0" width="1412" height="976" maximized="true" key="dock-window-1/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590771544844" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1590680603854">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1590680603854" />
+    <state x="498" y="178" width="672" height="538" key="search.everywhere.popup" timestamp="1590841453108">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="498" y="178" width="672" height="538" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1590841453108" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1590435192076" />
+    <state x="2465" y="218" width="735" height="660" key="search.everywhere.popup/0.0.1920.1040/1920.0.1680.1010@1920.0.1680.1010" timestamp="1590776150470" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/pl/wizyg/payroll/controller/SalaryController.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo typeName="pl.wizyg.payroll.entity.SickLeave" fieldName="employee" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+</project>
