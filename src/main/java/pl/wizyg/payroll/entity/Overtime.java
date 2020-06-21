@@ -23,10 +23,20 @@ public class Overtime {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    public Overtime(){};
+    public Overtime() {
+    }
+
+    ;
 
     public Overtime(Employee employee) {
-        this.employee=employee;
+        this.employee = employee;
+    }
+
+    public Overtime(Employee employee, int month, int year, int overtimeHours) {
+        this.employee = employee;
+        this.month = month;
+        this.year = year;
+        this.numberOfOverTimeHoursInCurrentMonth = overtimeHours;
     }
 
     public Integer getId() {

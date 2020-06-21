@@ -28,8 +28,11 @@ public class SalaryConstants {
 
     protected final static int TAX_DEDUCTION = 4376;
 
-    protected final static double SICKPAY_BASE_NET_RATE=0.8629;
+    protected final static double SICKPAY_BASE_NET_RATE = 0.8629;
 
-    protected final static double SICKPAY_RATE=0.8;
+    protected final static double SICKPAY_RATE = 0.8;
+
+    protected final static int TEACHER_OVERTIME_COEFFICIENT = 75;
+
 
 }

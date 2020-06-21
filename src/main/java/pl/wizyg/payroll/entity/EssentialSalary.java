@@ -14,30 +14,18 @@ public class EssentialSalary extends Salary {
         super(employee, month, year, employeesSickLeavesMonthYear,employeesSickLeavesUpToMonthInYear, salariesFromLast12Months);
     }
 
+
     @Override
     public boolean isAllowedForSickPayBaseCalculation() {
           return workedDaysRatio() >= 0.5;
     }
 
     public double workedDaysRatio(){
-        return (double)getNumberOfWorkedDaysWithSickLeave()/getNumberOfWorkdays();
+        return (double) getNumberOfWorkDaysWithSickLeave() / getNumberOfWorkdays();
     }
 
     @Override
     public String toString() {
-        return "EssentialSalary{" +
-                "grossSalary=" + grossSalary +
-                ", contributionBase=" + contributionBase +
-                ", pensionContributionPayer=" + pensionContributionPayer +
-                ", disabilityContributionPayer=" + disabilityContributionPayer +
-                ", accidentInsuranceContribution=" + accidentInsuranceContribution +
-                ", pensionContributionEmployee=" + pensionContributionEmployee +
-                ", disabilityContributionEmployee=" + disabilityContributionEmployee +
-                ", sicknessContribution=" + sicknessContribution +
-                ", healthcareContribution=" + healthcareContribution +
-                ", healthcareContributionDeduction=" + healthcareContributionDeduction +
-                ", employee=" + employee +
-                ", incomeTaxAdvance=" + incomeTaxAdvance +
-                '}';
+        return super.toString();
     }
 }

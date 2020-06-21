@@ -1,22 +1,24 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Wizyg
-  Date: 25.03.2020
-  Time: 21:46
+  Date: 28.05.2020
+  Time: 19:48
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html>
 <html>
-
 <head>
-    <title>Save Teacher</title>
-</head>
+    <title>Salary list</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
 
+</head>
 <body>
+
 <nav class="navbar sticky-top navbar-dark bg-transparent">
     <div class="d-flex">
         <div class="p-2 w-100 ">
@@ -79,102 +81,44 @@
 
 </nav>
 
-<div id="wrapper">
-    <div id="header">
-        <h2>Teacher form</h2>
-    </div>
-</div>
-
-<div id="container">
-    <h3>Save Teacher</h3>
-
-    <h2>${teacher.firstName } ${teacher.lastName }</h2>
-
-    <form:form action="${pageContext.request.contextPath}/teacher/saveTeacher" modelAttribute="teacher" method="POST">
-
-        <form:hidden path="id"/>
-
-        <table>
-            <tbody>
+<h2>${employee.firstName} ${employee.lastName}</h2>
 
 
-            <tr>
-                <td><label>First name:</label></td>
-                <td><form:input path="firstName"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Last name:</label></td>
-                <td><form:input path="lastName"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Email:</label></td>
-                <td><form:input path="email"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Pesel:</label></td>
-                <td><form:input path="pesel"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Functional bonus:</label></td>
-                <td><form:input path="functionalBonus"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Incentive pay:</label></td>
-                <td><form:input path="incentivePay"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Seniority bonus:</label></td>
-                <td><form:input path="seniorityBonus"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Employment date:</label></td>
-                <td><form:input type="date" path="employeedOnDate"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Extra tax deductible expenses:</label></td>
-                <td><form:checkbox path="allowedForExtraTaxDeductibleExpenses" value="true"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Is active:</label></td>
-                <td><form:checkbox path="active" value="true"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Birth date:</label></td>
-                <td><form:input type="date" path="birthDate"/></td>
-            </tr>
+<table class="table table-responsive table-bordered">
+    <thead class="thead-light">
+    <tr>
+        <th>Name</th>
+        <th>L. godzin</th>
+        <th>GSalary</th>
+        <th>NetSalary</th>
+        <th>SContr</th>
+        <th>PenContr(E)</th>
+        <th>DisContr(E)</th>
+        <th>AccInsContr</th>
+        <th>PenContr(P)</th>
+        <th>DisContr(P)</th>
+    </tr>
+    </thead>
 
 
+    <c:forEach var="salary" items="${salaries}">
+        <tr class="d-table-row">
+            <td> ${salary.employee.firstName} ${salary.employee.lastName}</td>
+            <td> ${salary.numberOfOvertimeHours} </td>
+            <td> ${salary.baseSalaryString} </td>
+            <td> ${salary.grossSalaryString} </td>
+            <td> ${salary.netSalaryString} </td>
+            <td> ${salary.sicknessContributionString} </td>
+            <td> ${salary.pensionContributionEmployeeString}</td>
+            <td> ${salary.disabilityContributionEmployeeString}</td>
+            <td> ${salary.accidentInsuranceContributionString} </td>
+            <td> ${salary.pensionContributionPayerString}</td>
+            <td> ${salary.disabilityContributionPayerString}</td>
 
-            <tr>
-                <td><label></label></td>
-                <td><input type="submit" value="Save" class="save"/></td>
-            </tr>
-
-
-            </tbody>
-        </table>
-
-
-    </form:form>
-
-    <div style="clear: both"></div>
-
-    <p>
-        <a href="${pageContext.request.contextPath}/teacher/list">Back to List</a>
-    </p>
-
-</div>
+        </tr>
+        ${salary.month}/${salary.year}
+    </c:forEach>
+</table>
 
 </body>
-
 </html>

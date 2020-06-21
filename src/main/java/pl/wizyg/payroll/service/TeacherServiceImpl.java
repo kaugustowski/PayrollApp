@@ -4,9 +4,6 @@ package pl.wizyg.payroll.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.wizyg.payroll.DAO.TeacherDAO;
-import pl.wizyg.payroll.entity.Overtime;
-import pl.wizyg.payroll.entity.SickLeave;
 import pl.wizyg.payroll.entity.Teacher;
 import pl.wizyg.payroll.repository.TeacherRepository;
 
@@ -31,7 +28,14 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Teacher> getActiveTeachers(){return teacherRepository.findAllByActiveTrue();}
+    public List<Teacher> getActiveTeachers() {
+        return teacherRepository.findAllByActiveTrue();
+    }
+
+    @Override
+    public List<Teacher> getInactiveTeachers() {
+        return teacherRepository.findAllByActiveFalse();
+    }
 
     @Override
     public void saveTeacher(Teacher teacher) {
@@ -49,7 +53,18 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void setInactiveTeacher(Integer id){teacherRepository.findById(id).get().setActive(false);}
+    public void setInactiveTeacher(Integer id) {
+        Teacher teacher = teacherRepository.findById(id).get();
+        teacher.setActive(false);
+        teacherRepository.save(teacher);
+    }
+
+    @Override
+    public void setActiveTeacher(Integer id) {
+        Teacher teacher = teacherRepository.findById(id).get();
+        teacher.setActive(true);
+        teacherRepository.save(teacher);
+    }
 
 
 }

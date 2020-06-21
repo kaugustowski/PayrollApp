@@ -7,7 +7,9 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.wizyg.payroll.entity.*;
+import pl.wizyg.payroll.entity.Education;
+import pl.wizyg.payroll.entity.Teacher;
+import pl.wizyg.payroll.entity.TeacherType;
 import pl.wizyg.payroll.repository.SickLeaveRepository;
 import pl.wizyg.payroll.service.EmployeeService;
 import pl.wizyg.payroll.service.TeacherService;
@@ -49,6 +51,16 @@ public class TeacherController {
     public String listActiveTeachers(Model theModel) {
 
         List<Teacher> theTeachers = teacherService.getActiveTeachers();
+
+        theModel.addAttribute("teachers", theTeachers);
+
+        return "list-teachers";
+    }
+
+    @GetMapping("/list/inactive")
+    public String listInactiveTeachers(Model theModel) {
+
+        List<Teacher> theTeachers = teacherService.getInactiveTeachers();
 
         theModel.addAttribute("teachers", theTeachers);
 
@@ -97,6 +109,24 @@ public class TeacherController {
 
         // delete the customer
         teacherService.deleteTeacher(theId);
+
+        return "redirect:/teacher/list";
+    }
+
+    @GetMapping("/setInactive")
+    public String setTeacherInactive(@RequestParam("teacherId") int theId) {
+
+        // delete the customer
+        teacherService.setInactiveTeacher(theId);
+
+        return "redirect:/teacher/list";
+    }
+
+    @GetMapping("/setActive")
+    public String setTeacherActive(@RequestParam("teacherId") int theId) {
+
+        // delete the customer
+        teacherService.setActiveTeacher(theId);
 
         return "redirect:/teacher/list";
     }

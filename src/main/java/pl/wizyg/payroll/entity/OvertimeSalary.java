@@ -14,6 +14,19 @@ public class OvertimeSalary extends Salary {
     public OvertimeSalary() {}
 
     public OvertimeSalary(Employee employee, int month, int year) {
+        this.employee = employee;
+
+        this.numberOfOvertimeHours = employee.getOvertimeList()
+                .stream()
+                .filter(overtime -> overtime.getMonth() == month && overtime.getYear() == year)
+                .findFirst()
+                .map(Overtime::getNumberOfOverTimeHoursInCurrentMonth)
+                .orElse(0);
+
+        this.month = month;
+        this.year = year;
+
+        performCalculations();
     }
 
     public int getNumberOfOvertimeHours() {
@@ -25,33 +38,22 @@ public class OvertimeSalary extends Salary {
     }
 
 
-    public int calculateContributionBaseOvertime(Overtime overtime) {
-        int overtimeHours = overtime.getNumberOfOverTimeHoursInCurrentMonth();
-        contributionBase = employee.getOvertimeHourRate()*overtimeHours;
-
+    public int calculateContributionBaseOvertime() {
+        contributionBase = employee.getOvertimeHourRate() * numberOfOvertimeHours;
         return contributionBase;
     }
 
-    public int calculateGrossSalaryOvertime(Overtime overtime) {
-        int overtimeHours = overtime.getNumberOfOverTimeHoursInCurrentMonth();
-        grossSalary = employee.getOvertimeHourRate()*overtimeHours;
-
-        return contributionBase;
-    }
-
-
-
-    @Override
-    public int calculateTax() {
-        return (int) Math.round((roundToHundreds(calculateTaxBase()) * SalaryConstants.TAX_PERCENT / 100));
+    public int calculateGrossSalaryOvertime() {
+        grossSalary = employee.getOvertimeHourRate() * numberOfOvertimeHours;
+        return grossSalary;
     }
 
     @Override
     public int calculateTaxBase() {
-        int taxBase = 0;
-        taxBase = grossSalary - pensionContributionEmployee - disabilityContributionEmployee - sicknessContribution;
-
-        return taxBase;
+        return grossSalary
+                - pensionContributionEmployee
+                - disabilityContributionEmployee
+                - sicknessContribution;
     }
 
     @Override
@@ -62,22 +64,26 @@ public class OvertimeSalary extends Salary {
     }
 
     @Override
+    public int calculateTax() {
+        tax = (int) Math.round((roundToHundreds(calculateTaxBase()) * SalaryConstants.TAX_PERCENT / 100));
+        return tax;
+    }
+
+    @Override
     protected boolean isAllowedForSickPayBaseCalculation() {
         return true;
     }
 
     @Override
     public void performCalculations() {
-        calculateContributionBase();
+        calculateGrossSalaryOvertime();
+        calculateContributionBaseOvertime();
         calculateEmployeeContribution();
         calculatePayerDeductions();
-        calculateSickPay(calculateSickPayBase());
-        calculateSicknessAllowance();
-        calculateGrossSalary();
         calculateHealthCareContribution();
         calculateIncomeTaxAdvance();
         calculateEmployeeDeductionsFromSalary();
-        getNetSalary();
+        calculateNetSalary();
     }
 
     @Override

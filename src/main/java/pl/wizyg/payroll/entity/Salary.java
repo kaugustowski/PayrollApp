@@ -2,6 +2,7 @@ package pl.wizyg.payroll.entity;
 
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
@@ -70,14 +71,14 @@ public abstract class Salary {
     private int laborFund;
     @Column(name = "base_salary")
     private int baseSalary;
-
-    public int getBaseSalary() {
-        return baseSalary;
-    }
-
-    public void setBaseSalary(int baseSalary){
-        this.baseSalary=baseSalary;
-    }
+    @Column(name = "net_salary")
+    private int netSalary;
+    @Column(name = "seniority_bonus")
+    private int seniorityBonus;
+    @Column(name = "functional_bonus")
+    private int functionalBonus;
+    @Column(name = "incentive_pay")
+    private int incentivePay;
 
 
     @Transient
@@ -110,56 +111,32 @@ public abstract class Salary {
         this.id = id;
     }
 
-    public void setSickLeavesUpToMonth(List<SickLeave> sickLeavesUpToMonth) {
-        this.sickLeavesUpToMonth = sickLeavesUpToMonth;
+    public int getBaseSalary() {
+        return baseSalary;
     }
 
-    public int getMonth() {
-        return month;
+    public void setBaseSalary(int baseSalary) {
+        this.baseSalary = baseSalary;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
+    public int getSeniorityBonus() {
+        return seniorityBonus;
     }
 
-    public int getYear() {
-        return year;
+    public void setSeniorityBonus(int seniorityBonus) {
+        this.seniorityBonus = seniorityBonus;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public int getFunctionalBonus() {
+        return functionalBonus;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public void setFunctionalBonus(int functionalBonus) {
+        this.functionalBonus = functionalBonus;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public int getLaborFund() {
-        return laborFund;
-    }
-
-    public void setLaborFund(int laborFund) {
-        this.laborFund = laborFund;
-    }
-
-    public int getHealthcareContribution() {
-        return healthcareContribution;
-    }
-
-    public void setHealthcareContribution(int healthcareContribution) {
-        this.healthcareContribution = healthcareContribution;
-    }
-
-    public int getHealthcareContributionDeduction() {
-        return healthcareContributionDeduction;
-    }
-
-    public void setHealthcareContributionDeduction(int healthcareContributionDeduction) {
-        this.healthcareContributionDeduction = healthcareContributionDeduction;
+    public void setIncentivePay(int incentivePay) {
+        this.incentivePay = incentivePay;
     }
 
     public int getGrossSalary() {
@@ -292,10 +269,10 @@ public abstract class Salary {
             prevmonth=12;
         }
         int sickLeaveDaysInMonthYear = 0;
-        if(sickLeavesInMonth!=null){
-        for (SickLeave sickLeave : sickLeavesInMonth) {
-            sickLeaveDaysInMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(prevmonth, yearPrevMonth);
-        }
+        if (!CollectionUtils.isEmpty(sickLeavesInMonth)) {
+            for (SickLeave sickLeave : sickLeavesInMonth) {
+                sickLeaveDaysInMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(prevmonth, yearPrevMonth);
+            }
         }
 
         return sickLeaveDaysInMonthYear;
@@ -323,7 +300,7 @@ public abstract class Salary {
 
     public int getNumberOfSickLeaveDaysUpToMonth() {
         int sickLeaveDaysUpToMonthYear = 0;
-        if(sickLeavesUpToMonth!=null) {
+        if (!CollectionUtils.isEmpty(sickLeavesUpToMonth)) {
             for (SickLeave sickLeave : sickLeavesUpToMonth) {
                 for (int i = 1; i < month; i++) {
                     sickLeaveDaysUpToMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(i, year);
@@ -333,11 +310,37 @@ public abstract class Salary {
         return sickLeaveDaysUpToMonthYear;
     }
 
+    public int calculateBaseComponents() {
+        return calculateBaseSalary() + calculateSeniorityBonus() + calculateIncentivePay() + calculateFunctionalBonus();
+    }
+
+    public int calculateBaseSalary() {
+        baseSalary = (int) Math.round(employee.getBaseSalary() * ((double) (30 - getNumberOfSickLeaveDaysInPreviousMonth()) / 30));
+
+        return baseSalary;
+    }
+
+    public int calculateSeniorityBonus() {
+        seniorityBonus = (int) Math.round(employee.getSeniorityBonus() * ((double) (30 - getNumberOfSickLeaveDaysInPreviousMonth()) / 30));
+
+        return seniorityBonus;
+    }
+
+    public int calculateFunctionalBonus() {
+        functionalBonus = (int) Math.round(employee.getFunctionalBonus() * ((double) (30 - getNumberOfSickLeaveDaysInPreviousMonth()) / 30));
+
+        return functionalBonus;
+    }
+
+    public int calculateIncentivePay() {
+        incentivePay = (int) Math.round(employee.getIncentivePay() * ((double) (30 - getNumberOfSickLeaveDaysInPreviousMonth()) / 30));
+
+        return incentivePay;
+    }
+
 
     public int calculateContributionBase() {
-        contributionBase = employee.getBaseSalary() + employee.getSeniorityBonus() + employee.getIncentivePay() + employee.getFunctionalBonus();
-
-        contributionBase *= (double) (30 - getNumberOfSickLeaveDaysInPreviousMonth()) / 30;
+        contributionBase = calculateBaseComponents();
 
         contributionBase = Math.round(contributionBase);
 
@@ -348,7 +351,7 @@ public abstract class Salary {
     public int calculateEmployeeDeductionsFromSalary() {
         int deductionsFromSalary;
 
-        deductionsFromSalary = incomeTaxAdvance + calculateEmployeeContribution()+calculateHealthCareContribution();
+        deductionsFromSalary = incomeTaxAdvance + calculateEmployeeContribution() + calculateHealthCareContribution();
         return deductionsFromSalary;
     }
 
@@ -481,19 +484,18 @@ public abstract class Salary {
 
             for (Salary salary : essentialSalaries) {
                 if (salary.isAllowedForSickPayBaseCalculation()) {
-                    OvertimeSalary overtimeSalaryFromSameMonth=
+                    OvertimeSalary overtimeSalaryFromSameMonth =
                             (OvertimeSalary) overtimeSalaries.stream()
-                                    .filter(overtimeSalary -> overtimeSalary.getMonth()==salary.month&&overtimeSalary.getYear()==salary.getYear())
+                                    .filter(overtimeSalary -> overtimeSalary.getMonth() == salary.month && overtimeSalary.getYear() == salary.getYear())
                                     .findFirst().orElse(new OvertimeSalary());
 
-                    sickPayBaseSum += salary.getHealthcareContributionBase()+overtimeSalaryFromSameMonth.getHealthcareContributionBase();
-                        i++;
+                    sickPayBaseSum += salary.getHealthcareContributionBase() + overtimeSalaryFromSameMonth.getHealthcareContributionBase();
+                    i++;
                 }
             }
-        }
-        else{
-            sickPayBaseSum= (int) Math.round((employee.getBaseSalary()+employee.getFunctionalBonus()+employee.getIncentivePay()+employee.getSeniorityBonus())*SalaryConstants.SICKPAY_BASE_NET_RATE);
-            i=1;
+        } else {
+            sickPayBaseSum = (int) Math.round((employee.getBaseSalary() + employee.getFunctionalBonus() + employee.getIncentivePay() + employee.getSeniorityBonus()) * SalaryConstants.SICKPAY_BASE_NET_RATE);
+            i = 1;
         }
 
         return (int) Math.round((double) sickPayBaseSum / i);
@@ -501,17 +503,20 @@ public abstract class Salary {
 
     protected abstract boolean isAllowedForSickPayBaseCalculation();
 
+
+    //TODO
     public int getNumberOfWorkdays() {
         int numberOfWorkDays = 0;
         YearMonth yearMonth = YearMonth.of(year, month);
 
         // java 8
-        LocalDate[] freeDays =
-                (LocalDate[]) IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
+        List<LocalDate> freeDays =
+                IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
                         .mapToObj(day -> LocalDate.of(year, month, day))
-                        .filter(this::isFreeDay).toArray();
+                        .filter(this::isFreeDay)
+                        .collect(Collectors.toList());
 
-        numberOfWorkDays = yearMonth.lengthOfMonth() - freeDays.length;
+        numberOfWorkDays = yearMonth.lengthOfMonth() - freeDays.size();
 
         //java 11+
 //        LocalDate[] weekendDays =
@@ -599,8 +604,8 @@ public abstract class Salary {
         getNetSalary();
     }
 
-    public int calculateGrossSalary(){
-        grossSalary=calculateContributionBase()+sickPay+sicknessAllowance;
+    public int calculateGrossSalary() {
+        grossSalary = calculateContributionBase() + sickPay + sicknessAllowance;
         return grossSalary;
     }
 

@@ -49,9 +49,31 @@ public class SalaryController {
     }
 
     @RequestMapping("list/{year}/{month}")
-    public String listSalaries(Model model, @PathVariable int month,@PathVariable int year ){
+    public String listSalaries(Model model, @PathVariable int month, @PathVariable int year) {
 
-        List<Salary> salaries = salaryService.getSalariesInMonthYear(month,year);
+        List<Salary> salaries = salaryService.getSalariesInMonthYear(month, year);
+
+        model.addAttribute("salaries", salaries);
+
+        return "salary-list";
+    }
+
+    @RequestMapping("{employeeId}/{year}/{month}")
+    public String listSalaries(Model model, @PathVariable int month, @PathVariable int year, @PathVariable int employeeId) {
+
+        EssentialSalary salary = salaryService.getEmployeeEssentialSalary(employeeId, month, year);
+
+        EssentialSalaryDTO salaryDTO = new EssentialSalaryDTO(salary);
+
+        model.addAttribute("salary", salaryDTO);
+
+        return "salary-details";
+    }
+
+    @RequestMapping("/previous/{employeeId}/{year}/{month}")
+    public String listSalaries12months(Model model, @PathVariable int month, @PathVariable int year, @PathVariable int employeeId) {
+
+        List<Salary> salaries = salaryService.getEmployeeSalariesFromPrevious12Months(employeeId, month, year);
 
         model.addAttribute("salaries", salaries);
 
@@ -59,9 +81,9 @@ public class SalaryController {
     }
 
     @RequestMapping("list/active/{year}/{month}")
-    public String listSalariesForActiveEmployees(Model model, @PathVariable int month,@PathVariable int year ){
+    public String listSalariesForActiveEmployees(Model model, @PathVariable int month, @PathVariable int year) {
 
-        List<Salary> salaries = salaryService.getSalariesForActiveEmployeesInMonthYear(month,year);
+        List<Salary> salaries = salaryService.getSalariesForActiveEmployeesInMonthYear(month, year);
 
         model.addAttribute("salaries", salaries);
 
@@ -69,7 +91,7 @@ public class SalaryController {
     }
 
     @RequestMapping("list/employee/{employeeId}")
-    public String listSalaries(Model model, @PathVariable int employeeId){
+    public String listSalaries(Model model, @PathVariable int employeeId) {
         Employee employee = employeeService.getEmployee(employeeId);
         List<Salary> salaries = salaryService.getEmployeeSalaries(employeeId);
         model.addAttribute("employee", employee);
@@ -78,25 +100,30 @@ public class SalaryController {
     }
 
     @RequestMapping("/overtimeList/{year}/{month}")
-    public String listOvertimeSalaries(Model model, @PathVariable int month,@PathVariable int year ){
-        List<OvertimeSalary> salaries = salaryService.getOvertimeSalariesInMonthYear(month,year);
-        model.addAttribute("overtimeSalaries", salaries);
-        return "salary-list";
+    public String listOvertimeSalaries(Model model, @PathVariable int month, @PathVariable int year) {
+        List<OvertimeSalary> salaries = salaryService.getOvertimeSalariesInMonthYear(month, year);
+        model.addAttribute("salaries", salaries);
+        return "overtime-salary-list";
     }
 
     @RequestMapping("/essentialList/{year}/{month}")
-    public String listEssentialSalaries(Model model, @PathVariable int month,@PathVariable int year ){
-        List<EssentialSalary> salaries = salaryService.getEssentialSalariesInMonthYear(month,year);
-        model.addAttribute("overtimeSalaries", salaries);
+    public String listEssentialSalaries(Model model, @PathVariable int month, @PathVariable int year) {
+        List<EssentialSalary> salaries = salaryService.getEssentialSalariesInMonthYear(month, year);
+        model.addAttribute("salaries", salaries);
         return "salary-list";
     }
 
+    @RequestMapping("/createPayroll")
+    public String payrollForm() {
+        return "payroll-form";
+    }
+
     @RequestMapping("/calculateSalary/{year}/{month}")
-    public String showSalaryDetails(@PathVariable int month, @PathVariable int year, @RequestParam int employeeId, RedirectAttributes redirectAttrs){
+    public String showSalaryDetails(@PathVariable int month, @PathVariable int year, @RequestParam int employeeId, RedirectAttributes redirectAttrs) {
         Salary salary = salaryService.calculateSalary(employeeId, month, year);
 
         employeeService.getEmployee(employeeId).addSalary(salary);
-        salaryService.saveSalary(salary, employeeId );
+        salaryService.saveSalary(salary, employeeId);
         System.out.println(salary.getYear() + salary.getMonth());
 
         redirectAttrs.addAttribute("year", salary.getYear());
@@ -123,7 +150,7 @@ public class SalaryController {
 
     }
 
-    @PostMapping("/calculateSalaries/{year}/{month}")
+    @RequestMapping("/calculateSalaries/{year}/{month}")
     public String calculateSalaries(@PathVariable int year, @PathVariable int month){
 
         salaryService.saveSalaries(salaryService.calculateSalariesForActiveEmployees(month, year));
@@ -131,7 +158,7 @@ public class SalaryController {
         return "redirect:/salary/list/{year}/{month}";
     }
 
-    @PostMapping("/calculateOvertimeSalaries/{year}/{month}")
+    @RequestMapping("/calculateOvertimeSalaries/{year}/{month}")
     public String calculateOvertimeSalaries(@PathVariable int year, @PathVariable int month){
         salaryService.saveSalaries(salaryService.calculateOvertimeSalaryForActiveEmployees(month, year));
 

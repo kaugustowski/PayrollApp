@@ -1,22 +1,19 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Wizyg
-  Date: 25.03.2020
-  Time: 21:46
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-
 <head>
-    <title>Save Teacher</title>
-</head>
+    <title>Create New Payroll</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
 
-<body>
+</head>
+<body onload="selectValues()">
+
 <nav class="navbar sticky-top navbar-dark bg-transparent">
     <div class="d-flex">
         <div class="p-2 w-100 ">
@@ -79,102 +76,56 @@
 
 </nav>
 
-<div id="wrapper">
-    <div id="header">
-        <h2>Teacher form</h2>
+<form:form id="form" action="${pageContext.request.contextPath}/salary/createPayroll" method="POST">
+    <div class="form-group row">
+        <label for="month" class="col-sm-2 col-form-label">Month:</label>
+        <div class="col-sm-10">
+            <select id="month" onchange="updateLink()">
+                <option value=''>--Select Month--</option>
+                <option selected value='1'>January</option>
+                <option value='2'>February</option>
+                <option value='3'>March</option>
+                <option value='4'>April</option>
+                <option value='5'>May</option>
+                <option value='6'>June</option>
+                <option value='7'>July</option>
+                <option value='8'>August</option>
+                <option value='9'>September</option>
+                <option value='10'>October</option>
+                <option value='11'>November</option>
+                <option value='12'>December</option>
+            </select>
+        </div>
     </div>
-</div>
 
-<div id="container">
-    <h3>Save Teacher</h3>
+    <div class="form-group row">
+        <label for="year" class="col-sm-2 col-form-label">Year:</label>
+        <div class="col-sm-10">
+            <select id="year" onchange="updateLink()">
 
-    <h2>${teacher.firstName } ${teacher.lastName }</h2>
+            </select>
+        </div>
+    </div>
 
-    <form:form action="${pageContext.request.contextPath}/teacher/saveTeacher" modelAttribute="teacher" method="POST">
-
-        <form:hidden path="id"/>
-
-        <table>
-            <tbody>
-
-
-            <tr>
-                <td><label>First name:</label></td>
-                <td><form:input path="firstName"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Last name:</label></td>
-                <td><form:input path="lastName"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Email:</label></td>
-                <td><form:input path="email"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Pesel:</label></td>
-                <td><form:input path="pesel"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Functional bonus:</label></td>
-                <td><form:input path="functionalBonus"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Incentive pay:</label></td>
-                <td><form:input path="incentivePay"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Seniority bonus:</label></td>
-                <td><form:input path="seniorityBonus"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Employment date:</label></td>
-                <td><form:input type="date" path="employeedOnDate"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Extra tax deductible expenses:</label></td>
-                <td><form:checkbox path="allowedForExtraTaxDeductibleExpenses" value="true"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Is active:</label></td>
-                <td><form:checkbox path="active" value="true"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Birth date:</label></td>
-                <td><form:input type="date" path="birthDate"/></td>
-            </tr>
+    <div class="form-group row">
+        <label for="type" class="col-sm-2 col-form-label">Type:</label>
+        <div class="col-sm-10">
+            <select id="type" onchange="updateLink()">
+                <option value='calculateOvertimeSalaries'>Overtime</option>
+                <option value='calculateSalaries'>Essential</option>
+            </select>
+        </div>
+    </div>
 
 
+    <div class="form-group row">
+        <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
 
-            <tr>
-                <td><label></label></td>
-                <td><input type="submit" value="Save" class="save"/></td>
-            </tr>
+</form:form>
 
-
-            </tbody>
-        </table>
-
-
-    </form:form>
-
-    <div style="clear: both"></div>
-
-    <p>
-        <a href="${pageContext.request.contextPath}/teacher/list">Back to List</a>
-    </p>
-
-</div>
 
 </body>
-
 </html>

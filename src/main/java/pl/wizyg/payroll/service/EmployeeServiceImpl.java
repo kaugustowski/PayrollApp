@@ -1,6 +1,6 @@
 package pl.wizyg.payroll.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -29,6 +29,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jdbcUserDetailsManager = jdbcUserDetailsManager;
     }
 
     @Override

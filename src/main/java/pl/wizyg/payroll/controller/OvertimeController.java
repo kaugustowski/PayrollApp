@@ -8,6 +8,8 @@ import pl.wizyg.payroll.entity.Overtime;
 import pl.wizyg.payroll.service.EmployeeService;
 import pl.wizyg.payroll.service.OvertimeService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/overtime")
 public class OvertimeController {
@@ -22,8 +24,21 @@ public class OvertimeController {
         this.overtimeService = overtimeService;
     }
 
+    @GetMapping("/list/{employeeId}")
+    public String showOvertimeList(@PathVariable int employeeId, Model theModel) {
+
+        Employee employee = employeeService.getEmployee(employeeId);
+
+        List<Overtime> overtimes = overtimeService.getEmployeeOvertimeList(employeeId);
+
+        theModel.addAttribute("employee", employee);
+        theModel.addAttribute("overtimes", overtimes);
+
+        return "overtime-list";
+    }
+
     @GetMapping("/add/{employeeId}")
-    public String showOvertimeForm(@PathVariable int employeeId, Model theModel){
+    public String showOvertimeForm(@PathVariable int employeeId, Model theModel) {
 
         Employee employee = employeeService.getEmployee(employeeId);
 

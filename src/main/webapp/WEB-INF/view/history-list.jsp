@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Employment history</title>
+    <title>Historia zatrudnienia</title>
 
     <style>
         table, th, td {
@@ -18,16 +18,16 @@
     </style>
 </head>
 <body>
-<h1>Employment history</h1>
+<h1>Historia zatrudnienia</h1>
 <h2>${employee.firstName} ${employee.lastName}</h2>
 
 <table>
 
     <tr>
-        <th>Institution name</th>
-        <th>Start date</th>
-        <th>End date</th>
-        <th>Unpaid leave days</th>
+        <th>Nazwa placówki</th>
+        <th>Data rozpoczęcia</th>
+        <th>Data zakończenia</th>
+        <th>Dni na urlopie bezpłatnym</th>
     </tr>
 
 

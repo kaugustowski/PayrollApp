@@ -1,6 +1,5 @@
 package pl.wizyg.payroll.entity;
 
-import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.pl.PESEL;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -89,8 +88,8 @@ public abstract class Employee {
     }
 
     public void addOvertime(Overtime overtime) {
-        if (salaries == null) {
-            salaries = new HashSet<>();
+        if (overtimeSet == null) {
+            overtimeSet = new HashSet<>();
         }
         overtimeSet.add(overtime);
         overtime.setEmployee(this);

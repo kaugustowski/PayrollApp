@@ -1,7 +1,6 @@
 package pl.wizyg.payroll.entity;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -241,7 +240,7 @@ class SalaryTest {
         salary.setContributionBase(395000);
         salary.setIncomeTaxAdvance(22900);
         int expected = 287269;
-        int actual = salary.getNetSalary();
+        int actual = salary.calculateNetSalary();
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -282,20 +281,14 @@ class SalaryTest {
         assertThat(salary.getHealthcareContribution()).isEqualTo(30676);
         assertThat(salary.getIncomeTaxAdvance()).isEqualTo(22900);
         assertThat(salary.getGrossSalary()).isEqualTo(395000);
-        assertThat(salary.getNetSalary()).isEqualTo(287269);
+        assertThat(salary.calculateNetSalary()).isEqualTo(287269);
 
     }
 
     @Test
     void calculateSalary2(){
         Salary salary = new EssentialSalary();
-        Teacher employee2 = new Teacher() {
-            @Override
-            public int getOvertimeHourRate() {
-                return 0;
-            }
-
-        };
+        Teacher employee2 = new Teacher();
         employee2.setBirthDate(LocalDate.of(1960,1,1));
         employee2.setBaseSalary(381700);
         employee2.setFunctionalBonus(20000);
@@ -315,14 +308,13 @@ class SalaryTest {
         assertThat(salary.getHealthcareContribution()).isEqualTo(39455);
         assertThat(salary.getIncomeTaxAdvance()).isEqualTo(31900);
         assertThat(salary.getGrossSalary()).isEqualTo(508040);
-        assertThat(salary.getNetSalary()).isEqualTo(367032);
+        assertThat(salary.calculateNetSalary()).isEqualTo(367032);
     }
 
     @Test
     void calculateSalary3(){
         Salary salary = new EssentialSalary();
-        Teacher employee3 = new Teacher() {
-        };
+        Teacher employee3 = new Teacher();
         employee3.setBirthDate(LocalDate.of(1990,1,1));
         employee3.setBaseSalary(260000);
         employee3.setFunctionalBonus(20000);
@@ -342,16 +334,18 @@ class SalaryTest {
         assertThat(salary.getHealthcareContribution()).isEqualTo(22522);
         assertThat(salary.getIncomeTaxAdvance()).isEqualTo(14500);
         assertThat(salary.getGrossSalary()).isEqualTo(290000);
-        assertThat(salary.getNetSalary()).isEqualTo(213219);
+        assertThat(salary.calculateNetSalary()).isEqualTo(213219);
     }
 
 
     @Test
-    void calculateSalaryWithSickLeave(){
+    void calculateSalaryWithSickLeave() {
 
         SickLeave sl1 = new SickLeave(employee);
-        sl1.setEndDate(LocalDate.of(2020,4,10));
-        sl1.setStartDate(LocalDate.of(2020,4,1));
+        sl1.setEndDate(LocalDate.of(2020, 4, 10));
+        sl1.setStartDate(LocalDate.of(2020, 4, 1));
+
+        List<Salary> salariesFromPrevious12Months = new ArrayList<>();
 
         List<SickLeave> sickLeavesInPrevMonth = new ArrayList<>();
         sickLeavesInPrevMonth.add(sl1);
@@ -361,7 +355,7 @@ class SalaryTest {
         salary.setMonth(5);
         salary.setYear(2020);
         salary.setSickLeavesInMonth(sickLeavesInPrevMonth);
-
+        salary.setSalariesFromLast12Months(salariesFromPrevious12Months);
         salary.performCalculations();
 
         assertThat(salary.getContributionBase()).isEqualTo(263333);
@@ -376,7 +370,7 @@ class SalaryTest {
         assertThat(salary.getSicknessContribution()).isEqualTo(6452);
         assertThat(salary.calculateSickPayBase()).isEqualTo(340846);
         assertThat(salary.calculateSickPay(340846)).isEqualTo(90900);
-        assertThat(salary.getNetSalary()).isEqualTo(268698);
+        assertThat(salary.calculateNetSalary()).isEqualTo(268698);
 
 
     }

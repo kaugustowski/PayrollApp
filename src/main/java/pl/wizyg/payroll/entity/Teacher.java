@@ -110,7 +110,7 @@ public class Teacher extends Employee {
 
     @Override
     public int getOvertimeHourRate() {
-        return (int) ((double) getBaseSalary()/7500); //TODO sprawdzic ile ma byc
+        return (int) ((double) getBaseSalary() / SalaryConstants.TEACHER_OVERTIME_COEFFICIENT); //TODO sprawdzic ile ma byc
     }
 
     public void setIncentivePayString (String senBonus){

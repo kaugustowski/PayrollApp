@@ -1,7 +1,5 @@
 package pl.wizyg.payroll.service;
 
-import pl.wizyg.payroll.entity.Overtime;
-import pl.wizyg.payroll.entity.SickLeave;
 import pl.wizyg.payroll.entity.Teacher;
 
 import java.util.List;
@@ -13,6 +11,8 @@ TeacherService {
 
     List<Teacher> getActiveTeachers();
 
+    List<Teacher> getInactiveTeachers();
+
     void saveTeacher(Teacher teacher);
 
     Teacher getTeacher(Integer id);
@@ -21,5 +21,5 @@ TeacherService {
 
     void setInactiveTeacher(Integer id);
 
-
+    void setActiveTeacher(Integer theId);
 }

@@ -11,9 +11,10 @@ import pl.wizyg.payroll.repository.EssentialSalaryRepository;
 import pl.wizyg.payroll.repository.OvertimeSalaryRepository;
 import pl.wizyg.payroll.repository.SalaryRepository;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -46,40 +47,54 @@ public class SalaryServiceImpl implements SalaryService {
     @Override
     public Salary calculateSalary(int employeeId, int month, int year) {
 
-        int sickLeaveMonth = month-1;
-        int sickLeaveYear = year;
-        if(month==1){
-            sickLeaveMonth = 12;
-            sickLeaveYear=year-1;
-        }
-        Salary salary = getEmployeeEssentialSalary(employeeId,month,year)
-                .orElse( new EssentialSalary(employeeService.getEmployee(employeeId), month, year,
-                sickLeaveService.getEmployeeSickLeavesMonthYear(employeeId, sickLeaveMonth, sickLeaveYear),
-                sickLeaveService.getEmployeeSickLeavesUpToMonthInYear(employeeId, sickLeaveMonth, sickLeaveYear),
-                getEmployeeSalariesFromPrevious12Months(employeeId,month,year)))
-         ;
-        salary.performCalculations();
+        int sickLeaveMonth = month == 1 ? 12 : month - 1;
+        int sickLeaveYear = month == 1 ? year - 1 : year;
 
+        Salary salary = getEmployeeEssentialSalary(employeeId, month, year);
+
+        //recalculate if already exists
+        if (salary != null) {
+            salary.setSickLeavesInMonth(sickLeaveService.getEmployeeSickLeavesMonthYear(employeeId, sickLeaveMonth, sickLeaveYear));
+            salary.setSickLeavesUpToMonth(sickLeaveService.getEmployeeSickLeavesUpToMonthInYear(employeeId, sickLeaveMonth, sickLeaveYear));
+            salary.setSalariesFromLast12Months(getEmployeeSalariesFromPrevious12Months(employeeId, month, year));
+            salary.performCalculations();
+        }
+        //else create new
+        else {
+            salary = new EssentialSalary(employeeService.getEmployee(employeeId), month, year,
+                    sickLeaveService.getEmployeeSickLeavesMonthYear(employeeId, sickLeaveMonth, sickLeaveYear),
+                    sickLeaveService.getEmployeeSickLeavesUpToMonthInYear(employeeId, sickLeaveMonth, sickLeaveYear),
+                    getEmployeeSalariesFromPrevious12Months(employeeId, month, year));
+
+        }
         return salary;
     }
+
 
     @Override
     public List<Salary> calculateSalariesForActiveEmployees(int month, int year) {
         List<Employee> employees = employeeService.getActiveEmployees();
         List<Salary> salaries = new ArrayList<Salary>();
+        LocalDate firstDayOfMonth = YearMonth.of(year, month).atDay(1);
         for (Employee employee:employees) {
-            Salary salary = calculateSalary(employee.getId(), month, year);
-           // employee.addSalary(salary);
-            salaries.add(salary);
+            if (!employee.getEmployeedOnDate().isAfter(firstDayOfMonth)) {
+                Salary salary = calculateSalary(employee.getId(), month, year);
+                salaries.add(salary);
+            }
         }
         return salaries;
     }
 
     @Override
-    public Salary calculateOvertimeSalary(int employeeId, int month, int year){
-        Salary salary
-                = new OvertimeSalary(employeeService.getEmployee(employeeId), month, year);
-        salary.performCalculations();
+    public Salary calculateOvertimeSalary(int employeeId, int month, int year) {
+
+        Salary salary = getEmployeeOvertimeSalary(employeeId, month, year);
+
+        if (salary != null) {
+            salary.performCalculations();
+        } else {
+            salary = new OvertimeSalary(employeeService.getEmployee(employeeId), month, year);
+        }
         return salary;
     }
 
@@ -119,8 +134,8 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public Optional<EssentialSalary> getEmployeeEssentialSalary(int employeeId, int month, int year) {
-        return essentialSalaryRepository.findByEmployee_IdAndMonthAndYear(employeeId,month,year);
+    public EssentialSalary getEmployeeEssentialSalary(int employeeId, int month, int year) {
+        return essentialSalaryRepository.findByEmployee_IdAndMonthAndYear(employeeId, month, year);
     }
 
     @Override
@@ -166,12 +181,12 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public List<SalaryListDTO> getOvertimeSalaryListDTO(){
+    public List<SalaryListDTO> getOvertimeSalaryListDTO() {
         return salaryRepository.getAllOVertimePayrollMonths();
     }
 
     @Override
-    public List<SalaryListDTO> getEssentialSalaryListDTO(){
+    public List<SalaryListDTO> getEssentialSalaryListDTO() {
         return salaryRepository.getAllEssentialPayrollMonths();
     }
 

@@ -82,10 +82,6 @@ public class SickLeave {
 
         LocalDate endOfMonth = yearMonth.atEndOfMonth();
 
-       // LocalDate[] sickLeaveWorkdays = new LocalDate[0];
-
-
-        //TODO
         if (startDate.isBefore(beginningOfMonth) && endDate.isAfter(endOfMonth)) {
             numberOfSickleaveDaysOnWorkdays =
                      IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
@@ -109,12 +105,8 @@ public class SickLeave {
             System.out.println("??????????");
         }
 
-//        numberOfSickleaveDaysOnWorkdays = sickLeaveWorkdays.length;
-
         return numberOfSickleaveDaysOnWorkdays;
     }
-
-
 
     public int getSickLeaveId() {
         return sickLeaveId;

@@ -22,10 +22,19 @@ public class OvertimeServiceImpl implements OvertimeService {
         this.employeeService=employeeService;
     }
 
+
     @Override
     public void saveOvertime(Overtime overtime, int employeeId) {
-        employeeService.getEmployee(employeeId).addOvertime(overtime);
-        overtimeRepository.save(overtime);
+
+        Overtime ot = overtimeRepository.findByEmployee_IdAndMonthAndYear(employeeId, overtime.getMonth(), overtime.getYear());
+
+        if (ot != null) {
+            ot.setNumberOfOverTimeHoursInCurrentMonth(overtime.getNumberOfOverTimeHoursInCurrentMonth());
+            overtimeRepository.save(ot);
+        } else {
+            employeeService.getEmployee(employeeId).addOvertime(overtime);
+            overtimeRepository.save(overtime);
+        }
     }
 
     @Override

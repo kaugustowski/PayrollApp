@@ -5,12 +5,11 @@ import org.springframework.stereotype.Repository;
 import pl.wizyg.payroll.entity.EssentialSalary;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface EssentialSalaryRepository extends JpaRepository<EssentialSalary, Integer> {
 
-    Optional<EssentialSalary> findByEmployee_IdAndMonthAndYear(Integer employee_id, int month, int year);
+    EssentialSalary findByEmployee_IdAndMonthAndYear(Integer employee_id, int month, int year);
 
     List<EssentialSalary> findAllByMonthAndYear(int month, int year);
 

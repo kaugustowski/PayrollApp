@@ -10,4 +10,6 @@ import java.util.List;
 public interface OvertimeRepository extends JpaRepository<Overtime, Integer> {
 
     List<Overtime> findAllByEmployee_Id(int employeeId);
+
+    Overtime findByEmployee_IdAndMonthAndYear(Integer employee_id, int month, int year);
 }
