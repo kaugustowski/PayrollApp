@@ -11,6 +11,20 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+        #dropdownMenu1 {
+            height: 80%;
+        }
+
+        td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar sticky-top navbar-dark bg-transparent">
@@ -18,11 +32,11 @@
         <div class="p-2 w-100 ">
             <ul class="nav nav-tabs">
                 <li>
-                    <a class="nav-link active" href="#">Strona główna</a>
+                    <a class="nav-link" href="#">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
-                    <li class="nav-item">
-                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list">Pracownicy</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list>Pracownicy</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown"
@@ -71,52 +85,74 @@
             </form:form>
         </div>
 
-    </div>
 
+    </div>
 </nav>
 
-<table>
+<table class="table table-responsive table-bordered">
+    <thead class="thead-light">
     <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
+        <th>Imię</th>
+        <th>Nazwisko</th>
         <th>Email</th>
+        <th>Aktywny</th>
+        <th>Akcje</th>
     </tr>
+    </thead>
 
 
-    <c:forEach var="employee" items="${employees}">
+    <c:forEach var="tempTeacher" items="${employees}">
 
 
-        <%--        <c:url var="updateLink" value="/teacher/showFormForUpdate">--%>
-        <%--            <c:param name="employeeId" value="${employee.id}"/>--%>
-        <%--        </c:url>--%>
+        <c:url var="updateLink" value="/teacher/showFormForUpdate">
+            <c:param name="teacherId" value="${tempTeacher.id}"/>
+        </c:url>
 
 
-        <%--        <c:url var="deleteLink" value="/teacher/delete">--%>
-        <%--            <c:param name="teacherId" value="${tempTeacher.id}"/>--%>
-        <%--        </c:url>--%>
+        <c:url var="deleteLink" value="/teacher/delete">
+            <c:param name="teacherId" value="${tempTeacher.id}"/>
+        </c:url>
 
-        <tr>
-            <td> ${employee.firstName} </td>
-            <td> ${employee.lastName} </td>
-            <td> ${employee.email} </td>
+        <c:url var="addSickLeaveLink" value="/sickLeave/add/${tempTeacher.id}">
+        </c:url>
 
-                <%--            <td>--%>
-                <%--                <a href="${updateLink}">Update</a>--%>
-                <%--                |--%>
-                <%--                <a href="${deleteLink}"--%>
-                <%--                   onclick="if (!(confirm('Are you sure you want to delete this teacher?'))) return false">Delete</a>--%>
-                <%--            </td>--%>
+        <c:url var="addOvertimeLink" value="/overtime/add/${tempTeacher.id}">
+        </c:url>
 
+        <c:url var="salaryList" value="/salary/list/employee/${tempTeacher.id}">
+        </c:url>
+
+
+        <tr class="d-table-row">
+            <td> ${tempTeacher.firstName} </td>
+            <td> ${tempTeacher.lastName} </td>
+            <td> ${tempTeacher.email} </td>
+            <td> ${tempTeacher.active==true ? "+" : "-"}</td>
+
+
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle bg-success"
+                            type="button" id="dropdownMenu1" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        Action
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <a class="dropdown-item" href="${updateLink}">Aktualizuj</a>
+                        <a class="dropdown-item" href="${addSickLeaveLink}">Dodaj zwolnienie lekarskie</a>
+                        <a class="dropdown-item" href="${deleteLink}"
+                           onclick="if (!(confirm('Czy na pewno chcesz usunąć tego pracownika?' +
+                            ' Spowoduje to usunięcie historii wypłat z nim powiązanych! Rozważ zmianę statusu pracownika na nieaktywny'))) return false">Usuń
+                            pracownika</a>
+                        <a class="dropdown-item" href="${addOvertimeLink}">Dodaj nadgodziny</a>
+                        <a class="dropdown-item" href="${salaryList}">Lista płac pracownika</a>
+                    </div>
+                </div>
+            </td>
         </tr>
 
     </c:forEach>
 
-    <%--    <c:url var="calculateLink" value="/teacher/calculate">--%>
-    <%--                    <c:param name="teacherId" value="${tempTeacher.id}"/>--%>
-    <%--    </c:url>--%>
-
-
-    <%--    <button onclick="${calculateLink}"> Calculate </button>--%>
 </table>
 
 

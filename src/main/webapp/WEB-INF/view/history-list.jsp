@@ -19,20 +19,22 @@
 </head>
 <body>
 <h1>Historia zatrudnienia</h1>
+
 <h2>${employee.firstName} ${employee.lastName}</h2>
 
 <table>
-
-    <tr>
+    <thead class="thead-light">
+    <tr class="table table-responsive table-bordered">
         <th>Nazwa placówki</th>
         <th>Data rozpoczęcia</th>
         <th>Data zakończenia</th>
         <th>Dni na urlopie bezpłatnym</th>
     </tr>
+    </thead>
 
 
     <c:forEach var="eh" items="${history}">
-        <tr>
+        <tr class="d-table-row">
             <td>${eh.institutionName}</td>
             <td>${eh.startDate}</td>
             <td>${eh.endDate}</td>

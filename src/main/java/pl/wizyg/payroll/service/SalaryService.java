@@ -31,7 +31,7 @@ public interface SalaryService {
 
     OvertimeSalary getOvertimeSalary(int id);
 
-    abstract Salary getEmployeeOvertimeSalary(int employeeId, int month, int year);
+    Salary getEmployeeOvertimeSalary(int employeeId, int month, int year);
 
     List<EssentialSalary> getEssentialSalariesInMonthYear(int month, int year);
 
@@ -40,6 +40,8 @@ public interface SalaryService {
     List<Salary> getEmployeeSalariesFromPrevious12Months(int employeeId, int month, int year);
 
     List<Salary> getEmployeeSalaries(int employeeId);
+
+    List<Salary> getEmployeeSalariesInMonthYear(String email, int month, int year);
 
     List<SalaryListDTO> getSalaryListDTO();
 

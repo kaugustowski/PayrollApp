@@ -166,8 +166,8 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public List<Salary> getEmployeeSalariesFromPrevious12Months(int employeeId, int month, int year) {
-        int prevYear=year-1;
-        return salaryRepository.findAllByEmployeeIdAndMonthIsLessThanAndYearOrMonthGreaterThanEqualAndYear(employeeId,month ,year,month,prevYear);
+        int prevYear = year - 1;
+        return salaryRepository.findAllByEmployeeIdAndMonthIsLessThanAndYearOrMonthGreaterThanEqualAndYear(employeeId, month, year, month, prevYear);
     }
 
     @Override
@@ -176,7 +176,12 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public List<SalaryListDTO> getSalaryListDTO(){
+    public List<Salary> getEmployeeSalariesInMonthYear(String email, int month, int year) {
+        return salaryRepository.findByEmployee_EmailAndMonthAndYear(email, month, year);
+    }
+
+    @Override
+    public List<SalaryListDTO> getSalaryListDTO() {
         return salaryRepository.getAllPayrollMonths();
     }
 

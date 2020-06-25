@@ -34,7 +34,7 @@
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
-                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list">Pracownicy</a>
+                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list>Pracownicy</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown"
@@ -103,17 +103,19 @@
         <form:hidden path="id"/>
 
         <div class="form-group row">
-            <label for="firstName" class="col-sm-2 col-form-label">First name:</label>
+            <label for="firstName" class="col-sm-2 col-form-label">Imię:</label>
             <div class="col-sm-10">
                 <form:input path="firstName" id="firstName"/>
+                <form:errors path="firstName" cssClass="ui-state-error-text"/>
             </div>
         </div>
 
 
         <div class="form-group row">
-            <label for="lastName" class="col-sm-2 col-form-label">Last name:</label>
+            <label for="lastName" class="col-sm-2 col-form-label">Nazwisko:</label>
             <div class="col-sm-10">
                 <form:input path="lastName" id="lastName"/>
+                <form:errors path="lastName" cssClass="ui-state-error-text"/>
             </div>
         </div>
 
@@ -121,6 +123,7 @@
             <label for="email" class="col-sm-2 col-form-label">Email:</label>
             <div class="col-sm-10">
                 <form:input path="email" id="email"/>
+                <form:errors path="email" cssClass="ui-state-error-text"/>
             </div>
         </div>
 
@@ -128,11 +131,12 @@
             <label for="pesel" class="col-sm-2 col-form-label">Pesel:</label>
             <div class="col-sm-10">
                 <form:input path="pesel" id="pesel"/>
+                <form:errors path="pesel" cssClass="ui-state-error-text"/>
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="teacher_type" class="col-sm-2 col-form-label">Teacher type:</label>
+            <label for="teacher_type" class="col-sm-2 col-form-label">Stopień awansu zawodowego:</label>
             <div class="col-sm-10">
                 <form:select path="teacherType" id="teacher_type">
                     <c:forEach var="teacherType" items="${teacherTypeValues}">
@@ -144,7 +148,7 @@
         </div>
 
         <div class="form-group row">
-            <label for="education" class="col-sm-2 col-form-label">Education:</label>
+            <label for="education" class="col-sm-2 col-form-label">Wykształcenie:</label>
             <div class="col-sm-10">
                 <form:select path="education">
                     <c:forEach var="education" items="${educationValues}">
@@ -159,6 +163,7 @@
             <label for="funcBonus" class="col-sm-2 col-form-label">Functional bonus:</label>
             <div class="col-sm-10">
                 <form:input id="funcBonus" type="number" step="0.01" path="functionalBonusString"/>
+                <form:errors path="functionalBonus" cssClass="ui-state-error-text"/>
             </div>
         </div>
 
@@ -166,6 +171,7 @@
             <label for="seniorityBonus" class="col-sm-2 col-form-label">Seniority bonus:</label>
             <div class="col-sm-10">
                 <form:input id="seniorityBonus" type="number" step="0.01" path="seniorityBonusString"/>
+                <form:errors path="seniorityBonus" cssClass="ui-state-error-text"/>
             </div>
         </div>
 
@@ -173,6 +179,7 @@
             <label for="incPay" class="col-sm-2 col-form-label">Incentive pay:</label>
             <div class="col-sm-10">
                 <form:input id="incPay" type="number" step="0.01" path="incentivePayString"/>
+                <form:errors path="incentivePay" cssClass="ui-state-error-text"/>
             </div>
         </div>
 
@@ -205,12 +212,11 @@
         </div>
 
 
-
-            <div class="form-group row">
-                <div class="col-sm-10 offset-sm-2">
-                    <button type="submit" class="btn btn-primary">Sign in</button>
-                </div>
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">Dodaj pracownika</button>
             </div>
+        </div>
 
 
     </form:form>
@@ -218,7 +224,7 @@
     <div style="clear: both"></div>
 
     <p>
-        <a href="${pageContext.request.contextPath}/teacher/list">Back to List</a>
+        <a href="${pageContext.request.contextPath}/teacher/list">Powrót do listy</a>
     </p>
 
 </div>

@@ -11,6 +11,7 @@
 <head>
     <title>Salary list</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -83,37 +84,67 @@
 
 <h2>${employee.firstName} ${employee.lastName}</h2>
 
+<c:forEach var="salary" items="${salaries}">
+    <div class="grid-container border border-primary">
+        <div class="Name"><b>${salary.employee.firstName} ${salary.employee.lastName}</b></div>
+        <div class="components border">
+            Podstawa:<br/>
+            Dod. funkcyjny:<br/>
+            Dod. motywacyjny:<br/>
+            Dod. stażowy:<br/>
+            Wyn. chor.:<br/>
+            Zas chor:<br/>
+            <b>Suma brutto:</b><br/>
+        </div>
+        <div class="comp-values border">
+                ${salary.baseSalaryString}<br/>
+                ${salary.functionalBonusString}<br/>
+                ${salary.incentivePayString}<br/>
+                ${salary.seniorityBonusString}<br/>
+                ${salary.sickPayString}<br/>
+                ${salary.sicknessAllowanceString}<br/>
+            <b>${salary.grossSalaryString}</b><br/>
+        </div>
+        <div class="employee-contribution border">
+            Skł. emeryt. prac.:<br/>
+            Skł. rentowa prac.:<br/>
+            Skł. chorob. prac.:<br/>
+            Skł. zdrow.:<br/>
+            Skł. zdrow. odl.:<br/>
+            KUP:<br/>
+            Zaliczka na podatek:<br/>
+        </div>
+        <div class="payer-contr border">
+            Skł. emeryt. płat.:<br/>
+            Skł. rentowa płat.:<br/>
+            Skł. wypadkowa:<br/>
+            Fund. pracy:<br/>
+        </div>
+        <div class="ec-values border">
+                ${salary.pensionContributionEmployeeString}<br/>
+                ${salary.disabilityContributionEmployeeString}<br/>
+                ${salary.sicknessContributionString}<br/>
+                ${salary.healthcareContributionString}<br/>
+                ${salary.healthcareContributionDeductionString}<br/>
+                ${salary.taxDeductibleExpensesString}<br/>
+                ${salary.incomeTaxAdvanceString}<br/>
 
-<table class="table table-responsive table-bordered">
-    <thead class="thead-light">
-    <tr>
-        <th>Name</th>
-        <th>BSalary</th>
-        <th>GSalary</th>
-        <th>NetSalary</th>
-        <th>SContr</th>
-        <th>PenContr(E)</th>
-        <th>DisContr(E)</th>
-    </tr>
-    </thead>
 
-    <c:forEach var="salary" items="${salaries}">
-        <tr class="d-table-row">
-            <td> ${salary.employee.firstName} ${salary.employee.lastName}</td>
-            <td> ${salary.baseSalaryString} </td>
-            <td> ${salary.grossSalaryString} </td>
-            <td> ${salary.netSalaryString} </td>
-            <td> ${salary.sicknessContributionString} </td>
-            <td> ${salary.pensionContributionEmployeeString}</td>
-            <td> ${salary.disabilityContributionEmployeeString}</td>
-            <td> ${salary.accidentInsuranceContributionString} </td>
-            <td> ${salary.pensionContributionPayerString}</td>
-            <td> ${salary.disabilityContributionPayerString}</td>
-
-        </tr>
-        ${salary.month}/${salary.year}
-    </c:forEach>
-</table>
+        </div>
+        <div class="pc-values border">
+                ${salary.pensionContributionPayerString}<br/>
+                ${salary.disabilityContributionPayerString}<br/>
+                ${salary.accidentInsuranceContributionString}<br/>
+                ${salary.laborFundString}<br/>
+        </div>
+        <div class="net border">
+            <b>Suma netto:</b>
+        </div>
+        <div class="net-value border">
+            <b>${salary.netSalaryString}</b>
+        </div>
+    </div>
+</c:forEach>
 
 </body>
 </html>

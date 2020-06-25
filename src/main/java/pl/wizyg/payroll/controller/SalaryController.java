@@ -99,6 +99,15 @@ public class SalaryController {
         return "salary-list";
     }
 
+    @RequestMapping("my/{year}/{month}")
+    public String listSalaries(Model model, @PathVariable int year, @PathVariable int month, Principal principal) {
+        //Employee employee = employeeService.getEmployee(principal.getName());
+        List<Salary> salaries = salaryService.getEmployeeSalariesInMonthYear(principal.getName(), month, year);
+        //model.addAttribute("employee", employee);
+        model.addAttribute("salaries", salaries);
+        return "salary-list";
+    }
+
     @RequestMapping("/overtimeList/{year}/{month}")
     public String listOvertimeSalaries(Model model, @PathVariable int month, @PathVariable int year) {
         List<OvertimeSalary> salaries = salaryService.getOvertimeSalariesInMonthYear(month, year);
@@ -129,10 +138,10 @@ public class SalaryController {
         redirectAttrs.addAttribute("year", salary.getYear());
         redirectAttrs.addAttribute("month", salary.getMonth());
 
-        return "redirect:/salary/list/{year}/{month}" ;
+        return "redirect:/salary/essentialList/{year}/{month}";
     }
 
-    @GetMapping("/saveSalary/{employeeId}")
+    @GetMapping("/details/{employeeId}")
     public String showSalaryDetails(@ModelAttribute("salary") EssentialSalary salary, @PathVariable int employeeId, RedirectAttributes redirectAttrs){
 
         salaryService.getEmployeeSalaries(employeeId);
@@ -150,7 +159,7 @@ public class SalaryController {
 
     }
 
-    @RequestMapping("/calculateSalaries/{year}/{month}")
+    @PostMapping("/calculateSalaries/{year}/{month}")
     public String calculateSalaries(@PathVariable int year, @PathVariable int month){
 
         salaryService.saveSalaries(salaryService.calculateSalariesForActiveEmployees(month, year));
@@ -158,7 +167,7 @@ public class SalaryController {
         return "redirect:/salary/list/{year}/{month}";
     }
 
-    @RequestMapping("/calculateOvertimeSalaries/{year}/{month}")
+    @PostMapping("/calculateOvertimeSalaries/{year}/{month}")
     public String calculateOvertimeSalaries(@PathVariable int year, @PathVariable int month){
         salaryService.saveSalaries(salaryService.calculateOvertimeSalaryForActiveEmployees(month, year));
 

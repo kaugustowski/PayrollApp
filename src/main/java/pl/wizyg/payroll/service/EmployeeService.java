@@ -1,7 +1,6 @@
 package pl.wizyg.payroll.service;
 
 import pl.wizyg.payroll.entity.Employee;
-import pl.wizyg.payroll.entity.Teacher;
 
 import java.util.List;
 
@@ -14,6 +13,8 @@ public interface EmployeeService {
     //    void saveEmployee(Employee employee);
 //
     Employee getEmployee(int id);
+
+    Employee getEmployee(String email);
 
     void createEmployeeAccountIfDoesNotExist(Employee employee);
 

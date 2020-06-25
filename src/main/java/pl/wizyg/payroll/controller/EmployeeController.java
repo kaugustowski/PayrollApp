@@ -1,6 +1,5 @@
 package pl.wizyg.payroll.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.wizyg.payroll.entity.Employee;
-import pl.wizyg.payroll.entity.Teacher;
 import pl.wizyg.payroll.repository.EmployeeRepository;
 import pl.wizyg.payroll.service.EmployeeService;
 
@@ -42,10 +40,10 @@ public class EmployeeController {
     @RequestMapping("/{employeeId}")
     public String details(Model model, @PathVariable int employeeId){
 
-        Employee teacher = employeeService.getEmployee(employeeId);
+        Employee employee = employeeService.getEmployee(employeeId);
 
-        model.addAttribute("teacher", teacher);
+        model.addAttribute("emp", employee);
 
-        return "employee-form";
+        return "employee-details";
     }
 }

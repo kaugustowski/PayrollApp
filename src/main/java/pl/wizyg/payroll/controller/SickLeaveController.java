@@ -2,9 +2,12 @@ package pl.wizyg.payroll.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.wizyg.payroll.entity.Employee;
 import pl.wizyg.payroll.entity.SickLeave;
+import pl.wizyg.payroll.exception.SickLeaveNotFoundException;
+import pl.wizyg.payroll.exception.SickLeavesOverlapException;
 import pl.wizyg.payroll.service.EmployeeService;
 import pl.wizyg.payroll.service.SickLeaveService;
 
@@ -50,11 +53,47 @@ public class SickLeaveController {
         return "sickleave-form";
     }
 
+    @GetMapping("/edit/{employeeId}")
+    public String updateSickLeave(@RequestParam int sickLeaveId, @PathVariable int employeeId, Model theModel) throws SickLeaveNotFoundException {
+
+        Employee employee = employeeService.getEmployee(employeeId);
+
+        SickLeave sickLeave = sickLeaveService.getSickLeave(sickLeaveId);
+
+        theModel.addAttribute("employee", employee);
+        theModel.addAttribute("sickLeave", sickLeave);
+
+        return "sickleave-form";
+    }
+
     @PostMapping("/save/{employeeId}")
-    public String saveSickLeave(@ModelAttribute("sickLeave") SickLeave sickLeave, @PathVariable int employeeId) {
+    public String saveSickLeave(@ModelAttribute("sickLeave") SickLeave sickLeave, BindingResult bindingResult, @PathVariable int employeeId) throws SickLeavesOverlapException {
+
+        if (bindingResult.hasErrors()) {
+            return "sickleave-form";
+        }
 
         sickLeaveService.saveSickLeave(sickLeave, employeeId);
 
-        return "redirect:/sickLeaves/list/{employeeId}";
+        return "redirect:/sickLeave/list/{employeeId}";
     }
+
+    @PostMapping("/delete/{employeeId}")
+    public String deleteSickLeave(@RequestParam int sickLeaveId) throws SickLeaveNotFoundException {
+
+        sickLeaveService.delete(sickLeaveId);
+
+        return "redirect:/sickLeave/list/{employeeId}";
+    }
+
+
+//    @ExceptionHandler(SickLeavesOverlapException.class)
+//    public ModelAndView handleException(SickLeavesOverlapException ex)
+//    {
+//        //Do something additional if required
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("error");
+//        modelAndView.addObject("message", ex.getMessage());
+//        return modelAndView;
+//    }
 }

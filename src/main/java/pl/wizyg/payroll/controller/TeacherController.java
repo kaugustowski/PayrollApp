@@ -6,14 +6,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.wizyg.payroll.entity.Education;
 import pl.wizyg.payroll.entity.Teacher;
 import pl.wizyg.payroll.entity.TeacherType;
-import pl.wizyg.payroll.repository.SickLeaveRepository;
 import pl.wizyg.payroll.service.EmployeeService;
 import pl.wizyg.payroll.service.TeacherService;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,13 +26,12 @@ public class TeacherController {
     Logger logger = LoggerFactory.getLogger(TeacherController.class);
     // private static final Logger logger = Logger.getLogger(TeacherController.class);
 
-    private final SickLeaveRepository sickLeaveRepository;
+
     private final TeacherService teacherService;
     private final EmployeeService employeeServiceService;
 
 
-    public TeacherController(SickLeaveRepository sickLeaveRepository, TeacherService teacherService, EmployeeService employeeServiceService) {
-        this.sickLeaveRepository = sickLeaveRepository;
+    public TeacherController(TeacherService teacherService, EmployeeService employeeServiceService) {
         this.teacherService = teacherService;
         this.employeeServiceService = employeeServiceService;
     }
@@ -43,6 +43,8 @@ public class TeacherController {
         List<Teacher> theTeachers = teacherService.getTeachers();
 
         theModel.addAttribute("teachers", theTeachers);
+
+        theTeachers.forEach(teacher -> System.out.println(teacher.getLastName()));
 
         return "list-teachers";
     }
@@ -82,12 +84,15 @@ public class TeacherController {
     }
 
     @PostMapping("/saveTeacher")
-    public String saveTeacher(@ModelAttribute("teacher") Teacher teacher) {
+    public String saveTeacher(@Valid @ModelAttribute("teacher") Teacher teacher, BindingResult bindingResult) {
 
+        if (bindingResult.hasErrors()) {
+            return "teacher-form";
+        }
         employeeServiceService.createEmployeeAccountIfDoesNotExist(teacher);
         teacherService.saveTeacher(teacher);
 
-        return "redirect:/teacher/addTeacher";
+        return "redirect:/teacher/list";
     }
 
     @GetMapping("/showFormForUpdate")

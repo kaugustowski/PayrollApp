@@ -1,5 +1,7 @@
 package pl.wizyg.payroll.entity;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Overtime {
     @Column(name = "year")
     private int year;
 
+    @Range(min = 1, max = 12, message = "Miesiąc powinien mieścić się w przedziale 1-12")
     @Column(name = "month")
     private int month;
 
@@ -25,8 +28,6 @@ public class Overtime {
 
     public Overtime() {
     }
-
-    ;
 
     public Overtime(Employee employee) {
         this.employee = employee;

@@ -48,6 +48,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findById(id).get();
     }
 
+    @Override
+    public Employee getEmployee(String email) {
+        return employeeRepository.findByEmail(email).get();
+    }
+
 //TODO
     @Override
     public void createEmployeeAccountIfDoesNotExist(Employee employee){

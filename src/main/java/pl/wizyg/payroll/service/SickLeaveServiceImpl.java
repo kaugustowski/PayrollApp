@@ -3,9 +3,10 @@ package pl.wizyg.payroll.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.wizyg.payroll.entity.Employee;
+import pl.wizyg.payroll.entity.MyDateUtils;
 import pl.wizyg.payroll.entity.SickLeave;
-import pl.wizyg.payroll.repository.EmployeeRepository;
+import pl.wizyg.payroll.exception.SickLeaveNotFoundException;
+import pl.wizyg.payroll.exception.SickLeavesOverlapException;
 import pl.wizyg.payroll.repository.SickLeaveRepository;
 
 import java.time.LocalDate;
@@ -67,9 +68,26 @@ public class SickLeaveServiceImpl implements SickLeaveService {
     }
 
     @Override
-    public void saveSickLeave(SickLeave sickLeave, int employeeId) {
+    public void saveSickLeave(SickLeave sickLeave, int employeeId) throws SickLeavesOverlapException {
+        sickLeave.validateAndSwapIfNeeded();
+        List<SickLeave> employeeSickLeaves = sickLeaveRepository.findAllByEmployeeId(employeeId);
+        for (SickLeave sl : employeeSickLeaves) {
+            if (areSickLeavesOverlapped(sl, sickLeave)) {
+                throw new SickLeavesOverlapException("Zwolnienie nakłada się na już istniejące!");
+            }
+        }
         employeeService.getEmployee(employeeId).addSickLeave(sickLeave);
         sickLeaveRepository.save(sickLeave);
+    }
+
+    @Override
+    public SickLeave getSickLeave(int sickLeaveId) throws SickLeaveNotFoundException {
+        return sickLeaveRepository.findById(sickLeaveId).orElseThrow(() -> new SickLeaveNotFoundException("Nie znaleziono zwolnienia o id: " + sickLeaveId));
+    }
+
+    @Override
+    public void delete(int sickLeaveId) throws SickLeaveNotFoundException {
+        sickLeaveRepository.delete(sickLeaveRepository.findById(sickLeaveId).orElseThrow(() -> new SickLeaveNotFoundException("Nie znaleziono zwolnienia o id: " + sickLeaveId)));
     }
 
     public int getNumberOfAbsenceDays(int employeeId, int month, int year) {
@@ -80,6 +98,10 @@ public class SickLeaveServiceImpl implements SickLeaveService {
             absenceDays += sl.getNumberOfSickLeaveDaysInMonthYear(month, year);
         }
         return absenceDays;
+    }
+
+    private boolean areSickLeavesOverlapped(SickLeave sl1, SickLeave sl2) {
+        return MyDateUtils.isOverlapped(sl1.getStartDate(), sl1.getEndDate(), sl2.getStartDate(), sl2.getEndDate());
     }
 
 

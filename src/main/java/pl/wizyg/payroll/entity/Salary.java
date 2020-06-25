@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -20,26 +22,35 @@ import java.util.stream.Stream;
 @Component
 public abstract class Salary {
 
-    @Column(name = "gross_salary")
-    int grossSalary;
+    @Column(name = "income_tax_advance")
+    @Min(0)
+    protected int incomeTaxAdvance;
     @Transient
     int contributionBase;
+    @Min(0)
+    @Column(name = "gross_salary")
+    int grossSalary;
     @Column(name = "pension_contribution_payer")
+    @Min(0)
     int pensionContributionPayer;
     @Column(name = "disability_contribution_payer")
+    @Min(0)
     int disabilityContributionPayer;
     @Column(name = "accident_insurance_contribution")
+    @Min(0)
     int accidentInsuranceContribution;
     @Column(name = "pension_contribution_employee")
+    @Min(0)
     int pensionContributionEmployee;
     @Column(name = "disability_contribution_employee")
+    @Min(0)
     int disabilityContributionEmployee;
     @Column(name = "sickness_contribution")
+    @Min(0)
     int sicknessContribution;
     @Column(name = "healthcare_contribution")
+    @Min(0)
     int healthcareContribution;
-    @Column(name = "healthcare_contribution_deduction")
-    int healthcareContributionDeduction;
     @ManyToOne
     @JoinColumn(name = "employee_id")
     Employee employee;
@@ -53,31 +64,42 @@ public abstract class Salary {
             sequenceName = "salary_sequence"
     )
     private int id;
+    @Column(name = "healthcare_contribution_deduction")
+    @Min(0)
+    int healthcareContributionDeduction;
     @Column(name = "month")
     private int month;
     @Column(name = "year")
     private int year;
     @Column(name = "tax")
-    private int tax;
-    @Column(name = "income_tax_advance")
-    protected int incomeTaxAdvance;
+    @Min(0)
+    int tax;
     @Column(name = "tax_deductible_expenses")
+    @Min(0)
     private int taxDeductibleExpenses;
     @Column(name = "sick_pay")
+    @Min(0)
     private int sickPay;
     @Column(name = "sickness_allowance")
+    @Min(0)
     private int sicknessAllowance;
     @Column(name = "labor_fund")
+    @Min(0)
     private int laborFund;
     @Column(name = "base_salary")
+    @Min(0)
     private int baseSalary;
     @Column(name = "net_salary")
+    @Min(0)
     private int netSalary;
     @Column(name = "seniority_bonus")
+    @Min(0)
     private int seniorityBonus;
     @Column(name = "functional_bonus")
+    @Min(0)
     private int functionalBonus;
     @Column(name = "incentive_pay")
+    @Min(0)
     private int incentivePay;
 
 
@@ -557,11 +579,10 @@ public abstract class Salary {
     isWeekend(LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         return dayOfWeek == DayOfWeek.SUNDAY || dayOfWeek == DayOfWeek.SATURDAY;
-
     }
 
     public boolean isFreeDay(LocalDate date) {
-        return isWeekend(date) || Holidays.getHolidaysInYear(year).contains(date);
+        return isWeekend(date) || MyDateUtils.getHolidaysInYear(year).contains(date);
     }
 
 //    public int getNumberOfSickLeaveDaysUpToMonth() {

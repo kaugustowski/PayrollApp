@@ -3,8 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 0.5fr 1.5fr 1fr 1fr 1fr;
+            gap: 1px 1px;
+            grid-template-areas: "Name Name Name Name" "components comp-values employee-contribution ec-values" "components comp-values employee-contribution ec-values" "components comp-values payer-contr pc-values" "net net-value payer-contr pc-values";
+        }
+
+        .Name {
+            grid-area: Name;
+        }
+
+        .components {
+            grid-area: components;
+        }
+
+        .comp-values {
+            grid-area: comp-values;
+        }
+
+        .employee-contribution {
+            grid-area: employee-contribution;
+        }
+
+        .payer-contr {
+            grid-area: payer-contr;
+        }
+
+        .ec-values {
+            grid-area: ec-values;
+        }
+
+        .pc-values {
+            grid-area: pc-values;
+        }
+
+        .net {
+            grid-area: net;
+        }
+
+        .net-value {
+            grid-area: net-value;
+        }
+    </style>
 </head>
 <body>
 
+<div class="grid-container">
+    <div class="Name">Karol</div>
+    <div class="components">
+        podstawa:<br/>
+        dod f:<br/>
+        dod mot:<br/>
+        dod staz:<br/>
+        wyn ch:<br/>
+        wyn zas:<br/>
+        brutto:<br/>
+    </div>
+    <div class="comp-values">
+        2600,00<br/>
+        200,20<br/>
+        150,00<br/>
+        180,00<br/>
+        0,00<br/>
+        0,00<br/>
+        3250,00<br/>
+    </div>
+    <div class="employee-contribution">
+        emerytalna:<br/>
+        rentowa:<br/>
+        chorob:<br/>
+        zdrow:<br/>
+        zdrow odl.:<br/>
+        KUP:<br/>
+        zaliczka na podatek:<br/>
+    </div>
+    <div class="payer-contr">
+        emerytalna:<br/>
+        rentowa:<br/>
+        wypadkowa:<br/>
+        fp:<br/>
+    </div>
+    <div class="ec-values">
+        2600,00<br/>
+        200,20<br/>
+        150,00<br/>
+        180,00<br/>
+        28,00<br/>
+        53,00<br/>
+    </div>
+    <div class="pc-values">
+        2600,00<br/>
+        200,20<br/>
+        150,00<br/>
+        180,00<br/>
+    </div>
+    <div class="net">Suma netto:</div>
+    <div class="net-value"> 2852,39</div>
+</div>
+
 </body>
-</html>
+</html>fds

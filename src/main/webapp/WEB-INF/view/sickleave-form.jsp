@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -30,7 +31,7 @@
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
-                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list">Pracownicy</a>
+                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list>Pracownicy</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown"
@@ -83,16 +84,10 @@
 
 </nav>
 
-<div id="wrapper">
-    <div id="header">
-        <h2>Sick leave form</h2>
-    </div>
-</div>
-
 <div id="container">
-    <h3>Save Sick Leave</h3>
+    <h3>Zwolnienie lekarskie</h3>
 
-    <h2>${employee.firstName } ${employee.lastName }</h2>
+    <h3>${employee.firstName } ${employee.lastName }</h3>
 
     <form:form action="${pageContext.request.contextPath}/sickLeave/save/${employeeId}"
                modelAttribute="sickLeave" method="POST">
@@ -102,18 +97,18 @@
         <table>
             <tbody>
             <tr>
-                <td><label>Sick leave start date:</label></td>
+                <td><label>Początek zwolnienia:</label></td>
                 <td><form:input type="date" path="startDate"/></td>
             </tr>
 
             <tr>
-                <td><label>Sick leave end date:</label></td>
+                <td><label>Koniec zwolnienia:</label></td>
                 <td><form:input type="date" path="endDate"/></td>
             </tr>
 
             <tr>
                 <td><label></label></td>
-                <td><input type="submit" value="Save" class="save"/></td>
+                <td><input type="submit" value="Zapisz" class="save"/></td>
             </tr>
             </tbody>
         </table>

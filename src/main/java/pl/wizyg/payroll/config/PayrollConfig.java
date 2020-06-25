@@ -151,4 +151,5 @@ public class PayrollConfig implements WebMvcConfigurer {
                 .addResourceLocations("/resources/");
     }
 
+
 }

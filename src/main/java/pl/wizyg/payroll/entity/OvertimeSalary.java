@@ -3,12 +3,14 @@ package pl.wizyg.payroll.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "overtime_salary")
 public class OvertimeSalary extends Salary {
 
     @Column(name = "number_of_overtime_hours")
+    @Min(0)
     private int numberOfOvertimeHours;
 
     public OvertimeSalary() {}

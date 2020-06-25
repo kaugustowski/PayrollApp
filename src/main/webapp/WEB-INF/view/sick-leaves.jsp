@@ -85,19 +85,48 @@
 <h2>${employee.firstName} ${employee.lastName}</h2>
 
 <table>
-
+    <thead>
     <tr>
         <th>Start date</th>
         <th>End date</th>
         <th>Consecutive Days</th>
+        <th>Action</th>
     </tr>
+
+    </thead>
 
 
     <c:forEach var="sickLeave" items="${sickLeaves}">
+
+        <c:url var="edit" value="${pageContext.request.contextPath}/sickLeave/edit/${sickLeave.sickLeaveId}">
+            <c:param name="sickLeaveId" value="${sickLeave.sickLeaveId}"/>
+        </c:url>
+
+        <c:url var="deleteLink" value="${pageContext.request.contextPath}/sickLeave/delete/">
+            <c:param name="sickLeaveId" value="${sickLeave.sickLeaveId}"/>
+        </c:url>
+
+
         <tr>
             <td>${sickLeave.startDate}</td>
             <td>${sickLeave.endDate}</td>
             <td>${sickLeave.consecutiveDays}</td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle bg-success"
+                            type="button" id="dropdownMenu1" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        Akcje
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <a class="dropdown-item" href="${edit}">Aktualizuj</a>
+                        <a class="dropdown-item" href="${deleteLink}"
+                           onclick="if (!(confirm('Czy na pewno chcesz to zwolnienie?'))) return false">Usuń
+                            pracownika</a>
+
+                    </div>
+                </div>
+            </td>
         </tr>
     </c:forEach>
 

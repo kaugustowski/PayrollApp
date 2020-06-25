@@ -4,7 +4,10 @@ import org.hibernate.validator.constraints.pl.PESEL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -24,21 +27,25 @@ public abstract class Employee {
     @Column(name = "base_salary")
     int baseSalary;
     @Column(name = "seniority_bonus")
+    @Min(value = 0, message = "Wartość nie może być ujemna!")
     private int seniorityBonus;
     @Column(name = "functional_bonus")
+    @Min(value = 0, message = "Wartość nie może być ujemna!")
     private int functionalBonus;
     @Column(name = "first_name")
-    @NotNull
+    @NotNull(message = "Pole wymagane")
     private String firstName;
-    @NotNull
+    @NotNull(message = "Pole wymagane")
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "pesel")
     @PESEL
     private String pesel;
     @Column(name = "email", unique = true)
+    @Email
     private String email;
     @Column(name = "birth_date")
+    @Past
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate birthDate;
     @Column(name = "employeed_on_date")
@@ -258,14 +265,21 @@ public abstract class Employee {
 
     public void setFunctionalBonusString (String senBonus){
 
-        functionalBonus = (int) Math.round(Double.parseDouble(senBonus)*100);
-    }
-    public String getFunctionalBonusString(){
-
-        double sb = (double)functionalBonus/100;
-
-        return String.format(Locale.ROOT,"%.2f",sb);
+        functionalBonus = (int) Math.round(Double.parseDouble(senBonus) * 100);
     }
 
+    public String getFunctionalBonusString() {
+
+        double sb = (double) functionalBonus / 100;
+
+        return String.format(Locale.ROOT, "%.2f", sb);
+    }
+
+    public String getBaseSalaryString() {
+
+        double bs = (double) baseSalary / 100;
+
+        return String.format(Locale.ROOT, "%.2f", bs);
+    }
 }
 

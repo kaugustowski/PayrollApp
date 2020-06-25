@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
 import javax.sql.DataSource;
 
@@ -37,9 +38,19 @@ public class PayrollSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        http.addFilterBefore(new EncodingFilter(), ChannelProcessingFilter.class);
+
         http
                 .authorizeRequests()
-                .anyRequest()
+                .antMatchers("/salary/my/*").hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/salary/**").hasRole("PAYROLL_SPECIALIST")
+                .antMatchers("/employee/**").hasRole("PAYROLL_SPECIALIST")
+                .antMatchers("/teacher/**").hasRole("PAYROLL_SPECIALIST")
+                .antMatchers("/sickLeave/**").hasRole("PAYROLL_SPECIALIST")
+                .antMatchers("/overtime/**").hasRole("PAYROLL_SPECIALIST")
+                .antMatchers("/")
                 .authenticated()
                 .and()
                 .formLogin()
@@ -48,7 +59,6 @@ public class PayrollSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout().permitAll();
-
     }
 
     @Bean

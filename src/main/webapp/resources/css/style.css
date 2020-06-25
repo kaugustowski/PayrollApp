@@ -1,0 +1,44 @@
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 1.5fr 1fr 1fr 1fr;
+    gap: 1px 1px;
+    grid-template-areas: "Name Name Name Name" "components comp-values employee-contribution ec-values" "components comp-values employee-contribution ec-values" "components comp-values payer-contr pc-values" "net net-value payer-contr pc-values";
+}
+
+.Name {
+    grid-area: Name;
+}
+
+.components {
+    grid-area: components;
+}
+
+.comp-values {
+    grid-area: comp-values;
+}
+
+.employee-contribution {
+    grid-area: employee-contribution;
+}
+
+.payer-contr {
+    grid-area: payer-contr;
+}
+
+.ec-values {
+    grid-area: ec-values;
+}
+
+.pc-values {
+    grid-area: pc-values;
+}
+
+.net {
+    grid-area: net;
+}
+
+.net-value {
+    grid-area: net-value;
+}

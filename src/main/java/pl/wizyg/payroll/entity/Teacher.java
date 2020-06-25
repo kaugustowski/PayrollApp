@@ -1,6 +1,7 @@
 package pl.wizyg.payroll.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.Locale;
 
 @Entity
@@ -11,6 +12,7 @@ public class Teacher extends Employee {
     @Column(name = "teacher_type")
     private TeacherType teacherType;
 
+    @Min(value = 0, message = "Wartość nie może być ujemna!")
     @Column(name = "incentive_pay")
     private int incentivePay;
 

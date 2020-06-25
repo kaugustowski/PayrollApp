@@ -35,10 +35,11 @@ public class SickLeave {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    public SickLeave(){};
+    public SickLeave() {
+    }
 
     public SickLeave(Employee employee) {
-
+        this.employee = employee;
     }
 
     public int getConsecutiveDays() {
@@ -132,6 +133,15 @@ public class SickLeave {
         this.endDate = endDate;
     }
 
+    public void validateAndSwapIfNeeded() {
+        if (endDate != null && startDate != null)
+            if (endDate.isBefore(startDate)) {
+                LocalDate tempDate = this.endDate;
+                this.endDate = this.startDate;
+                this.startDate = tempDate;
+            }
+    }
+
     public Employee getEmployee() {
         return employee;
     }
@@ -158,6 +168,6 @@ public class SickLeave {
     }
 
     public boolean isFreeDay(LocalDate date) {
-        return isWeekend(date) || Holidays.getHolidaysInYear(date.getYear()).contains(date);
+        return isWeekend(date) || MyDateUtils.getHolidaysInYear(date.getYear()).contains(date);
     }
 }
