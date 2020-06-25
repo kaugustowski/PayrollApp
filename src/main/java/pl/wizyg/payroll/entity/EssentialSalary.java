@@ -28,4 +28,22 @@ public class EssentialSalary extends Salary {
     public String toString() {
         return super.toString();
     }
+
+    @Override
+    public String toString() {
+        return "EssentialSalary{" +
+                "grossSalary=" + grossSalary +
+                ", contributionBase=" + contributionBase +
+                ", pensionContributionPayer=" + pensionContributionPayer +
+                ", disabilityContributionPayer=" + disabilityContributionPayer +
+                ", accidentInsuranceContribution=" + accidentInsuranceContribution +
+                ", pensionContributionEmployee=" + pensionContributionEmployee +
+                ", disabilityContributionEmployee=" + disabilityContributionEmployee +
+                ", sicknessContribution=" + sicknessContribution +
+                ", healthcareContribution=" + healthcareContribution +
+                ", healthcareContributionDeduction=" + healthcareContributionDeduction +
+                ", employee=" + employee +
+                ", incomeTaxAdvance=" + incomeTaxAdvance +
+                '}';
+    }
 }
