@@ -42,3 +42,44 @@
 .net-value {
     grid-area: net-value;
 }
+
+#dropdownMenu1 {
+    height: 80%;
+}
+
+div#form-container {
+    padding: 100px;
+    margin: 20px;
+}
+
+h2.center {
+    align-content: center;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
+
+.form-row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
+
+div#nav-container {
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
+}
+
+
+

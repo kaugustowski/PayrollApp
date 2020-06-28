@@ -1,5 +1,7 @@
 package pl.wizyg.payroll.entity;
 
+import pl.wizyg.payroll.helper.SalaryConstants;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.Locale;

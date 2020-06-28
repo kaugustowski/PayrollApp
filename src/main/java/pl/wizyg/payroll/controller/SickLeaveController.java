@@ -11,6 +11,7 @@ import pl.wizyg.payroll.exception.SickLeavesOverlapException;
 import pl.wizyg.payroll.service.EmployeeService;
 import pl.wizyg.payroll.service.SickLeaveService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -67,7 +68,7 @@ public class SickLeaveController {
     }
 
     @PostMapping("/save/{employeeId}")
-    public String saveSickLeave(@ModelAttribute("sickLeave") SickLeave sickLeave, BindingResult bindingResult, @PathVariable int employeeId) throws SickLeavesOverlapException {
+    public String saveSickLeave(@Valid @ModelAttribute("sickLeave") SickLeave sickLeave, BindingResult bindingResult, @PathVariable int employeeId) throws SickLeavesOverlapException {
 
         if (bindingResult.hasErrors()) {
             return "sickleave-form";
@@ -78,7 +79,7 @@ public class SickLeaveController {
         return "redirect:/sickLeave/list/{employeeId}";
     }
 
-    @PostMapping("/delete/{employeeId}")
+    @PostMapping("/delete")
     public String deleteSickLeave(@RequestParam int sickLeaveId) throws SickLeaveNotFoundException {
 
         sickLeaveService.delete(sickLeaveId);
@@ -87,13 +88,4 @@ public class SickLeaveController {
     }
 
 
-//    @ExceptionHandler(SickLeavesOverlapException.class)
-//    public ModelAndView handleException(SickLeavesOverlapException ex)
-//    {
-//        //Do something additional if required
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("error");
-//        modelAndView.addObject("message", ex.getMessage());
-//        return modelAndView;
-//    }
 }

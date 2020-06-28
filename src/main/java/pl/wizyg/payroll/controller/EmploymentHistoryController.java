@@ -3,12 +3,17 @@ package pl.wizyg.payroll.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pl.wizyg.payroll.entity.Employee;
 import pl.wizyg.payroll.entity.EmploymentHistory;
 import pl.wizyg.payroll.service.EmployeeService;
 import pl.wizyg.payroll.service.EmploymentHistoryService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/history")
@@ -43,7 +48,12 @@ public class EmploymentHistoryController {
     }
 
     @PostMapping("/save/{employeeId}")
-    public String saveEmploymentHistory(@ModelAttribute EmploymentHistory employmentHistory, @PathVariable int employeeId){
+    public String saveEmploymentHistory(@Valid @ModelAttribute EmploymentHistory employmentHistory, BindingResult bindingResult, @PathVariable int employeeId) {
+
+        if (bindingResult.hasErrors()) {
+            return "sickleave-form";
+        }
+
         employeeService.getEmployee(employeeId).addEmploymentHistory(employmentHistory);
         employmentHistoryService.saveEmploymentHistory(employmentHistory, employeeId);
 

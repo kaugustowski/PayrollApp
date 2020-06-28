@@ -11,20 +11,13 @@
 <html>
 <head>
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <style>
-        #dropdownMenu1 {
-            height: 80%;
-        }
-
-        td {
-            text-align: center;
-            vertical-align: middle;
-        }
-    </style>
+    <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
 </head>
 <body>
 <nav class="navbar sticky-top navbar-dark bg-transparent">
@@ -32,7 +25,7 @@
         <div class="p-2 w-100 ">
             <ul class="nav nav-tabs">
                 <li>
-                    <a class="nav-link" href="#">Strona główna</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item active">
@@ -122,6 +115,9 @@
         <c:url var="salaryList" value="/salary/list/employee/${tempTeacher.id}">
         </c:url>
 
+        <c:url var="empHistory" value="/history/list/${tempTeacher.id}">
+        </c:url>
+
 
         <tr class="d-table-row">
             <td> ${tempTeacher.firstName} </td>
@@ -146,6 +142,7 @@
                             pracownika</a>
                         <a class="dropdown-item" href="${addOvertimeLink}">Dodaj nadgodziny</a>
                         <a class="dropdown-item" href="${salaryList}">Lista płac pracownika</a>
+                        <a class="dropdown-item" href="${empHistory}">Lista płac pracownika</a>
                     </div>
                 </div>
             </td>

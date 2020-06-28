@@ -29,7 +29,7 @@
         <div class="p-2 w-100 ">
             <ul class="nav nav-tabs">
                 <li>
-                    <a class="nav-link active" href="#">Strona główna</a>
+                    <a class="nav-link active" href="${pageContext.request.contextPath}">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
@@ -94,9 +94,7 @@
 
 <div id="container">
 
-
     <form:form action="${pageContext.request.contextPath}/admin/register" modelAttribute="user" method="POST">
-
 
         <table>
             <tbody>

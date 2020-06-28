@@ -38,7 +38,7 @@ public abstract class Employee {
     @NotNull(message = "Pole wymagane")
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "pesel")
+    @Column(name = "pesel", unique = true)
     @PESEL
     private String pesel;
     @Column(name = "email", unique = true)

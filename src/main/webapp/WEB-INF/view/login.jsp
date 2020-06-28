@@ -36,14 +36,14 @@
 
         <c:if test="${param.error != null}">
             <div>
-                <i class="failed">Sorry! You entered invalid username/password.</i>
+                <i class="failed">Wprowadzono błędną nazwę użytkownika/hasło!.</i>
             </div>
         </c:if>
 
 
         <c:if test="${param.logout != null}">
             <div>
-                <i class="logout">Logged out succesfully.</i>
+                <i class="logout">Wylogowano pomyślnie.</i>
             </div>
         </c:if>
 

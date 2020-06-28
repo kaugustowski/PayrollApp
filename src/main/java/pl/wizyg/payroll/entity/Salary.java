@@ -3,6 +3,8 @@ package pl.wizyg.payroll.entity;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import pl.wizyg.payroll.helper.MyDateUtils;
+import pl.wizyg.payroll.helper.SalaryConstants;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;

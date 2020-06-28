@@ -19,7 +19,7 @@
         <div class="p-2 w-100 ">
             <ul class="nav nav-tabs">
                 <li>
-                    <a class="nav-link active" href="#">Strona główna</a>
+                    <a class="nav-link active" href="${pageContext.request.contextPath}">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
@@ -76,55 +76,58 @@
 
 </nav>
 
-<form:form id="form" action="${pageContext.request.contextPath}/salary/createPayroll" method="POST">
-    <div class="form-group row">
-        <label for="month" class="col-sm-2 col-form-label">Month:</label>
-        <div class="col-sm-10">
-            <select id="month" onchange="updateLink()">
-                <option value=''>--Select Month--</option>
-                <option selected value='1'>January</option>
-                <option value='2'>February</option>
-                <option value='3'>March</option>
-                <option value='4'>April</option>
-                <option value='5'>May</option>
-                <option value='6'>June</option>
-                <option value='7'>July</option>
-                <option value='8'>August</option>
-                <option value='9'>September</option>
-                <option value='10'>October</option>
-                <option value='11'>November</option>
-                <option value='12'>December</option>
-            </select>
+<div class="container">
+    <form:form id="form" action="${pageContext.request.contextPath}/salary/createPayroll" method="POST">
+        <div class="form-group row">
+            <label for="month" class="col-sm-2 col-form-label">Month:</label>
+            <div class="col-sm-10">
+                <select id="month" onchange="updateLink()">
+                    <option value=''>--Select Month--</option>
+                    <option selected value='1'>January</option>
+                    <option value='2'>February</option>
+                    <option value='3'>March</option>
+                    <option value='4'>April</option>
+                    <option value='5'>May</option>
+                    <option value='6'>June</option>
+                    <option value='7'>July</option>
+                    <option value='8'>August</option>
+                    <option value='9'>September</option>
+                    <option value='10'>October</option>
+                    <option value='11'>November</option>
+                    <option value='12'>December</option>
+                </select>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label for="year" class="col-sm-2 col-form-label">Year:</label>
-        <div class="col-sm-10">
-            <select id="year" onchange="updateLink()">
+        <div class="form-group row">
+            <label for="year" class="col-sm-2 col-form-label">Year:</label>
+            <div class="col-sm-10">
+                <select id="year" onchange="updateLink()">
 
-            </select>
+                </select>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label for="type" class="col-sm-2 col-form-label">Type:</label>
-        <div class="col-sm-10">
-            <select id="type" onchange="updateLink()">
-                <option value='calculateOvertimeSalaries'>Overtime</option>
-                <option value='calculateSalaries'>Essential</option>
-            </select>
+        <div class="form-group row">
+            <label for="type" class="col-sm-2 col-form-label">Type:</label>
+            <div class="col-sm-10">
+                <select id="type" onchange="updateLink()">
+                    <option value='calculateOvertimeSalaries'>Overtime</option>
+                    <option value='calculateSalaries'>Essential</option>
+                </select>
+            </div>
         </div>
-    </div>
 
 
-    <div class="form-group row">
-        <div class="col-sm-10 offset-sm-2">
-            <button type="submit" class="btn btn-primary">Create</button>
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
         </div>
-    </div>
 
-</form:form>
+    </form:form>
+
+</div>
 
 
 </body>

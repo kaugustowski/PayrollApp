@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Wizyg
@@ -25,11 +26,11 @@
         <div class="p-2 w-100 ">
             <ul class="nav nav-tabs">
                 <li>
-                    <a class="nav-link active" href="#">Strona główna</a>
+                    <a class="nav-link active" href="${pageContext.request.contextPath}">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
-                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list">Pracownicy</a>
+                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list>Pracownicy</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown"
@@ -81,70 +82,72 @@
     </div>
 
 </nav>
+<div class="container">
+    <h2>${employee.firstName} ${employee.lastName}</h2>
 
-<h2>${employee.firstName} ${employee.lastName}</h2>
-
-<c:forEach var="salary" items="${salaries}">
-    <div class="grid-container border border-primary">
-        <div class="Name"><b>${salary.employee.firstName} ${salary.employee.lastName}</b></div>
-        <div class="components border">
-            Podstawa:<br/>
-            Dod. funkcyjny:<br/>
-            Dod. motywacyjny:<br/>
-            Dod. stażowy:<br/>
-            Wyn. chor.:<br/>
-            Zas chor:<br/>
-            <b>Suma brutto:</b><br/>
-        </div>
-        <div class="comp-values border">
-                ${salary.baseSalaryString}<br/>
-                ${salary.functionalBonusString}<br/>
-                ${salary.incentivePayString}<br/>
-                ${salary.seniorityBonusString}<br/>
-                ${salary.sickPayString}<br/>
-                ${salary.sicknessAllowanceString}<br/>
-            <b>${salary.grossSalaryString}</b><br/>
-        </div>
-        <div class="employee-contribution border">
-            Skł. emeryt. prac.:<br/>
-            Skł. rentowa prac.:<br/>
-            Skł. chorob. prac.:<br/>
-            Skł. zdrow.:<br/>
-            Skł. zdrow. odl.:<br/>
-            KUP:<br/>
-            Zaliczka na podatek:<br/>
-        </div>
-        <div class="payer-contr border">
-            Skł. emeryt. płat.:<br/>
-            Skł. rentowa płat.:<br/>
-            Skł. wypadkowa:<br/>
-            Fund. pracy:<br/>
-        </div>
-        <div class="ec-values border">
-                ${salary.pensionContributionEmployeeString}<br/>
-                ${salary.disabilityContributionEmployeeString}<br/>
-                ${salary.sicknessContributionString}<br/>
-                ${salary.healthcareContributionString}<br/>
-                ${salary.healthcareContributionDeductionString}<br/>
-                ${salary.taxDeductibleExpensesString}<br/>
-                ${salary.incomeTaxAdvanceString}<br/>
+    <c:forEach var="salary" items="${salaries}">
+        <div class="grid-container border border-primary">
+            <div class="Name"><b>${salary.employee.firstName} ${salary.employee.lastName}</b></div>
+            <div class="components border">
+                Podstawa:<br/>
+                Dod. funkcyjny:<br/>
+                Dod. motywacyjny:<br/>
+                Dod. stażowy:<br/>
+                Wyn. chor.:<br/>
+                Zas chor:<br/>
+                <b>Suma brutto:</b><br/>
+            </div>
+            <div class="comp-values border">
+                    ${salary.baseSalaryString}<br/>
+                    ${salary.functionalBonusString}<br/>
+                    ${salary.incentivePayString}<br/>
+                    ${salary.seniorityBonusString}<br/>
+                    ${salary.sickPayString}<br/>
+                    ${salary.sicknessAllowanceString}<br/>
+                <b>${salary.grossSalaryString}</b><br/>
+            </div>
+            <div class="employee-contribution border">
+                Skł. emeryt. prac.:<br/>
+                Skł. rentowa prac.:<br/>
+                Skł. chorob. prac.:<br/>
+                Skł. zdrow.:<br/>
+                Skł. zdrow. odl.:<br/>
+                KUP:<br/>
+                Zaliczka na podatek:<br/>
+            </div>
+            <div class="payer-contr border">
+                Skł. emeryt. płat.:<br/>
+                Skł. rentowa płat.:<br/>
+                Skł. wypadkowa:<br/>
+                Fund. pracy:<br/>
+            </div>
+            <div class="ec-values border">
+                    ${salary.pensionContributionEmployeeString}<br/>
+                    ${salary.disabilityContributionEmployeeString}<br/>
+                    ${salary.sicknessContributionString}<br/>
+                    ${salary.healthcareContributionString}<br/>
+                    ${salary.healthcareContributionDeductionString}<br/>
+                    ${salary.taxDeductibleExpensesString}<br/>
+                    ${salary.incomeTaxAdvanceString}<br/>
 
 
+            </div>
+            <div class="pc-values border">
+                    ${salary.pensionContributionPayerString}<br/>
+                    ${salary.disabilityContributionPayerString}<br/>
+                    ${salary.accidentInsuranceContributionString}<br/>
+                    ${salary.laborFundString}<br/>
+            </div>
+            <div class="net border">
+                <b>Suma netto:</b>
+            </div>
+            <div class="net-value border">
+                <b>${salary.netSalaryString}</b>
+            </div>
         </div>
-        <div class="pc-values border">
-                ${salary.pensionContributionPayerString}<br/>
-                ${salary.disabilityContributionPayerString}<br/>
-                ${salary.accidentInsuranceContributionString}<br/>
-                ${salary.laborFundString}<br/>
-        </div>
-        <div class="net border">
-            <b>Suma netto:</b>
-        </div>
-        <div class="net-value border">
-            <b>${salary.netSalaryString}</b>
-        </div>
-    </div>
-</c:forEach>
+    </c:forEach>
+
+</div>
 
 </body>
 </html>

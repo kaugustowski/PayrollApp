@@ -14,11 +14,13 @@
 
 <head>
     <title>Save Sick leave</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
 </head>
 
 <body>
@@ -98,12 +100,14 @@
             <tbody>
             <tr>
                 <td><label>Początek zwolnienia:</label></td>
-                <td><form:input type="date" path="startDate"/></td>
+                <td><form:input type="date" path="startDate"/>
+                </td>
             </tr>
 
             <tr>
                 <td><label>Koniec zwolnienia:</label></td>
-                <td><form:input type="date" path="endDate"/></td>
+                <td><form:input type="date" path="endDate"/>
+                    <form:errors cssClass="ui-state-error-text"/></td>
             </tr>
 
             <tr>

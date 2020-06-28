@@ -187,7 +187,7 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public List<SalaryListDTO> getOvertimeSalaryListDTO() {
-        return salaryRepository.getAllOVertimePayrollMonths();
+        return salaryRepository.getAllOvertimePayrollMonths();
     }
 
     @Override

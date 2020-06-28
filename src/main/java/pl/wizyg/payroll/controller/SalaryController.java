@@ -100,10 +100,13 @@ public class SalaryController {
     }
 
     @RequestMapping("my/{year}/{month}")
-    public String listSalaries(Model model, @PathVariable int year, @PathVariable int month, Principal principal) {
-        //Employee employee = employeeService.getEmployee(principal.getName());
+    public String listSalaries(Model model,
+                               @PathVariable int year,
+                               @PathVariable int month,
+                               Principal principal) {
+
         List<Salary> salaries = salaryService.getEmployeeSalariesInMonthYear(principal.getName(), month, year);
-        //model.addAttribute("employee", employee);
+
         model.addAttribute("salaries", salaries);
         return "salary-list";
     }

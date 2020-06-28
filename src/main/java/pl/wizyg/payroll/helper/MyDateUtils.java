@@ -1,4 +1,4 @@
-package pl.wizyg.payroll.entity;
+package pl.wizyg.payroll.helper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MyDateUtils {
 
-    static List<LocalDate> getHolidaysInYear(int year) {
+    public static List<LocalDate> getHolidaysInYear(int year) {
         List<LocalDate> holidays = new ArrayList<>();
 
         LocalDate newYear = LocalDate.of(year, 1, 1);
@@ -88,7 +88,8 @@ public class MyDateUtils {
     }
 
 
-    public static boolean isOverlapped(LocalDate start1, LocalDate end1, LocalDate start2, LocalDate end2) {
+    public static boolean isOverlapped(LocalDate start1, LocalDate end1,
+                                       LocalDate start2, LocalDate end2) {
         return (start1.isBefore(end2) && end1.isAfter(start2)
                 || start1.equals(end2)
                 || start2.equals(end1));

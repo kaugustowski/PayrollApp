@@ -1,5 +1,7 @@
 package pl.wizyg.payroll.entity;
 
+import pl.wizyg.payroll.validator.ValidEmploymentHistoryDates;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -7,6 +9,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 @Entity
 @Table(name = "employment_history")
+@ValidEmploymentHistoryDates(message = "Data zakończenia zwolnienia nie może poprzedzać daty jego rozpoczęcia")
 public class EmploymentHistory {
 
     @Id

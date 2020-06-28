@@ -14,20 +14,26 @@
 
 <head>
     <title>Overtime</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
 </head>
 
 <body>
 
 <nav class="navbar sticky-top navbar-dark bg-transparent">
     <div class="d-flex">
-        <div class="p-2 w-100 ">
+        <div class="p-2 w-100">
             <ul class="nav nav-tabs">
                 <li>
-                    <a class="nav-link active" href="#">Strona główna</a>
+                    <a class="nav-link active" href="${pageContext.request.contextPath}">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
-                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list">Pracownicy</a>
+                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list>Pracownicy</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown"

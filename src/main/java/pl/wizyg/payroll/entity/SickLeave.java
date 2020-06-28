@@ -1,8 +1,11 @@
 package pl.wizyg.payroll.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import pl.wizyg.payroll.helper.MyDateUtils;
+import pl.wizyg.payroll.validator.ValidSickLeaveDates;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -12,24 +15,22 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 @Entity
 @Table(name = "sick_leave")
+@ValidSickLeaveDates(message = "Data zakończenia zwolnienia nie może poprzedzać daty jego rozpoczęcia")
 public class SickLeave {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sickLeaveId;
 
-
     @Column(name = "start_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @NotNull
     private LocalDate startDate;
 
     @Column(name = "end_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @NotNull
     private LocalDate endDate;
-
-
-    //    @Transient
-//    private int consecutiveDays;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
@@ -43,7 +44,6 @@ public class SickLeave {
     }
 
     public int getConsecutiveDays() {
-        // consecutiveDays
         return (int) DAYS.between(startDate, endDate) + 1;
     }
 

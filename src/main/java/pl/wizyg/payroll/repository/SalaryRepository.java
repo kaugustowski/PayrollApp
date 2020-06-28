@@ -27,17 +27,18 @@ public interface SalaryRepository extends JpaRepository<Salary, Integer> {
 
   List<Salary> findByEmployee_Id(int employeeId);
 
-  @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from Salary s order by s.year desc,s.month desc ")
+  @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  " +
+          "from Salary s order by s.year desc,s.month desc ")
   List<SalaryListDTO> getAllPayrollMonths();
 
-    @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from OvertimeSalary s order by s.year desc,s.month desc ")
-    List<SalaryListDTO> getAllOVertimePayrollMonths();
+  @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from OvertimeSalary s order by s.year desc,s.month desc ")
+  List<SalaryListDTO> getAllOvertimePayrollMonths();
 
-    @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from EssentialSalary s order by s.year desc,s.month desc ")
-    List<SalaryListDTO> getAllEssentialPayrollMonths();
+  @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from EssentialSalary s order by s.year desc,s.month desc ")
+  List<SalaryListDTO> getAllEssentialPayrollMonths();
 
-    @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from EssentialSalary s where s.employee.email=:email order by s.year desc,s.month desc ")
-    List<SalaryListDTO> getEmployeePayrollMonths(@Param("email") String email);
+  @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from EssentialSalary s where s.employee.email=:email order by s.year desc,s.month desc ")
+  List<SalaryListDTO> getEmployeePayrollMonths(@Param("email") String email);
 
     List<Salary> findByEmployee_EmailAndMonthAndYear(String email, int month, int year);
 }

@@ -1,5 +1,7 @@
 package pl.wizyg.payroll.entity;
 
+import pl.wizyg.payroll.helper.SalaryConstants;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -107,22 +109,4 @@ public class OvertimeSalary extends Salary {
                 '}';
     }
 
-    @Override
-    public String toString() {
-        return "OvertimeSalary{" +
-                "numberOfOvertimeHours=" + numberOfOvertimeHours +
-                ", grossSalary=" + grossSalary +
-                ", contributionBase=" + contributionBase +
-                ", pensionContributionPayer=" + pensionContributionPayer +
-                ", disabilityContributionPayer=" + disabilityContributionPayer +
-                ", accidentInsuranceContribution=" + accidentInsuranceContribution +
-                ", pensionContributionEmployee=" + pensionContributionEmployee +
-                ", disabilityContributionEmployee=" + disabilityContributionEmployee +
-                ", sicknessContribution=" + sicknessContribution +
-                ", healthcareContribution=" + healthcareContribution +
-                ", healthcareContributionDeduction=" + healthcareContributionDeduction +
-                ", employee=" + employee +
-                ", incomeTaxAdvance=" + incomeTaxAdvance +
-                '}';
-    }
 }

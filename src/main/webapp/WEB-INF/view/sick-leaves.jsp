@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Wizyg
@@ -81,16 +82,16 @@
 
 </nav>
 
-<h1>Sick leaves</h1>
+<h1>Zwolnienia lekarskie</h1>
 <h2>${employee.firstName} ${employee.lastName}</h2>
 
 <table>
     <thead>
     <tr>
-        <th>Start date</th>
-        <th>End date</th>
-        <th>Consecutive Days</th>
-        <th>Action</th>
+        <th>Początek</th>
+        <th>Koniec</th>
+        <th>Liczba dni</th>
+        <th>Akcje</th>
     </tr>
 
     </thead>
@@ -98,11 +99,11 @@
 
     <c:forEach var="sickLeave" items="${sickLeaves}">
 
-        <c:url var="edit" value="${pageContext.request.contextPath}/sickLeave/edit/${sickLeave.sickLeaveId}">
+        <c:url var="edit" value="${pageContext.request.contextPath}/sickLeave/edit/${employee.id}">
             <c:param name="sickLeaveId" value="${sickLeave.sickLeaveId}"/>
         </c:url>
 
-        <c:url var="deleteLink" value="${pageContext.request.contextPath}/sickLeave/delete/">
+        <c:url var="deleteLink" value="${pageContext.request.contextPath}/sickLeave/delete">
             <c:param name="sickLeaveId" value="${sickLeave.sickLeaveId}"/>
         </c:url>
 

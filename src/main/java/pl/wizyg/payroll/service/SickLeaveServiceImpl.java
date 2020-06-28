@@ -3,11 +3,13 @@ package pl.wizyg.payroll.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.wizyg.payroll.entity.MyDateUtils;
+import org.springframework.validation.annotation.Validated;
 import pl.wizyg.payroll.entity.SickLeave;
 import pl.wizyg.payroll.exception.SickLeaveNotFoundException;
 import pl.wizyg.payroll.exception.SickLeavesOverlapException;
+import pl.wizyg.payroll.helper.MyDateUtils;
 import pl.wizyg.payroll.repository.SickLeaveRepository;
+import pl.wizyg.payroll.validator.SickLeaveValidator;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -67,9 +69,11 @@ public class SickLeaveServiceImpl implements SickLeaveService {
         return sickLeaveRepository.findAllByEmployeeId(employeeId);
     }
 
+    @Validated({SickLeaveValidator.class})
     @Override
-    public void saveSickLeave(SickLeave sickLeave, int employeeId) throws SickLeavesOverlapException {
-        sickLeave.validateAndSwapIfNeeded();
+    public void saveSickLeave(@Validated SickLeave sickLeave,
+                              int employeeId) throws SickLeavesOverlapException {
+
         List<SickLeave> employeeSickLeaves = sickLeaveRepository.findAllByEmployeeId(employeeId);
         for (SickLeave sl : employeeSickLeaves) {
             if (areSickLeavesOverlapped(sl, sickLeave)) {

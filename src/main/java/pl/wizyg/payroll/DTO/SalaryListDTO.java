@@ -1,8 +1,8 @@
 package pl.wizyg.payroll.DTO;
 
 public class SalaryListDTO {
-    private int month;
-    private int year;
+    private final int month;
+    private final int year;
 
     public SalaryListDTO(int month, int year) {
         this.month = month;

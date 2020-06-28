@@ -29,7 +29,6 @@ public class PayrollSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-
         auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
 
         auth.jdbcAuthentication().dataSource(dataSource);
@@ -43,7 +42,7 @@ public class PayrollSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/salary/my/*").hasRole("USER")
+                .antMatchers("/salary/my/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/salary/**").hasRole("PAYROLL_SPECIALIST")
                 .antMatchers("/employee/**").hasRole("PAYROLL_SPECIALIST")

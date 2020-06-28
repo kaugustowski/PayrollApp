@@ -11,11 +11,7 @@
 <head>
     <title>Historia zatrudnienia</title>
 
-    <style>
-        table, th, td {
-            border: 1px solid black;
-        }
-    </style>
+
 </head>
 <body>
 <h1>Historia zatrudnienia</h1>
@@ -42,7 +38,8 @@
         </tr>
     </c:forEach>
 
-    <a href="${pageContext.request.contextPath}/history/add/${employeeId}" class="ui-button">Add another work experience</a>
+    <a class="btn btn-primary" href="${pageContext.request.contextPath}/history/add/${employeeId}" class="ui-button">Add
+        another work experience</a>
 
 </table>
 

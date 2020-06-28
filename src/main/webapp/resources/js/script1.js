@@ -3,18 +3,8 @@ function updateLink() {
     const $year = $("#year").val();
     const $month = $("#month").val();
     let link = "/payrollApp/salary/" + $type + "/" + $year + "/" + $month;
-    console.log(link);
-    // $("#form").attr("action",link);
     let $form = $("#form")
     $form.attr("action", link).attr("method", "POST");
-    $("#link").attr("href", link);
-
-    const csrf = document.createElement('input');
-    csrf.setAttribute("type", "hidden");
-    csrf.setAttribute("name", "_token");
-    csrf.setAttribute("value", "{{csrf_field()}}")
-    let form = document.getElementById("form");
-    form.appendChild(csrf);
 }
 
 function selectValues() {
@@ -40,7 +30,7 @@ function selectValues() {
 
 function filterBySearchbar() {
 
-    var input, filter, table, tr, td, i, txtValue;
+    let input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("search");
     filter = input.value.toUpperCase();
     table = document.getElementById("myTable");
@@ -57,4 +47,8 @@ function filterBySearchbar() {
             }
         }
     }
+}
+
+function goBack() {
+    window.history.go(-1);
 }
