@@ -20,8 +20,9 @@ public class EssentialSalary extends Salary {
           return workedDaysRatio() >= 0.5;
     }
 
+
     public double workedDaysRatio(){
-        return (double) getNumberOfWorkDaysWithSickLeave() / getNumberOfWorkdays();
+        return (getNumberOfWorkdays() - getNumberOfWorkDaysWithSickLeave()) / (double) getNumberOfWorkdays();
     }
 
 

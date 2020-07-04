@@ -25,29 +25,84 @@ function selectValues() {
     }
     document.getElementById("month").innerHTML = options2;
 
+    updateLink()
 }
 
+//
+// function filterBySearchbar() {
+//
+//     let input, filter, table, tr, td, i, txtValue;
+//     input = document.getElementById("search");
+//     filter = input.value.toUpperCase();
+//     table = document.getElementById("searchTable");
+//     tr = table.getElementsByTagName("tr");
+//
+//     for (i = 0; i < tr.length; i++) {
+//         //for (let j = 0; j < 4; i++) {
+//             td = tr[i].getElementsByTagName("td")[1];
+//             if (td) {
+//                 txtValue = td.textContent || td.innerText;
+//                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
+//                     tr[i].style.display = "";
+//                 } else {
+//                     tr[i].style.display = "none";
+//                 }
+//             }
+//        // }
+//     }
+// }
 
 function filterBySearchbar() {
+    const input = document.getElementById("search");
+    const filter = input.value.toUpperCase();
+    const table = document.getElementById("searchTable");
+    const tbody = table.getElementsByTagName("tbody");
+    const tr = tbody.getElementsByTagName("tr");
+    const tds = tr.getElementsByTagName("td");
 
-    let input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("search");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
-            }
+    for (let i = 0; i < tr.length; i++) {
+        const firstCol = tds[0].textContent.toUpperCase();
+        const secondCol = tds[1].textContent.toUpperCase();
+        const thirdCol = tds[2].textContent.toUpperCase();
+        if (firstCol.indexOf(filter) > -1 || secondCol.indexOf(filter) > -1 || thirdCol.indexOf(filter) > -1) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
         }
     }
 }
+
+(function searchFilter() {
+
+    const searchInput = document.getElementById("search");
+    const targetRows = Array.from(document.querySelectorAll("#searchTable tbody tr"));
+    const rowsWithAppropriateCellsString = targetRows.map(row => {
+        const rowCells = Array.from(row.children);
+        const MAX_CELLS = 3;
+        let appropriateCellsString = "";
+        for (let i = 0; i < MAX_CELLS; i++) {
+            appropriateCellsString += rowCells[i].textContent.toLowerCase();
+        }
+        return {
+            row,
+            appropriateCellsString,
+            isVisible: true
+        }
+    })
+
+    const checkRowsVisibility = (rowObjArr, stringToCheck) => rowObjArr.forEach(rowObj => {
+        const isVisible = rowObj.appropriateCellsString.indexOf(stringToCheck) !== -1;
+        rowObj.isVisible = isVisible;
+    });
+    const toggleRowsVisibility = rowObjArr => rowObjArr.forEach(rowObj => rowObj.row.style.setProperty("display", rowObj.isVisible ? "table-row" : "none", "important"));
+
+    searchInput.addEventListener("keyup", ({target: {value: inputText}}) => {
+        checkRowsVisibility(rowsWithAppropriateCellsString, inputText.toLowerCase());
+        toggleRowsVisibility(rowsWithAppropriateCellsString);
+    })
+
+})()
+
 
 function goBack() {
     window.history.go(-1);

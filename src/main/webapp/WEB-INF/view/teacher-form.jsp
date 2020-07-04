@@ -26,12 +26,19 @@
 
 <body>
 
-<nav class="navbar sticky-top navbar-dark bg-transparent">
-    <div class="d-flex">
-        <div class="p-2 w-100 ">
-            <ul class="nav nav-tabs">
+<div class="container sticky-top" id="nav-container">
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+
+            <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link active" href="#">Strona główna</a>
+                    <a class="nav-link" href="#">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
@@ -75,20 +82,23 @@
                             użytkownika</a>
                     </li>
                 </c:if>
+
+                <li class="nav-item">
+
+                </li>
+
             </ul>
-        </div>
-
-        <div class="p-2 flex-shrink d-inline pull-right">
-            <form:form class="navbar-right" action="${pageContext.request.contextPath}/logout" method="POST">
-                <input class="nav-link" type="submit" name="logout" value="Wyloguj">
+            <form:form cssClass="form-inline my-2" action="${pageContext.request.contextPath}/logout" method="POST">
+                <input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="logout" value="Wyloguj">
             </form:form>
+
         </div>
 
-    </div>
+    </nav>
 
-</nav>
+</div>
 
-<div id="form-container">
+<div id="form-container container justify-content-center">
     <h3>Zapisz nauczyciela</h3>
 
     <h2 class="center">${teacher.firstName } ${teacher.lastName }</h2>
@@ -133,7 +143,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="birthDate" class="col-sm-2 col-form-label">Birth date:</label>
+                    <label for="birthDate" class="col-sm-2 col-form-label">Data urodzenia:</label>
                     <div class="col-sm-10">
                         <form:input id="birthDate" type="date" path="birthDate"/>
                     </div>
@@ -144,8 +154,10 @@
                     <div class="col-sm-10">
                         <form:select path="teacherType" id="teacher_type">
                             <c:forEach var="teacherType" items="${teacherTypeValues}">
-                                <option value="${teacherType}" ${teacherType == teacher.teacherType ? 'selected="selected"' : ''}>${teacherType.name()}</option>
+
+                                <option value="${teacherType}" ${teacherType == teacher.teacherType ? 'selected="selected"' : ''}>${teacherType.displayName}</option>
                             </c:forEach>
+
 
                         </form:select>
                     </div>
@@ -156,7 +168,7 @@
                     <div class="col-sm-10">
                         <form:select path="education">
                             <c:forEach var="education" items="${educationValues}">
-                                <option value="${education}" ${education == teacher.education ? 'selected="selected"' : ''}>${education.name()}</option>
+                                <option value="${education}" ${education == teacher.education ? 'selected="selected"' : ''}>${education.displayName}</option>
                             </c:forEach>
 
                         </form:select>
@@ -167,7 +179,7 @@
             <div class="column">
 
                 <div class="form-group">
-                    <label for="funcBonus" class="col-form-label">Dodatek funkcyjny:</label>
+                    <label for="funcBonus" class="col-form-label">Dodatek funkcyjny [zł]:</label>
                     <div class="col-sm-10">
                         <form:input id="funcBonus" type="number" step="0.01" path="functionalBonusString"/>
                         <form:errors path="functionalBonus" cssClass="ui-state-error-text"/>
@@ -175,7 +187,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="seniorityBonus" class="col-form-label">Dodatek stażowy:</label>
+                    <label for="seniorityBonus" class="col-form-label">Dodatek stażowy [zł]:</label>
                     <div class="col-sm-10">
                         <form:input id="seniorityBonus" type="number" step="0.01" path="seniorityBonusString"/>
                         <form:errors path="seniorityBonus" cssClass="ui-state-error-text"/>
@@ -183,7 +195,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="incPay" class="col-form-label">Dodatek motywacyjny:</label>
+                    <label for="incPay" class="col-form-label">Dodatek motywacyjny [zł]:</label>
                     <div class="col-sm-10">
                         <form:input id="incPay" type="number" step="0.01" path="incentivePayString"/>
                         <form:errors path="incentivePay" cssClass="ui-state-error-text"/>
@@ -218,7 +230,7 @@
 
         <div class="form-group row">
             <div class="col-sm-10 offset-sm-2">
-                <button type="submit" class="btn btn-primary">Dodaj pracownika</button>
+                <button type="submit" class="btn btn-primary">Zapisz</button>
             </div>
         </div>
 

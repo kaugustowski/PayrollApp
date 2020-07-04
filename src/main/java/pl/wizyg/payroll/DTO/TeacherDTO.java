@@ -1,5 +1,8 @@
 package pl.wizyg.payroll.DTO;
 
+import pl.wizyg.payroll.entity.Education;
+import pl.wizyg.payroll.entity.TeacherType;
+
 import java.time.LocalDate;
 
 public class TeacherDTO {
@@ -25,6 +28,54 @@ public class TeacherDTO {
     private LocalDate employeedOnDate;
 
     private boolean isAllowedForExtraTaxDeductibleExpenses;
+
+    private Education education;
+
+    private TeacherType teacherType;
+
+    public TeacherDTO(Integer id,
+                      int baseSalary,
+                      int seniorityBonus,
+                      int functionalBonus,
+                      String firstName,
+                      String lastName,
+                      String pesel,
+                      String email,
+                      LocalDate birthDate,
+                      LocalDate employeedOnDate,
+                      boolean isAllowedForExtraTaxDeductibleExpenses,
+                      Education education,
+                      TeacherType teacherType) {
+        this.id = id;
+        this.baseSalary = baseSalary;
+        this.seniorityBonus = seniorityBonus;
+        this.functionalBonus = functionalBonus;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pesel = pesel;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.employeedOnDate = employeedOnDate;
+        this.isAllowedForExtraTaxDeductibleExpenses = isAllowedForExtraTaxDeductibleExpenses;
+        this.education = education;
+        this.teacherType = teacherType;
+    }
+
+    public Education getEducation() {
+        return education;
+    }
+
+    public void setEducation(Education education) {
+        this.education = education;
+    }
+
+    public TeacherType getTeacherType() {
+        return teacherType;
+    }
+
+    public void setTeacherType(TeacherType teacherType) {
+        this.teacherType = teacherType;
+    }
 
     public Integer getId() {
         return id;

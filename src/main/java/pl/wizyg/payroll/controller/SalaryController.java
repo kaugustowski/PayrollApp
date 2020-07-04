@@ -31,14 +31,14 @@ public class SalaryController {
     public String listEssentialSalaries(Model model){
         List<SalaryListDTO> salaries = salaryService.getEssentialSalaryListDTO();
         model.addAttribute("salaryMonths", salaries);
-        return "salaries";
+        return "essential-salaries";
     }
 
     @RequestMapping("overtimeList")
     public String listOvertimeSalaries(Model model){
         List<SalaryListDTO> salaries = salaryService.getOvertimeSalaryListDTO();
         model.addAttribute("salaryMonths", salaries);
-        return "salaries";
+        return "overtime-salaries";
     }
 
     @RequestMapping("list")
@@ -111,11 +111,21 @@ public class SalaryController {
         return "salary-list";
     }
 
+    @RequestMapping(value = "/my", method = RequestMethod.GET)
+    public String mySalaries(Principal principal, Model model) {
+
+        List<SalaryListDTO> salaries = salaryService.getEmployeeSalaryListDTO(principal.getName());
+        model.addAttribute("salaryMonths", salaries);
+
+        return "my-salaries";
+    }
+
+
     @RequestMapping("/overtimeList/{year}/{month}")
     public String listOvertimeSalaries(Model model, @PathVariable int month, @PathVariable int year) {
         List<OvertimeSalary> salaries = salaryService.getOvertimeSalariesInMonthYear(month, year);
         model.addAttribute("salaries", salaries);
-        return "overtime-salary-list";
+        return "salary-list";
     }
 
     @RequestMapping("/essentialList/{year}/{month}")
@@ -136,7 +146,6 @@ public class SalaryController {
 
         employeeService.getEmployee(employeeId).addSalary(salary);
         salaryService.saveSalary(salary, employeeId);
-        System.out.println(salary.getYear() + salary.getMonth());
 
         redirectAttrs.addAttribute("year", salary.getYear());
         redirectAttrs.addAttribute("month", salary.getMonth());
@@ -150,10 +159,6 @@ public class SalaryController {
         salaryService.getEmployeeSalaries(employeeId);
         employeeService.getEmployee(employeeId).addSalary(salary);
         salaryService.saveSalary(salary, employeeId );
-        System.out.println(salary.getYear() + salary.getMonth());
-
-        redirectAttrs.addAttribute("year", salary.getYear());
-        redirectAttrs.addAttribute("month", salary.getMonth());
 
         redirectAttrs.addAttribute("salary", salary);
         redirectAttrs.addAttribute("employeeId", employeeId);
@@ -167,13 +172,13 @@ public class SalaryController {
 
         salaryService.saveSalaries(salaryService.calculateSalariesForActiveEmployees(month, year));
 
-        return "redirect:/salary/list/{year}/{month}";
+        return "redirect:/salary/essentialList/{year}/{month}";
     }
 
     @PostMapping("/calculateOvertimeSalaries/{year}/{month}")
     public String calculateOvertimeSalaries(@PathVariable int year, @PathVariable int month){
         salaryService.saveSalaries(salaryService.calculateOvertimeSalaryForActiveEmployees(month, year));
 
-        return "redirect:/salary/list/{year}/{month}";
+        return "redirect:/salary/overtimeList/{year}/{month}";
     }
 }

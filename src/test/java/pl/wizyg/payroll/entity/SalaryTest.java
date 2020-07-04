@@ -265,7 +265,7 @@ class SalaryTest {
     }
 
     @Test
-    void calculateSalary(){
+    void calculateSalaryWithoutSickLeave() {
         Salary salary = new EssentialSalary();
         salary.setEmployee(employee);
 
@@ -282,7 +282,6 @@ class SalaryTest {
         assertThat(salary.getIncomeTaxAdvance()).isEqualTo(22900);
         assertThat(salary.getGrossSalary()).isEqualTo(395000);
         assertThat(salary.calculateNetSalary()).isEqualTo(287269);
-
     }
 
     @Test
@@ -376,12 +375,100 @@ class SalaryTest {
     }
 
     @Test
-    void stringTest(){
+    void calculateSalaryWithSickLeaves() {
+
+        SickLeave sl1 = new SickLeave(employee);
+        sl1.setEndDate(LocalDate.of(2020, 4, 10));
+        sl1.setStartDate(LocalDate.of(2020, 4, 1));
+
+        SickLeave sl2 = new SickLeave(employee);
+        sl2.setEndDate(LocalDate.of(2020, 3, 12));
+        sl2.setStartDate(LocalDate.of(2020, 3, 18));
+
+        List<Salary> salariesFromPrevious12Months = new ArrayList<>();
+
+        List<SickLeave> sickLeavesInPrevMonth = new ArrayList<>();
+        sickLeavesInPrevMonth.add(sl1);
+
         Salary salary = new EssentialSalary();
         salary.setEmployee(employee);
         salary.setMonth(5);
         salary.setYear(2020);
-        System.out.println("sfsfasdasString "+ salary.getBaseSalaryString());
-        salary.getBaseSalaryString();
+        salary.setSickLeavesInMonth(sickLeavesInPrevMonth);
+        salary.setSalariesFromLast12Months(salariesFromPrevious12Months);
+        salary.performCalculations();
+
+        assertThat(salary.getContributionBase()).isEqualTo(263333);
+
+        assertThat(salary.getHealthcareContribution()).isEqualTo(28632);
+        assertThat(salary.getIncomeTaxAdvance()).isEqualTo(20800);
+        assertThat(salary.getPensionContributionEmployee()).isEqualTo(25701);
+        assertThat(salary.getPensionContributionPayer()).isEqualTo(25701);
+        assertThat(salary.getDisabilityContributionEmployee()).isEqualTo(3950);
+        assertThat(salary.getDisabilityContributionPayer()).isEqualTo(17117);
+        assertThat(salary.getAccidentInsuranceContribution()).isEqualTo(2449);
+        assertThat(salary.getSicknessContribution()).isEqualTo(6452);
+        assertThat(salary.calculateSickPayBase()).isEqualTo(340846);
+        assertThat(salary.calculateSickPay(340846)).isEqualTo(90900);
+        assertThat(salary.calculateNetSalary()).isEqualTo(268698);
+
+
+    }
+
+
+    @Test
+    void getNumberOfWorkdaysInApril() {
+
+        Salary salary = new EssentialSalary();
+        salary.setEmployee(employee);
+        salary.setMonth(5);
+        salary.setYear(2020);
+
+        assertThat(salary.getNumberOfWorkdays()).isEqualTo(21);
+
+    }
+
+    @Test
+    void getNumberOfWorkdaysInMarch() {
+        Salary salary = new EssentialSalary();
+        salary.setEmployee(employee);
+        salary.setMonth(4);
+        salary.setYear(2020);
+
+        assertThat(salary.getNumberOfWorkdays()).isEqualTo(22);
+    }
+
+    @Test
+    void getNumberOfWorkdaysInFebruary() {
+
+        Salary salary = new EssentialSalary();
+        salary.setEmployee(employee);
+        salary.setMonth(3);
+        salary.setYear(2020);
+
+        assertThat(salary.getNumberOfWorkdays()).isEqualTo(20);
+
+    }
+
+    @Test
+    void getNumberOfWorkDaysWithSickLeaveInApril() {
+
+        SickLeave sl1 = new SickLeave(employee);
+        sl1.setEndDate(LocalDate.of(2020, 4, 10));
+        sl1.setStartDate(LocalDate.of(2020, 4, 1));
+
+        List<Salary> salariesFromPrevious12Months = new ArrayList<>();
+
+        List<SickLeave> sickLeavesInPrevMonth = new ArrayList<>();
+        sickLeavesInPrevMonth.add(sl1);
+
+        Salary salary = new EssentialSalary();
+        salary.setEmployee(employee);
+        salary.setMonth(5);
+        salary.setYear(2020);
+        salary.setSickLeavesInMonth(sickLeavesInPrevMonth);
+
+        assertThat(salary.getNumberOfWorkDaysWithSickLeave()).isEqualTo(8);
+
     }
 }

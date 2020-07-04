@@ -43,7 +43,6 @@ class OvertimeSalaryTest {
     }
 
 
-    //TODO
     @Test
     void performCalculations10Hours() {
 

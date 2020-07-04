@@ -30,6 +30,20 @@ class SickLeaveTest {
     }
 
     @Test
+    void getNumberOfSickLeaveDaysInMonthYearFromLastDayOfMonth() {
+        SickLeave sickLeave = new SickLeave();
+        LocalDate startDate = LocalDate.of(2020, 6, 30);
+        LocalDate endDate = LocalDate.of(2020, 7, 4);
+        sickLeave.setStartDate(startDate);
+        sickLeave.setEndDate(endDate);
+
+        int expected1 = 1;
+        int actual1 = sickLeave.getNumberOfSickLeaveDaysInMonthYear(6, 2020);
+
+        assertThat(actual1).isEqualTo(expected1);
+    }
+
+    @Test
     void getNumberOfSickLeaveDaysInMonthYearToLastDayOfMonth() {
         SickLeave sickLeave = new SickLeave();
         LocalDate startDate = LocalDate.of(2020, 4, 22);
@@ -75,7 +89,6 @@ class SickLeaveTest {
 
     @Test
     void getNumberOfSickLeaveDaysInMonthYearStartBefore() {
-
         SickLeave sickLeave3 = new SickLeave();
         LocalDate startDate3 = LocalDate.of(2020, 3, 27);
         LocalDate endDate3 = LocalDate.of(2020, 4, 5);
@@ -157,7 +170,49 @@ class SickLeaveTest {
         sickLeave7.setEndDate(endDate7);
 
         int expected = 15;
-        int actual = sickLeave7.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear(6,2020);
+        int actual = sickLeave7.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear(6, 2020);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void getNumberOfSickLeaveDaysOnWorkdaysInMonthYear5() {
+        SickLeave sickLeave7 = new SickLeave();
+        LocalDate startDate7 = LocalDate.of(2020, 6, 1);
+        LocalDate endDate7 = LocalDate.of(2020, 6, 12);
+        sickLeave7.setStartDate(startDate7);
+        sickLeave7.setEndDate(endDate7);
+
+        int expected = 9;
+        int actual = sickLeave7.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear(6, 2020);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void getNumberOfSickLeaveDaysOnWorkdaysInMonthYear6() {
+        SickLeave sickLeave7 = new SickLeave();
+        LocalDate startDate7 = LocalDate.of(2020, 4, 1);
+        LocalDate endDate7 = LocalDate.of(2020, 4, 10);
+        sickLeave7.setStartDate(startDate7);
+        sickLeave7.setEndDate(endDate7);
+
+        int expected = 8;
+        int actual = sickLeave7.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear(4, 2020);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void getNumberOfSickLeaveDaysOnWorkdaysInMonthYear7() {
+        SickLeave sickLeave7 = new SickLeave();
+        LocalDate startDate7 = LocalDate.of(2020, 4, 1);
+        LocalDate endDate7 = LocalDate.of(2020, 4, 10);
+        sickLeave7.setStartDate(startDate7);
+        sickLeave7.setEndDate(endDate7);
+
+        int expected = 8;
+        int actual = sickLeave7.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear(6, 2020);
 
         assertThat(actual).isEqualTo(expected);
     }

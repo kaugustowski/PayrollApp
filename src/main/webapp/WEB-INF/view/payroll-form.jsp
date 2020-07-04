@@ -6,24 +6,33 @@
 <head>
     <title>Create New Payroll</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
 
 </head>
 <body onload="selectValues()">
 
-<nav class="navbar sticky-top navbar-dark bg-transparent">
-    <div class="d-flex">
-        <div class="p-2 w-100 ">
-            <ul class="nav nav-tabs">
+<div class="container sticky-top" id="nav-container">
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+
+            <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link active" href="${pageContext.request.contextPath}">Strona główna</a>
+                    <a class="nav-link" href="#">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
-                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list">Pracownicy</a>
+                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list>Pracownicy</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown"
@@ -63,69 +72,63 @@
                             użytkownika</a>
                     </li>
                 </c:if>
+
+                <li class="nav-item">
+
+                </li>
+
             </ul>
-        </div>
-
-        <div class="p-2 flex-shrink d-inline pull-right">
-            <form:form class="navbar-right" action="${pageContext.request.contextPath}/logout" method="POST">
-                <input class="nav-link" type="submit" name="logout" value="Wyloguj">
+            <form:form cssClass="form-inline my-2" action="${pageContext.request.contextPath}/logout" method="POST">
+                <input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="logout" value="Wyloguj">
             </form:form>
+
         </div>
 
+    </nav>
+
+</div>
+
+<div class="container justify-content-center">
+    <div class="jumbotron justify-content-center">
+        <form:form id="form" action="${pageContext.request.contextPath}/salary/createPayroll" method="POST">
+            <div class="form-group row">
+                <label for="month" class="offset-sm-3 col-sm-3 col-form-label">Miesiąc:</label>
+                <div class="col-sm-6">
+                    <select id="month" onchange="updateLink()">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="year" class="offset-sm-3 col-sm-3 col-form-label">Rok:</label>
+                <div class="col-sm-6">
+                    <select id="year" onchange="updateLink()">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="type" class="offset-sm-3 col-sm-3 col-form-label">Rodzaj:</label>
+                <div class="col-sm-6">
+                    <select id="type" onchange="updateLink()">
+                        <option value='calculateOvertimeSalaries'>Za nadgodziny</option>
+                        <option value='calculateSalaries'>Zasadnicza</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-sm-6 offset-sm-6">
+                    <button type="submit" class="btn btn-primary">Oblicz</button>
+                </div>
+            </div>
+
+        </form:form>
     </div>
 
-</nav>
-
-<div class="container">
-    <form:form id="form" action="${pageContext.request.contextPath}/salary/createPayroll" method="POST">
-        <div class="form-group row">
-            <label for="month" class="col-sm-2 col-form-label">Month:</label>
-            <div class="col-sm-10">
-                <select id="month" onchange="updateLink()">
-                    <option value=''>--Select Month--</option>
-                    <option selected value='1'>January</option>
-                    <option value='2'>February</option>
-                    <option value='3'>March</option>
-                    <option value='4'>April</option>
-                    <option value='5'>May</option>
-                    <option value='6'>June</option>
-                    <option value='7'>July</option>
-                    <option value='8'>August</option>
-                    <option value='9'>September</option>
-                    <option value='10'>October</option>
-                    <option value='11'>November</option>
-                    <option value='12'>December</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="year" class="col-sm-2 col-form-label">Year:</label>
-            <div class="col-sm-10">
-                <select id="year" onchange="updateLink()">
-
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="type" class="col-sm-2 col-form-label">Type:</label>
-            <div class="col-sm-10">
-                <select id="type" onchange="updateLink()">
-                    <option value='calculateOvertimeSalaries'>Overtime</option>
-                    <option value='calculateSalaries'>Essential</option>
-                </select>
-            </div>
-        </div>
-
-
-        <div class="form-group row">
-            <div class="col-sm-10 offset-sm-2">
-                <button type="submit" class="btn btn-primary">Create</button>
-            </div>
-        </div>
-
-    </form:form>
 
 </div>
 

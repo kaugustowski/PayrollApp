@@ -18,14 +18,32 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
+
+    <script>
+        // $(document).ready(function(){
+        //     $("#search").on("keyup", function() {
+        //         const value = $(this).val().toLowerCase();
+        //         $("#searchTable tr").filter(function() {
+        //             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        //         });
+        //     });
+        // });
+    </script>
 </head>
 <body>
-<nav class="navbar sticky-top navbar-dark bg-transparent">
-    <div class="d-flex">
-        <div class="p-2 w-100 ">
-            <ul class="nav nav-tabs">
+<div class="container sticky-top" id="nav-container">
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+
+            <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link active" href="${pageContext.request.contextPath}">Strona główna</a>
+                    <a class="nav-link" href="#">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
@@ -69,43 +87,51 @@
                             użytkownika</a>
                     </li>
                 </c:if>
+
+                <li class="nav-item">
+
+                </li>
+
             </ul>
-        </div>
-
-        <div class="p-2 flex-shrink d-inline pull-right">
-            <form:form class="navbar-right" action="${pageContext.request.contextPath}/logout" method="POST">
-                <input class="nav-link" type="submit" name="logout" value="Wyloguj">
+            <form:form cssClass="form-inline my-2" action="${pageContext.request.contextPath}/logout" method="POST">
+                <input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="logout" value="Wyloguj">
             </form:form>
+
         </div>
 
+    </nav>
 
-    </div>
-</nav>
-
-<div class="container">
-    <table class="table table-responsive table-bordered table-hover table-striped">
-        <thead class="thead-light">
-        <tr>
-            <th>Imię</th>
-            <th>Nazwisko</th>
-            <th>Email</th>
-            <th>Aktywny</th>
-            <th>Akcje</th>
-        </tr>
-        </thead>
+</div>
 
 
-        <c:forEach var="tempTeacher" items="${teachers}">
+<div class="container justify-content-center">
+
+    <div class="col-auto">
+        <div class="pt-2">
+            <input type="text" onkeyup="filterBySearchbar()" id="search" placeholder="Wyszukaj...">
+        </div>
+        <table id="searchTable" class="table table-bordered table-hover table-striped">
+            <thead class="thead-light">
+            <tr>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Email</th>
+                <th>Aktywny</th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+
+            <c:forEach var="tempTeacher" items="${teachers}">
 
 
-            <c:url var="updateLink" value="/teacher/showFormForUpdate">
-                <c:param name="teacherId" value="${tempTeacher.id}"/>
-            </c:url>
+                <c:url var="updateLink" value="/teacher/showFormForUpdate">
+                    <c:param name="teacherId" value="${tempTeacher.id}"/>
+                </c:url>
 
 
-            <c:url var="deleteLink" value="/teacher/delete">
-                <c:param name="teacherId" value="${tempTeacher.id}"/>
-            </c:url>
+                <c:url var="deleteLink" value="/teacher/delete">
+                    <c:param name="teacherId" value="${tempTeacher.id}"/>
+                </c:url>
 
             <c:url var="addSickLeaveLink" value="/sickLeave/add/${tempTeacher.id}">
             </c:url>
@@ -136,10 +162,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <a class="dropdown-item" href="${updateLink}">Aktualizuj</a>
                             <a class="dropdown-item" href="${addSickLeaveLink}">Dodaj zwolnienie lekarskie</a>
-                            <a class="dropdown-item" href="${deleteLink}"
-                               onclick="if (!(confirm('Czy na pewno chcesz usunąć tego pracownika?' +
-                            ' Spowoduje to usunięcie historii wypłat z nim powiązanych! Rozważ zmianę statusu pracownika na nieaktywny'))) return false">Usuń
-                                pracownika</a>
+
                             <a class="dropdown-item" href="${addOvertimeLink}">Dodaj nadgodziny</a>
                             <a class="dropdown-item" href="${salaryList}">Lista płac pracownika</a>
                             <a class="dropdown-item" href="${empHistory}">Historia zatrudnienia</a>
@@ -150,7 +173,8 @@
 
         </c:forEach>
 
-    </table>
+        </table>
+    </div>
 </div>
 
 

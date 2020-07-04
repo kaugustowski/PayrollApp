@@ -31,17 +31,23 @@
 
 </head>
 <body>
+<div class="container sticky-top" id="nav-container">
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-<nav class="navbar sticky-top navbar-dark bg-transparent">
-    <div class="d-flex">
-        <div class="p-2 w-100 ">
-            <ul class="nav nav-tabs">
+        <div class="collapse navbar-collapse" id="navbarColor01">
+
+            <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link active" href="${pageContext.request.contextPath}">Strona główna</a>
+                    <a class="nav-link" href="#">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
-                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list">Pracownicy</a>
+                        <a class="nav-link" href=${pageContext.request.contextPath}/employee/list>Pracownicy</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown"
@@ -81,65 +87,62 @@
                             użytkownika</a>
                     </li>
                 </c:if>
+
+                <li class="nav-item">
+
+                </li>
+
             </ul>
-        </div>
-
-        <div class="p-2 flex-shrink d-inline pull-right">
-            <form:form class="navbar-right" action="${pageContext.request.contextPath}/logout" method="POST">
-                <input class="nav-link" type="submit" name="logout" value="Wyloguj">
+            <form:form cssClass="form-inline my-2" action="${pageContext.request.contextPath}/logout" method="POST">
+                <input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="logout" value="Wyloguj">
             </form:form>
+
         </div>
 
+    </nav>
+
+</div>
+
+<div class="container justify-content-center">
+    <div class="col-auto">
+        <table class="table table-bordered">
+            <thead class="thead-light ">
+            <tr class="d-table-row justify-content-center">
+                <th>Rok</th>
+                <th>Miesiąc</th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+
+
+            <c:forEach var="month" items="${salaryMonths}">
+
+
+                <c:url var="showList" value="/salary/list/${month.year}/${month.month}">
+
+                </c:url>
+
+
+                <tr class="d-table-row">
+                    <td> ${month.year} </td>
+                    <td> ${month.month} </td>
+                    <td>
+
+                        <div class="dropdown">
+                            <button class="btn btn-secondary bg-success"
+                                    type="button">
+                                <a class="dropdown-item" href="${showList}">Lista</a>
+                            </button>
+
+                        </div>
+                    </td>
+                </tr>
+
+            </c:forEach>
+
+        </table>
     </div>
-
-</nav>
-
-<table class="table table-responsive table-bordered">
-    <thead class="thead-light">
-    <tr>
-        <th>Year</th>
-        <th>Month</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-
-
-    <c:forEach var="month" items="${salaryMonths}">
-
-
-        <c:url var="showList" value="/salary/list/${month.year}/${month.month}">
-
-        </c:url>
-
-
-        <c:url var="recalculate" value="/salary/calculateSalaries/${month.year}/${month.month}">
-
-        </c:url>
-
-
-
-        <tr class="d-table-row">
-            <td> ${month.year} </td>
-            <td> ${month.month} </td>
-            <td>
-
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle bg-success"
-                            type="button" id="dropdownMenu1" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        Action
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <a class="dropdown-item" href="${showList}">List</a>
-                        <a class="dropdown-item" href="${recalculate}">Recalculate</a>
-                    </div>
-                </div>
-               </td>
-        </tr>
-
-    </c:forEach>
-
-</table>
+</div>
 
 
 </body>

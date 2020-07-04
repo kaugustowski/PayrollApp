@@ -3,10 +3,7 @@ package pl.wizyg.payroll.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wizyg.payroll.DTO.SalaryListDTO;
-import pl.wizyg.payroll.entity.Employee;
-import pl.wizyg.payroll.entity.EssentialSalary;
-import pl.wizyg.payroll.entity.OvertimeSalary;
-import pl.wizyg.payroll.entity.Salary;
+import pl.wizyg.payroll.entity.*;
 import pl.wizyg.payroll.repository.EssentialSalaryRepository;
 import pl.wizyg.payroll.repository.OvertimeSalaryRepository;
 import pl.wizyg.payroll.repository.SalaryRepository;
@@ -27,6 +24,9 @@ public class SalaryServiceImpl implements SalaryService {
     EmployeeService employeeService;
 
     final
+    OvertimeService overtimeService;
+
+    final
     SalaryRepository salaryRepository;
 
     final
@@ -36,9 +36,10 @@ public class SalaryServiceImpl implements SalaryService {
     EssentialSalaryRepository essentialSalaryRepository;
 
 
-    public SalaryServiceImpl(SickLeaveService sickLeaveService, EmployeeService employeeService, SalaryRepository salaryRepository, OvertimeSalaryRepository overtimeSalaryRepository, EssentialSalaryRepository essentialSalaryRepository) {
+    public SalaryServiceImpl(SickLeaveService sickLeaveService, EmployeeService employeeService, OvertimeService overtimeService, SalaryRepository salaryRepository, OvertimeSalaryRepository overtimeSalaryRepository, EssentialSalaryRepository essentialSalaryRepository) {
         this.sickLeaveService = sickLeaveService;
         this.employeeService = employeeService;
+        this.overtimeService = overtimeService;
         this.salaryRepository = salaryRepository;
         this.overtimeSalaryRepository = overtimeSalaryRepository;
         this.essentialSalaryRepository = essentialSalaryRepository;
@@ -93,7 +94,9 @@ public class SalaryServiceImpl implements SalaryService {
         if (salary != null) {
             salary.performCalculations();
         } else {
-            salary = new OvertimeSalary(employeeService.getEmployee(employeeId), month, year);
+            Overtime ot = overtimeService.getEmployeeOvertimeInMonthYear(employeeId, month, year);
+            if (ot != null)
+                salary = new OvertimeSalary(employeeService.getEmployee(employeeId), month, year);
         }
         return salary;
     }
@@ -103,7 +106,9 @@ public class SalaryServiceImpl implements SalaryService {
         List<Employee> employees = employeeService.getActiveEmployees();
         List<Salary> salaries = new ArrayList<Salary>();
         for (Employee employee:employees) {
-            salaries.add(calculateOvertimeSalary(employee.getId(), month, year));
+            Salary salary = calculateOvertimeSalary(employee.getId(), month, year);
+            if (salary != null)
+                salaries.add(salary);
         }
         return salaries;
     }
@@ -115,7 +120,7 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public List<Salary> getSalariesInMonthYear(int month, int year) {
-        return salaryRepository.findAllByMonthAndYear(month, year);
+        return salaryRepository.findAllByMonthAndYearOrderByEmployee_FirstName(month, year);
     }
 
 

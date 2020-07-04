@@ -23,33 +23,6 @@ public class Teacher extends Employee {
     private Education education;
 
 
-////    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
-    //   @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "employee")
-    //   private List<SickLeave> sickLeaves;
-//
-//    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
-//    @OneToMany(mappedBy = "teacher")
-//    private List<EmploymentHistory> employmentHistoryList;
-//
-//    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
-//    @OneToMany(mappedBy = "teacher")
-//    private List<Salary> salaries;
-
-//    @ManyToMany
-//    @JoinTable(
-//            name="Teacher_Payroll",
-//            joinColumns = {@JoinColumn(name = "teacher_id")},
-//            inverseJoinColumns = {@JoinColumn(name="payroll_id")}
-//    )
-//    private List<Payroll> payrollList;
-//public void addSickLeave(SickLeave sickLeave) {
-//    if (sickLeaves == null) {
-//        sickLeaves = new ArrayList<>();
-//    }
-//    sickLeaves.add(sickLeave);
-//    sickLeave.setEmployee(this);
-//}
-
     public Teacher() {
     }
 
@@ -114,7 +87,7 @@ public class Teacher extends Employee {
 
     @Override
     public int getOvertimeHourRate() {
-        return (int) ((double) getBaseSalary() / SalaryConstants.TEACHER_OVERTIME_COEFFICIENT); //TODO sprawdzic ile ma byc
+        return (int) ((double) getBaseSalary() / SalaryConstants.TEACHER_OVERTIME_COEFFICIENT);
     }
 
     public void setIncentivePayString (String senBonus){

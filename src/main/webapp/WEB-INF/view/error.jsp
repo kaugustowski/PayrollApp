@@ -30,11 +30,16 @@
     </script>
 </head>
 <body>
-<h1>Wystąpił błąd</h1>
-<h1>${message}</h1>
-<h2>${url}</h2>
 
-<button onclick="goBack()">Powrót</button>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Wystąpił błąd</h1>
+        <h1>${message}</h1>
+        <h2>${url}</h2>
+
+        <button class="btn btn-info" onclick="goBack()">Powrót</button>
+    </div>
+</div>
 
 
 </body>

@@ -42,4 +42,9 @@ public class OvertimeServiceImpl implements OvertimeService {
         return overtimeRepository.findAllByEmployee_Id(employeeId);
     }
 
+    @Override
+    public Overtime getEmployeeOvertimeInMonthYear(int employeeId, int month, int year) {
+        return overtimeRepository.findByEmployee_IdAndMonthAndYear(employeeId, month, year);
+    }
+
 }

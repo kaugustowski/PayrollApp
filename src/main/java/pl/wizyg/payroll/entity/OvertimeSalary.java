@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
+import java.util.Locale;
 
 @Entity
 @Table(name = "overtime_salary")
@@ -39,6 +40,13 @@ public class OvertimeSalary extends Salary {
 
     public void setNumberOfOvertimeHours(int numberOfOvertimeHours) {
         this.numberOfOvertimeHours = numberOfOvertimeHours;
+    }
+
+    public String getOvertimeHourRateString() {
+
+        double ohr = employee.getOvertimeHourRate() / 100.0;
+
+        return String.format(Locale.forLanguageTag("pl-PL"), "%.2f", ohr);
     }
 
 

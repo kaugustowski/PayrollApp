@@ -22,12 +22,19 @@
 
 <body>
 
-<nav class="navbar sticky-top navbar-dark bg-transparent">
-    <div class="d-flex">
-        <div class="p-2 w-100 ">
-            <ul class="nav nav-tabs">
+<div class="container sticky-top" id="nav-container">
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+
+            <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link active" href=${pageContext.request.contextPath}>Strona główna</a>
+                    <a class="nav-link" href="#">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
@@ -71,18 +78,21 @@
                             użytkownika</a>
                     </li>
                 </c:if>
+
+                <li class="nav-item">
+
+                </li>
+
             </ul>
-        </div>
-
-        <div class="p-2 flex-shrink d-inline pull-right">
-            <form:form class="navbar-right" action="${pageContext.request.contextPath}/logout" method="POST">
-                <input class="nav-link" type="submit" name="logout" value="Wyloguj">
+            <form:form cssClass="form-inline my-2" action="${pageContext.request.contextPath}/logout" method="POST">
+                <input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="logout" value="Wyloguj">
             </form:form>
+
         </div>
 
-    </div>
+    </nav>
 
-</nav>
+</div>
 
 <div id="wrapper">
     <div id="header">

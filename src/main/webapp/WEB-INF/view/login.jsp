@@ -32,7 +32,7 @@
             <i class="fa fa-lock icon"></i>
             <input type='password' placeholder="Hasło" name="password"/>
         </div>
-        <input class="btn" name="Zaloguj" type="submit" value="submit"/>
+        <input class="btn" name="submit" type="submit" value="Zaloguj"/>
 
         <c:if test="${param.error != null}">
             <div>

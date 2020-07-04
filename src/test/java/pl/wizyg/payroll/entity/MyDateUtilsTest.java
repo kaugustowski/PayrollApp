@@ -12,7 +12,6 @@ class MyDateUtilsTest {
 
     @Test
     void getEasterDayInYear2015() {
-
         LocalDate expected = LocalDate.of(2015, 4, 5);
         LocalDate actual = MyDateUtils.getEasterDayInYear(2015);
         assertThat(expected).isEqualTo(actual);
@@ -82,8 +81,9 @@ class MyDateUtilsTest {
         LocalDate startdate2 = LocalDate.of(2020, 5, 3);
         LocalDate enddate2 = LocalDate.of(2020, 5, 6);
 
-        assertThat(MyDateUtils.isOverlapped(startdate1, enddate1, startdate2, enddate2)).isEqualTo(true);
-
+        assertThat(MyDateUtils.isOverlapped(startdate1, enddate1,
+                startdate2, enddate2))
+                .isEqualTo(true);
     }
 
     @Test

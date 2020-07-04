@@ -302,16 +302,6 @@ public abstract class Salary {
         return sickLeaveDaysInMonthYear;
     }
 
-    //TODO
-    public int getNumberOfSickLeaveDaysInCurrentMonth(List<SickLeave> sickLeavesInMonth) {
-        int sickLeaveDaysInMonthYear = 0;
-        for (SickLeave sickLeave : sickLeavesInMonth) {
-            sickLeaveDaysInMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(month, year);
-        }
-        return sickLeaveDaysInMonthYear;
-    }
-
-    //TODO
     public int getNumberOfSickLeaveDaysUpToMonth(List<SickLeave> sickLeavesUpToMonth) {
         int sickLeaveDaysUpToMonthYear = 0;
         for (SickLeave sickLeave : sickLeavesUpToMonth) {
@@ -327,7 +317,8 @@ public abstract class Salary {
         if (!CollectionUtils.isEmpty(sickLeavesUpToMonth)) {
             for (SickLeave sickLeave : sickLeavesUpToMonth) {
                 for (int i = 1; i < month; i++) {
-                    sickLeaveDaysUpToMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(i, year);
+                    if (sickLeave.isSickLeaveInMonthYear(i, year))
+                        sickLeaveDaysUpToMonthYear += sickLeave.getNumberOfSickLeaveDaysInMonthYear(i, year);
                 }
             }
         }
@@ -518,8 +509,9 @@ public abstract class Salary {
                 }
             }
         } else {
-            sickPayBaseSum = (int) Math.round((employee.getBaseSalary() + employee.getFunctionalBonus() + employee.getIncentivePay() + employee.getSeniorityBonus()) * SalaryConstants.SICKPAY_BASE_NET_RATE);
             i = 1;
+            sickPayBaseSum = (int) Math.round((employee.getBaseSalary() + employee.getFunctionalBonus() + employee.getIncentivePay() + employee.getSeniorityBonus()) * SalaryConstants.SICKPAY_BASE_NET_RATE);
+
         }
 
         return (int) Math.round((double) sickPayBaseSum / i);
@@ -531,12 +523,14 @@ public abstract class Salary {
     //TODO
     public int getNumberOfWorkdays() {
         int numberOfWorkDays = 0;
-        YearMonth yearMonth = YearMonth.of(year, month);
 
+        int previousMonth = month == 1 ? 12 : month - 1;
+        int previousMonthYear = month == 1 ? year - 1 : year;
+        YearMonth yearMonth = YearMonth.of(previousMonthYear, previousMonth);
         // java 8
         List<LocalDate> freeDays =
                 IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
-                        .mapToObj(day -> LocalDate.of(year, month, day))
+                        .mapToObj(day -> LocalDate.of(previousMonthYear, previousMonth, day))
                         .filter(this::isFreeDay)
                         .collect(Collectors.toList());
 
@@ -598,12 +592,15 @@ public abstract class Salary {
 
     public int calculateSicknessAllowance() {
 
-        int sickLeaveDaysThisYear = getNumberOfSickLeaveDaysUpToMonth() + getNumberOfSickLeaveDaysInPreviousMonth();
+        int sickLeaveDaysThisYear = getNumberOfSickLeaveDaysUpToMonth();
 
         int daysOverLimit = sickLeaveDaysThisYear - getSickLeaveLimit();
 
         if (daysOverLimit > 0) {
-            sicknessAllowance = (int) Math.round(sickPay * ((double) daysOverLimit / getNumberOfSickLeaveDaysInPreviousMonth()));
+            if (daysOverLimit > getNumberOfSickLeaveDaysInPreviousMonth())
+                sicknessAllowance = sickPay;
+            else
+                sicknessAllowance = (int) Math.round(sickPay * (((double) daysOverLimit) / getNumberOfSickLeaveDaysInPreviousMonth()));
         } else {
             sicknessAllowance = 0;
         }

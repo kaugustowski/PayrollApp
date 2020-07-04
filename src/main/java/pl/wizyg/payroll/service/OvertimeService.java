@@ -10,5 +10,5 @@ public interface OvertimeService {
 
     List<Overtime> getEmployeeOvertimeList(int employeeId);
 
-
+    Overtime getEmployeeOvertimeInMonthYear(int employeeId, int month, int year);
 }

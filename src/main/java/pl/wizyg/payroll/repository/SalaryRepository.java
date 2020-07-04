@@ -13,32 +13,34 @@ import java.util.Optional;
 @Repository
 public interface SalaryRepository extends JpaRepository<Salary, Integer> {
 
-  Optional<Salary> findFirstByMonthAndYear(int month, int year);
+    Optional<Salary> findFirstByMonthAndYear(int month, int year);
 
-  Salary findByEmployee_IdAndMonthAndYear(Integer employee_id, int month, int year);
+    Salary findByEmployee_IdAndMonthAndYear(Integer employee_id, int month, int year);
 
-  Salary findByEmployeeIdAndMonthAndYear(Integer employee_id, int month, int year);
+    Salary findByEmployeeIdAndMonthAndYear(Integer employee_id, int month, int year);
 
-  List<Salary> findAllByMonthAndYear(int month, int year);
+    List<Salary> findAllByMonthAndYear(int month, int year);
 
-  List<Salary> findAllByMonthAndYearAndEmployee_ActiveTrue(int month, int year);
+    List<Salary> findAllByMonthAndYearOrderByEmployee_FirstName(int month, int year);
 
-  List<Salary> findAllByEmployeeIdAndMonthIsLessThanAndYearOrMonthGreaterThanEqualAndYear(int employeeId, int month, int thisYear, int sameMonth, int prevYear);
+    List<Salary> findAllByMonthAndYearAndEmployee_ActiveTrue(int month, int year);
 
-  List<Salary> findByEmployee_Id(int employeeId);
+    List<Salary> findAllByEmployeeIdAndMonthIsLessThanAndYearOrMonthGreaterThanEqualAndYear(int employeeId, int month, int thisYear, int sameMonth, int prevYear);
 
-  @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  " +
-          "from Salary s order by s.year desc,s.month desc ")
-  List<SalaryListDTO> getAllPayrollMonths();
+    List<Salary> findByEmployee_Id(int employeeId);
 
-  @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from OvertimeSalary s order by s.year desc,s.month desc ")
-  List<SalaryListDTO> getAllOvertimePayrollMonths();
+    @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  " +
+            "from Salary s order by s.year desc,s.month desc ")
+    List<SalaryListDTO> getAllPayrollMonths();
 
-  @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from EssentialSalary s order by s.year desc,s.month desc ")
-  List<SalaryListDTO> getAllEssentialPayrollMonths();
+    @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from OvertimeSalary s order by s.year desc,s.month desc ")
+    List<SalaryListDTO> getAllOvertimePayrollMonths();
 
-  @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from EssentialSalary s where s.employee.email=:email order by s.year desc,s.month desc ")
-  List<SalaryListDTO> getEmployeePayrollMonths(@Param("email") String email);
+    @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from EssentialSalary s order by s.year desc,s.month desc ")
+    List<SalaryListDTO> getAllEssentialPayrollMonths();
+
+    @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  from EssentialSalary s where s.employee.email=:email order by s.year desc,s.month desc ")
+    List<SalaryListDTO> getEmployeePayrollMonths(@Param("email") String email);
 
     List<Salary> findByEmployee_EmailAndMonthAndYear(String email, int month, int year);
 }

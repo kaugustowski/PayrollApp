@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Wizyg
@@ -5,24 +7,29 @@
   Time: 21:46
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <html>
-
 <head>
-    <title>Save Sick leave</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
-    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
-</head>
 
+    <style>
+        #dropdownMenu1 {
+            height: 80%;
+        }
+
+        td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+
+</head>
 <body>
 <div class="container sticky-top" id="nav-container">
     <nav class="navbar navbar-dark navbar-expand-md bg-dark ">
@@ -96,48 +103,52 @@
 
 </div>
 
-<div id="container">
-    <h3>Zwolnienie lekarskie</h3>
-
-    <h3>${employee.firstName } ${employee.lastName }</h3>
-
-    <form:form action="${pageContext.request.contextPath}/sickLeave/save/${employeeId}"
-               modelAttribute="sickLeave" method="POST">
-
-        <%--        <form:hidden path="sickLeaveId"/>--%>
-
-        <table>
-            <tbody>
-            <tr>
-                <td><label>Początek zwolnienia:</label></td>
-                <td><form:input type="date" path="startDate"/>
-                </td>
-            </tr>
-
-            <tr>
-                <td><label>Koniec zwolnienia:</label></td>
-                <td><form:input type="date" path="endDate"/>
-                    <form:errors cssClass="ui-state-error-text"/></td>
-            </tr>
-
-            <tr>
-                <td><label></label></td>
-                <td><input type="submit" value="Zapisz" class="save"/></td>
-            </tr>
-            </tbody>
-        </table>
+<table class="table table-responsive table-bordered">
+    <thead class="thead-light">
+    <tr>
+        <th>Rok</th>
+        <th>Miesiąc</th>
+        <th>Akcje</th>
+    </tr>
+    </thead>
 
 
-    </form:form>
+    <c:forEach var="month" items="${salaryMonths}">
 
-    <div style="clear: both"></div>
 
-    <p>
-        <a href="${pageContext.request.contextPath}/teacher/list">Back to List</a>
-    </p>
+        <c:url var="showList" value="/salary/overtimeList/${month.year}/${month.month}">
 
-</div>
+        </c:url>
+
+
+        <c:url var="recalculate" value="/salary/calculateSalaries/${month.year}/${month.month}">
+
+        </c:url>
+
+
+        <tr class="d-table-row">
+            <td> ${month.year} </td>
+            <td> ${month.month} </td>
+            <td>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle bg-success"
+                            type="button" id="dropdownMenu1" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        Action
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <a class="dropdown-item" href="${showList}">List</a>
+                        <a class="dropdown-item" href="${recalculate}">Recalculate</a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+    </c:forEach>
+
+</table>
+
 
 </body>
-
 </html>

@@ -24,17 +24,17 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<Teacher> getTeachers() {
-        return teacherRepository.findAll();
+        return teacherRepository.findAllByOrderByLastName();
     }
 
     @Override
     public List<Teacher> getActiveTeachers() {
-        return teacherRepository.findAllByActiveTrue();
+        return teacherRepository.findAllByActiveTrueOrderByLastName();
     }
 
     @Override
     public List<Teacher> getInactiveTeachers() {
-        return teacherRepository.findAllByActiveFalse();
+        return teacherRepository.findAllByActiveFalseOrderByLastName();
     }
 
     @Override

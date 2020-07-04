@@ -44,8 +44,6 @@ public class TeacherController {
 
         theModel.addAttribute("teachers", theTeachers);
 
-        theTeachers.forEach(teacher -> System.out.println(teacher.getLastName()));
-
         return "list-teachers";
     }
 
@@ -73,7 +71,10 @@ public class TeacherController {
     public String addTeacher(Model theModel) {
 
         Teacher teacher = new Teacher();
+
+
         Education[] education = Education.values();
+
         TeacherType[] teacherTypes = TeacherType.values();
 
         theModel.addAttribute("teacher", teacher);

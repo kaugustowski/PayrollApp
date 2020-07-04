@@ -20,13 +20,19 @@
 
 </head>
 <body>
+<div class="container sticky-top" id="nav-container">
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark ">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-<nav class="navbar sticky-top navbar-dark bg-transparent">
-    <div class="d-flex">
-        <div class="p-2 w-100 ">
-            <ul class="nav nav-tabs">
+        <div class="collapse navbar-collapse" id="navbarColor01">
+
+            <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link active" href="${pageContext.request.contextPath}">Strona główna</a>
+                    <a class="nav-link" href="#">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
@@ -70,31 +76,43 @@
                             użytkownika</a>
                     </li>
                 </c:if>
+
+                <li class="nav-item">
+
+                </li>
+
             </ul>
-        </div>
-
-        <div class="p-2 flex-shrink d-inline pull-right">
-            <form:form class="navbar-right" action="${pageContext.request.contextPath}/logout" method="POST">
-                <input class="nav-link" type="submit" name="logout" value="Wyloguj">
+            <form:form cssClass="form-inline my-2" action="${pageContext.request.contextPath}/logout" method="POST">
+                <input class="btn btn-outline-success my-2 my-sm-0" type="submit" name="logout" value="Wyloguj">
             </form:form>
+
         </div>
 
-    </div>
+    </nav>
 
-</nav>
+</div>
 <div class="container">
-    <h2>${employee.firstName} ${employee.lastName}</h2>
+    <h2>${employee.firstName} ${employee.lastName} </h2>
 
     <c:forEach var="salary" items="${salaries}">
         <div class="grid-container border border-primary">
-            <div class="Name"><b>${salary.employee.firstName} ${salary.employee.lastName}</b></div>
+            <div class="Name"><b>${salary.employee.firstName} ${salary.employee.lastName},
+                Pesel: ${salary.employee.pesel} - ${salary.month}/${salary.year}
+                - ${salary['class'].simpleName == 'EssentialSalary'? 'Wynagrodzenie zasadnicze': 'Wynagrodzenie za nadgodziny'} </b>
+            </div>
             <div class="components border">
                 Podstawa:<br/>
                 Dod. funkcyjny:<br/>
                 Dod. motywacyjny:<br/>
                 Dod. stażowy:<br/>
-                Wyn. chor.:<br/>
-                Zas chor:<br/>
+                <c:if test="${salary['class'].simpleName == 'EssentialSalary'}">
+                    Wyn. chor.:<br/>
+                    Zas chor:<br/>
+                </c:if>
+                <c:if test="${salary['class'].simpleName == 'OvertimeSalary'}">
+                    Liczba godzin:<br/>
+                    Stawka godzinowa:<br/>
+                </c:if>
                 <b>Suma brutto:</b><br/>
             </div>
             <div class="comp-values border">
@@ -102,8 +120,14 @@
                     ${salary.functionalBonusString}<br/>
                     ${salary.incentivePayString}<br/>
                     ${salary.seniorityBonusString}<br/>
+                <c:if test="${salary['class'].simpleName == 'EssentialSalary'}">
                     ${salary.sickPayString}<br/>
                     ${salary.sicknessAllowanceString}<br/>
+                </c:if>
+                <c:if test="${salary['class'].simpleName == 'OvertimeSalary'}">
+                    ${salary.numberOfOvertimeHours}<br/>
+                    ${salary.overtimeHourRateString}<br/>
+                </c:if>
                 <b>${salary.grossSalaryString}</b><br/>
             </div>
             <div class="employee-contribution border">
@@ -112,7 +136,9 @@
                 Skł. chorob. prac.:<br/>
                 Skł. zdrow.:<br/>
                 Skł. zdrow. odl.:<br/>
-                KUP:<br/>
+                <c:if test="${salary['class'].simpleName == 'EssentialSalary'}">
+                    KUP:<br/>
+                </c:if>
                 Zaliczka na podatek:<br/>
             </div>
             <div class="payer-contr border">
@@ -127,7 +153,11 @@
                     ${salary.sicknessContributionString}<br/>
                     ${salary.healthcareContributionString}<br/>
                     ${salary.healthcareContributionDeductionString}<br/>
+                <c:if test="${salary['class'].simpleName == 'EssentialSalary'}">
                     ${salary.taxDeductibleExpensesString}<br/>
+                </c:if>
+
+
                     ${salary.incomeTaxAdvanceString}<br/>
 
 

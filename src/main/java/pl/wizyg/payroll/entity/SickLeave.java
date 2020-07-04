@@ -57,23 +57,41 @@ public class SickLeave {
         LocalDate beginningOfMonth = yearMonth.atDay(1);
 
         LocalDate endOfMonth = yearMonth.atEndOfMonth();
-
+        // zaczyna sie przed poczatkiem miesiaca i konczy po koncu miesiaca
         if (startDate.isBefore(beginningOfMonth) && endDate.isAfter(endOfMonth)) {
             sickLeaveDays = yearMonth.lengthOfMonth();
+            // zaczyna sie po poczatku miesiaca i konczy po koncu miesiaca
         }  else if (startDate.isAfter(beginningOfMonth) && endDate.isAfter((endOfMonth))) {
+
             sickLeaveDays = (int) DAYS.between(startDate, endOfMonth) + 1;
+            // zaczyna sie przed poczatkiem miesiaca i konczy przed koncem miesiaca
         } else if (startDate.isBefore(beginningOfMonth) && endDate.isBefore((endOfMonth))) {
             sickLeaveDays = (int) DAYS.between(beginningOfMonth, endDate) + 1;
-        } else if (startDate.isBefore(beginningOfMonth) && endDate.isAfter((endOfMonth))){
+            // zaczyna sie przed poczatkiem i konczy po koncu miesiaca
+        } else if (startDate.isBefore(beginningOfMonth) && endDate.isAfter((endOfMonth))) {
             sickLeaveDays = 30;
-        }
-        else {
+        } else {
             sickLeaveDays = (int) DAYS.between(startDate, endDate) + 1;
         }
         return sickLeaveDays;
     }
 
-    public int getNumberOfSickLeaveDaysOnWorkdaysInMonthYear(int month, int year){
+    public boolean isSickLeaveInMonthYear(int month, int year) {
+
+        boolean result;
+
+        YearMonth yearMonth = YearMonth.of(year, month);
+
+        LocalDate beginningOfMonth = yearMonth.atDay(1);
+
+        LocalDate endOfMonth = yearMonth.atEndOfMonth();
+
+        result = MyDateUtils.isOverlapped(startDate, endDate, beginningOfMonth, endOfMonth);
+
+        return result;
+    }
+
+    public int getNumberOfSickLeaveDaysOnWorkdaysInMonthYear(int month, int year) {
 
         int numberOfSickleaveDaysOnWorkdays = 0;
 
@@ -82,28 +100,33 @@ public class SickLeave {
         LocalDate beginningOfMonth = yearMonth.atDay(1);
 
         LocalDate endOfMonth = yearMonth.atEndOfMonth();
-
+        // zaczyna sie przed poczatkiem miesiaca i konczy po koncu miesiaca
         if (startDate.isBefore(beginningOfMonth) && endDate.isAfter(endOfMonth)) {
             numberOfSickleaveDaysOnWorkdays =
                      IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
                             .mapToObj(day -> LocalDate.of(year, month, day))
                             .filter(date ->!isFreeDay(date)).toArray().length;
+            // zaczyna sie w trakcie miesiaca i konczy przed koncem miesiaca
         } else if (startDate.isAfter(beginningOfMonth) && endDate.isBefore(endOfMonth)) {
             numberOfSickleaveDaysOnWorkdays =
                      IntStream.rangeClosed(startDate.getDayOfMonth(), endDate.getDayOfMonth())
                             .mapToObj(day -> LocalDate.of(year, month, day))
                             .filter(date ->!isFreeDay(date)).toArray().length;
+            // zaczyna sie po poczatku miesiaca i konczy  po koncu miesiaca
         } else if (startDate.isAfter(beginningOfMonth) && endDate.isAfter((endOfMonth))) {
             numberOfSickleaveDaysOnWorkdays =
                      IntStream.rangeClosed(startDate.getDayOfMonth(), yearMonth.lengthOfMonth())
                             .mapToObj(day -> LocalDate.of(year, month, day))
                             .filter(date ->!isFreeDay(date)).toArray().length;
+            // zaczyna sie przed poczatkiem i konczy przed koncem
         } else if (startDate.isBefore(beginningOfMonth) && endDate.isBefore((endOfMonth))) {
             numberOfSickleaveDaysOnWorkdays =  IntStream.rangeClosed(1, endDate.getDayOfMonth())
                     .mapToObj(day -> LocalDate.of(year, month, day))
                     .filter(date -> !isFreeDay(date)).toArray().length;
         } else {
-            System.out.println("??????????");
+            numberOfSickleaveDaysOnWorkdays = IntStream.rangeClosed(startDate.getDayOfMonth(), endDate.getDayOfMonth())
+                    .mapToObj(day -> LocalDate.of(year, month, day))
+                    .filter(date -> !isFreeDay(date)).toArray().length;
         }
 
         return numberOfSickleaveDaysOnWorkdays;
