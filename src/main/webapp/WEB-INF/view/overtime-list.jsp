@@ -91,30 +91,70 @@
     </nav>
 
 </div>
-<h1>Nadgodziny</h1>
-<h2>${employee.firstName} ${employee.lastName}</h2>
-
-<table>
-
-    <tr class="table">
-        <th>Rok</th>
-        <th>Miesiąc</th>
-        <th>Liczba nadgodzin</th>
-        <th>Akcje</th>
-    </tr>
 
 
-    <c:forEach var="ot" items="${overtimes}">
+
+<div class="container justify-content-center">
+
+    <h2>Nadgodziny</h2>
+    <h3>${employee.firstName} ${employee.lastName}</h3>
+    <table id="searchTable" class="table table-bordered table-hover table-striped">
+        <thead class="thead-light">
         <tr>
-            <td>${ot.year}</td>
-            <td>${ot.month}</td>
-            <td>${ot.numberOfOverTimeHoursInCurrentMonth}</td>
-            <td>Edytuj</td>
+            <th>Rok</th>
+            <th>Miesiąc</th>
+            <th>Liczba nadgodzin</th>
+            <th>Akcje</th>
         </tr>
-    </c:forEach>
+        </thead>
 
-</table>
+        <c:forEach var="ot" items="${overtimes}">
 
+
+            <c:url var="updateLink" value="/overtime/edit/${employee.id}">
+                <c:param name="overtimeId" value="${ot.id}"/>
+            </c:url>
+
+
+            <c:url var="deleteLink" value="/overtime/delete/${employee.id}">
+                <c:param name="overtimeId" value="${ot.id}"/>
+            </c:url>
+
+
+
+            <tr class="d-table-row">
+                <td>${ot.year}</td>
+                <td>${ot.month}</td>
+                <td>${ot.numberOfOverTimeHoursInCurrentMonth}</td>
+
+
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle bg-success"
+                                type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            Akcje
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <a class="dropdown-item" href="${updateLink}">Aktualizuj</a>
+                            <a class="dropdown-item" href="${deleteLink}">Usuń</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+        </c:forEach>
+
+    </table>
+
+    <a class="btn btn-primary" href="${pageContext.request.contextPath}/overtime/add/${employee.id}"> Dodaj nadgodziny </a>
+</div>
+
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 </body>
 </html>

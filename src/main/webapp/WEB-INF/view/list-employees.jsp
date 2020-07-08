@@ -18,6 +18,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
+
 </head>
 <body>
 <div class="container sticky-top" id="nav-container">
@@ -32,7 +33,7 @@
 
             <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link" href="#">Strona główna</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
@@ -98,14 +99,14 @@
         <input type="text" onkeyup="filterBySearchbar()" id="search" placeholder="Wyszukaj...">
     </div>
 
-    <table class="table table-responsive table-bordered">
+    <table id="searchTable" class="table  table-bordered">
         <thead class="thead-light">
         <tr>
             <th>Imię</th>
             <th>Nazwisko</th>
             <th>Email</th>
-            <th>Aktywny</th>
-            <th>Akcje</th>
+            <th class="text-center">Aktywny</th>
+            <th class="text-center">Akcje</th>
         </tr>
         </thead>
 
@@ -114,11 +115,6 @@
 
 
             <c:url var="updateLink" value="/teacher/showFormForUpdate">
-                <c:param name="teacherId" value="${tempTeacher.id}"/>
-            </c:url>
-
-
-            <c:url var="deleteLink" value="/teacher/delete">
                 <c:param name="teacherId" value="${tempTeacher.id}"/>
             </c:url>
 
@@ -139,10 +135,10 @@
                 <td> ${tempTeacher.firstName} </td>
                 <td> ${tempTeacher.lastName} </td>
                 <td> ${tempTeacher.email} </td>
-                <td> ${tempTeacher.active==true ? "+" : "-"}</td>
+                <td class="text-center"> ${tempTeacher.active==true ? "+" : "-"}</td>
 
 
-                <td>
+                <td class="text-center">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle bg-success"
                                 type="button" id="dropdownMenu1" data-toggle="dropdown"
@@ -152,10 +148,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <a class="dropdown-item" href="${updateLink}">Aktualizuj</a>
                             <a class="dropdown-item" href="${addSickLeaveLink}">Dodaj zwolnienie lekarskie</a>
-                            <a class="dropdown-item" href="${deleteLink}"
-                               onclick="if (!(confirm('Czy na pewno chcesz usunąć tego pracownika?' +
-                            ' Spowoduje to usunięcie historii wypłat z nim powiązanych! Rozważ zmianę statusu pracownika na nieaktywny'))) return false">Usuń
-                                pracownika</a>
+
                             <a class="dropdown-item" href="${addOvertimeLink}">Dodaj nadgodziny</a>
                             <a class="dropdown-item" href="${salaryList}">Lista płac pracownika</a>
                             <a class="dropdown-item" href="${empHistory}">Lista płac pracownika</a>
@@ -169,6 +162,11 @@
     </table>
 </div>
 
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 </body>
 </html>

@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.wizyg.payroll.entity.Employee;
 import pl.wizyg.payroll.entity.EmploymentHistory;
 import pl.wizyg.payroll.service.EmployeeService;
@@ -47,12 +44,19 @@ public class EmploymentHistoryController {
         return "emp-history-form";
     }
 
-    @PostMapping("/save/{employeeId}")
-    public String saveEmploymentHistory(@Valid @ModelAttribute EmploymentHistory employmentHistory, BindingResult bindingResult, @PathVariable int employeeId) {
+    @RequestMapping("/delete/{employeeId}")
+    public String showEmploymentHistoryForm(@PathVariable int employeeId, @RequestParam int empHistId){
 
-        if (bindingResult.hasErrors()) {
-            return "sickleave-form";
-        }
+        employmentHistoryService.deleteEmploymentHistory(empHistId);
+
+        return "redirect:/history/{employeeId}";
+    }
+
+    @PostMapping("/save/{employeeId}")
+    public String saveEmploymentHistory(@Valid @ModelAttribute("empHistory") EmploymentHistory employmentHistory, BindingResult bindingResult, @PathVariable int employeeId) {
+
+        if (bindingResult.hasErrors())
+            return "emp-history-form";
 
         employeeService.getEmployee(employeeId).addEmploymentHistory(employmentHistory);
         employmentHistoryService.saveEmploymentHistory(employmentHistory, employeeId);

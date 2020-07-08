@@ -12,11 +12,9 @@ import javax.validation.constraints.Min;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Entity
 @Table(name = "salary")
@@ -70,9 +68,12 @@ public abstract class Salary {
     @Min(0)
     int healthcareContributionDeduction;
     @Column(name = "month")
-    private int month;
+    @Min(1)
+    @Max(12)
+    int month;
     @Column(name = "year")
-    private int year;
+    @Min(0)
+    int year;
     @Column(name = "tax")
     @Min(0)
     int tax;
@@ -125,6 +126,7 @@ public abstract class Salary {
         this.sickLeavesInMonth = sickLeavesInMonth;
         this.sickLeavesUpToMonth = sickLeavesUpToMonth;
         this.salariesFromLast12Months = salariesFromLast12Months;
+        performCalculations();
     }
 
     public int getId() {
@@ -171,36 +173,12 @@ public abstract class Salary {
         this.grossSalary = grossSalary;
     }
 
-    public int getSickPay() {
-        return sickPay;
-    }
-
-    public void setSickPay(int sickPay) {
-        this.sickPay = sickPay;
-    }
-
-    public int getSicknessAllowance() {
-        return sicknessAllowance;
-    }
-
-    public void setSicknessAllowance(int sicknessAllowance) {
-        this.sicknessAllowance = sicknessAllowance;
-    }
-
-    public List<SickLeave> getSickLeavesInMonth() {
-        return sickLeavesInMonth;
-    }
-
-    public void setSickLeavesInMonth(List<SickLeave> sickLeavesInMonth) {
-        this.sickLeavesInMonth = sickLeavesInMonth;
-    }
-
     public int getContributionBase() {
         return contributionBase;
     }
 
-    public void setContributionBase(int grossSalary) {
-        this.contributionBase = grossSalary;
+    public void setContributionBase(int contributionBase) {
+        this.contributionBase = contributionBase;
     }
 
     public int getPensionContributionPayer() {
@@ -223,8 +201,8 @@ public abstract class Salary {
         return accidentInsuranceContribution;
     }
 
-    public void setAccidentInsuranceContribution(int accidentInsuranceContributionPayer) {
-        this.accidentInsuranceContribution = accidentInsuranceContributionPayer;
+    public void setAccidentInsuranceContribution(int accidentInsuranceContribution) {
+        this.accidentInsuranceContribution = accidentInsuranceContribution;
     }
 
     public int getPensionContributionEmployee() {
@@ -247,8 +225,48 @@ public abstract class Salary {
         return sicknessContribution;
     }
 
-    public void setSicknessContribution(int sicknessContributionEmployee) {
-        this.sicknessContribution = sicknessContributionEmployee;
+    public void setSicknessContribution(int sicknessContribution) {
+        this.sicknessContribution = sicknessContribution;
+    }
+
+    public int getHealthcareContribution() {
+        return healthcareContribution;
+    }
+
+    public void setHealthcareContribution(int healthcareContribution) {
+        this.healthcareContribution = healthcareContribution;
+    }
+
+    public int getHealthcareContributionDeduction() {
+        return healthcareContributionDeduction;
+    }
+
+    public void setHealthcareContributionDeduction(int healthcareContributionDeduction) {
+        this.healthcareContributionDeduction = healthcareContributionDeduction;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public int getTax() {
@@ -266,6 +284,63 @@ public abstract class Salary {
     public void setIncomeTaxAdvance(int incomeTaxAdvance) {
         this.incomeTaxAdvance = incomeTaxAdvance;
     }
+
+    public int getSickPay() {
+        return sickPay;
+    }
+
+    public void setSickPay(int sickPay) {
+        this.sickPay = sickPay;
+    }
+
+    public int getSicknessAllowance() {
+        return sicknessAllowance;
+    }
+
+    public void setSicknessAllowance(int sicknessAllowance) {
+        this.sicknessAllowance = sicknessAllowance;
+    }
+
+    public int getLaborFund() {
+        return laborFund;
+    }
+
+    public void setLaborFund(int laborFund) {
+        this.laborFund = laborFund;
+    }
+
+    public int getNetSalary() {
+        return netSalary;
+    }
+
+    public void setNetSalary(int netSalary) {
+        this.netSalary = netSalary;
+    }
+
+    public List<SickLeave> getSickLeavesUpToMonth() {
+        return sickLeavesUpToMonth;
+    }
+
+    public void setSickLeavesUpToMonth(List<SickLeave> sickLeavesUpToMonth) {
+        this.sickLeavesUpToMonth = sickLeavesUpToMonth;
+    }
+
+    public List<Salary> getSalariesFromLast12Months() {
+        return salariesFromLast12Months;
+    }
+
+    public void setSalariesFromLast12Months(List<Salary> salariesFromLast12Months) {
+        this.salariesFromLast12Months = salariesFromLast12Months;
+    }
+
+    public List<SickLeave> getSickLeavesInMonth() {
+        return sickLeavesInMonth;
+    }
+
+    public void setSickLeavesInMonth(List<SickLeave> sickLeavesInMonth) {
+        this.sickLeavesInMonth = sickLeavesInMonth;
+    }
+
 
     public int getTaxDeductibleExpenses() {
         if (employee.isAllowedForExtraTaxDeductibleExpenses()) {
@@ -370,29 +445,30 @@ public abstract class Salary {
         return deductionsFromSalary;
     }
 
-    public int calculateEmployeeContribution(){
-        int employeeContribution;
-        employeeContribution = calculateSicknessContribution() + calculatePensionContributionEmployee()
+    public int calculateEmployeeContribution() {
+        return calculateSicknessContribution()
+                + calculatePensionContributionEmployee()
                 + calculateDisabilityContributionEmployee();
-        return employeeContribution;
     }
 
     public int calculatePayerDeductions() {
-        int payerDeductions;
-
-        payerDeductions = calculateDisabilityContributionPayer() + calculatePensionContributionPayer() + calculateAccidentInsuranceContribution() + calculateLabourFund();
-        return payerDeductions;
+        return calculateDisabilityContributionPayer()
+                + calculatePensionContributionPayer()
+                + calculateAccidentInsuranceContribution()
+                + calculateLabourFund();
     }
 
     public int calculateTax() {
-        return (int) Math.round((roundToHundreds(calculateTaxBase()) * SalaryConstants.TAX_PERCENT / 100));
+        tax = (int) Math.round((roundToHundreds(calculateTaxBase()) * SalaryConstants.TAX_PERCENT / 100));
+        return tax;
     }
 
     public int calculateTaxBase() {
-        int taxBase = 0;
-        taxBase = grossSalary - pensionContributionEmployee - disabilityContributionEmployee - sicknessContribution - getTaxDeductibleExpenses();
-
-        return taxBase;
+        return grossSalary
+                - pensionContributionEmployee
+                - disabilityContributionEmployee
+                - sicknessContribution
+                - getTaxDeductibleExpenses();
     }
 
     public int calculateIncomeTaxAdvance() {
@@ -485,15 +561,12 @@ public abstract class Salary {
         int sickPayBaseSum = 0;
         int i = 0;
 
-        if(salariesFromLast12Months!=null){
-
-            Stream<Salary> salaryStream = salariesFromLast12Months.stream();
-
-            List<Salary> essentialSalaries = salaryStream
+        if (!CollectionUtils.isEmpty(salariesFromLast12Months)) {
+            List<Salary> essentialSalaries = salariesFromLast12Months.stream()
                     .filter(salary -> salary instanceof EssentialSalary)
                     .collect(Collectors.toList());
 
-            List<Salary> overtimeSalaries = salaryStream
+            List<Salary> overtimeSalaries = salariesFromLast12Months.stream()
                     .filter(salary -> salary instanceof OvertimeSalary)
                     .collect(Collectors.toList());
 
@@ -520,7 +593,6 @@ public abstract class Salary {
     protected abstract boolean isAllowedForSickPayBaseCalculation();
 
 
-    //TODO
     public int getNumberOfWorkdays() {
         int numberOfWorkDays = 0;
 
@@ -548,27 +620,18 @@ public abstract class Salary {
     }
 
 
-    //TODO jkbjjjh
-    public int getNumberOfWorkedDaysWithSickLeave() {
-        int numberOfUnworkedDays = 0;
-        YearMonth yearMonth = YearMonth.of(year, month);
+    public int getNumberOfWorkDaysWithSickLeave() {
+        int numberOfWorkDaysWithSickLeave = 0;
+        int sickLeaveMonth = month == 1 ? 12 : month - 1;
+        int sickLeaveYear = month == 1 ? year - 1 : year;
 
-        // java 8
-        LocalDate[] skippedDays =
-                (LocalDate[]) IntStream.rangeClosed(1, yearMonth.lengthOfMonth())
-                        .mapToObj(day -> LocalDate.of(year, month, day))
-                        .filter(date -> isFreeDay(date) || getSickLeavesInMonth().contains(date)).toArray();
+        if (!CollectionUtils.isEmpty(sickLeavesInMonth)) {
+            for (SickLeave sl : sickLeavesInMonth) {
+                numberOfWorkDaysWithSickLeave += sl.getNumberOfSickLeaveDaysOnWorkdaysInMonthYear(sickLeaveMonth, sickLeaveYear);
+            }
+        }
 
-        numberOfUnworkedDays = yearMonth.lengthOfMonth() - skippedDays.length;
-
-        //java 11+
-//        LocalDate[] weekendDays =
-//                (LocalDate[]) yearMonth.atDay(1).datesUntil(yearMonth.atEndOfMonth())
-//                        .filter(date -> isWeekend(date)).toArray();
-//
-//        numberOfWorkDays=yearMonth.lengthOfMonth()-weekendDays.length;
-
-        return numberOfUnworkedDays;
+        return numberOfWorkDaysWithSickLeave;
     }
 
     public boolean
@@ -621,7 +684,7 @@ public abstract class Salary {
         calculateHealthCareContribution();
         calculateIncomeTaxAdvance();
         calculateEmployeeDeductionsFromSalary();
-        getNetSalary();
+        calculateNetSalary();
     }
 
     public int calculateGrossSalary() {
@@ -629,8 +692,9 @@ public abstract class Salary {
         return grossSalary;
     }
 
-    public int getNetSalary(){
-        return grossSalary-calculateEmployeeDeductionsFromSalary();
+    public int calculateNetSalary() {
+        netSalary = grossSalary - calculateEmployeeDeductionsFromSalary();
+        return netSalary;
     }
 
     private int calculateLabourFund() {
@@ -648,9 +712,12 @@ public abstract class Salary {
         return limit;
     }
 
-    @Override
+
     public String toString() {
         return "Salary{" +
+                ", id=" + id +
+                ", month=" + month +
+                ", year=" + year +
                 "grossSalary=" + grossSalary +
                 ", contributionBase=" + contributionBase +
                 ", pensionContributionPayer=" + pensionContributionPayer +
@@ -662,9 +729,7 @@ public abstract class Salary {
                 ", healthcareContribution=" + healthcareContribution +
                 ", healthcareContributionDeduction=" + healthcareContributionDeduction +
                 ", employee=" + employee +
-                ", id=" + id +
-                ", month=" + month +
-                ", year=" + year +
+
                 ", tax=" + tax +
                 ", incomeTaxAdvance=" + incomeTaxAdvance +
                 ", taxDeductibleExpenses=" + taxDeductibleExpenses +
@@ -675,13 +740,140 @@ public abstract class Salary {
                 '}';
     }
 
-    public String getBaseSalaryString(){
 
-        double bs = baseSalary;
+    public String getBaseSalaryString() {
+
+        double bs = baseSalary / 100.0;
 
         return String.format("%.2f", bs);
     }
 
+
+    public String getGrossSalaryString() {
+
+        double gs = grossSalary / 100.0;
+
+        return String.format("%.2f", gs);
+    }
+
+    public String getNetSalaryString() {
+
+        double ns = netSalary / 100.0;
+
+        return String.format("%.2f", ns);
+    }
+
+    public String getSicknessContributionString() {
+
+        double sc = sicknessContribution / 100.0;
+
+        return String.format("%.2f", sc);
+    }
+
+    public String getAccidentInsuranceContributionString() {
+
+        double aic = accidentInsuranceContribution / 100.0;
+
+        return String.format("%.2f", aic);
+    }
+
+    public String getPensionContributionEmployeeString() {
+
+        double pce = pensionContributionEmployee / 100.0;
+
+        return String.format("%.2f", pce);
+    }
+
+    public String getPensionContributionPayerString() {
+
+        double pcp = pensionContributionPayer / 100.0;
+
+        return String.format("%.2f", pcp);
+    }
+
+    public String getDisabilityContributionEmployeeString() {
+
+        double dce = disabilityContributionEmployee / 100.0;
+
+        return String.format("%.2f", dce);
+    }
+
+    public String getDisabilityContributionPayerString() {
+
+        double dcp = disabilityContributionPayer / 100.0;
+
+        return String.format("%.2f", dcp);
+    }
+
+    public String getFunctionalBonusString() {
+
+        double fb = functionalBonus / 100.0;
+
+        return String.format("%.2f", fb);
+    }
+
+    public String getIncentivePayString() {
+
+        double ip = incentivePay / 100.0;
+
+        return String.format("%.2f", ip);
+    }
+
+    public String getSeniorityBonusString() {
+
+        double sb = seniorityBonus / 100.0;
+
+        return String.format("%.2f", sb);
+    }
+
+    public String getSickPayString() {
+
+        double sp = sickPay / 100.0;
+
+        return String.format("%.2f", sp);
+    }
+
+    public String getSicknessAllowanceString() {
+
+        double sa = sicknessAllowance / 100.0;
+
+        return String.format("%.2f", sa);
+    }
+
+    public String getIncomeTaxAdvanceString() {
+
+        double ita = incomeTaxAdvance / 100.0;
+
+        return String.format("%.2f", ita);
+    }
+
+    public String getHealthcareContributionString() {
+
+        double hc = healthcareContribution / 100.0;
+
+        return String.format("%.2f", hc);
+    }
+
+    public String getHealthcareContributionDeductionString() {
+
+        double hcd = healthcareContributionDeduction / 100.0;
+
+        return String.format("%.2f", hcd);
+    }
+
+    public String getTaxDeductibleExpensesString() {
+
+        double tde = taxDeductibleExpenses / 100.0;
+
+        return String.format("%.2f", tde);
+    }
+
+    public String getLaborFundString() {
+
+        double lf = laborFund / 100.0;
+
+        return String.format("%.2f", lf);
+    }
 
 }
 

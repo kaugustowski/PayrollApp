@@ -110,14 +110,13 @@ public class TeacherController {
         return "teacher-form";
     }
 
-    @GetMapping("/delete")
-    public String deleteTeacher(@RequestParam("teacherId") int theId) {
-
-        // delete the customer
-        teacherService.deleteTeacher(theId);
-
-        return "redirect:/teacher/list";
-    }
+//    @GetMapping("/delete")
+//    public String deleteTeacher(@RequestParam("teacherId") int theId) {
+//
+//        teacherService.deleteTeacher(theId);
+//
+//        return "redirect:/teacher/list";
+//    }
 
     @GetMapping("/setInactive")
     public String setTeacherInactive(@RequestParam("teacherId") int theId) {

@@ -2,12 +2,14 @@ package pl.wizyg.payroll.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.wizyg.payroll.entity.Employee;
 import pl.wizyg.payroll.entity.Overtime;
 import pl.wizyg.payroll.service.EmployeeService;
 import pl.wizyg.payroll.service.OvertimeService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -51,11 +53,34 @@ public class OvertimeController {
     }
 
     @PostMapping("/save/{employeeId}")
-    public String saveOvertime(@PathVariable int employeeId, @ModelAttribute Overtime overtime){
+    public String saveOvertime(@PathVariable int employeeId, @Valid @ModelAttribute Overtime overtime, BindingResult bindingResult){
+
+        if(bindingResult.hasErrors())
+            return "overtime-form";
 
         overtimeService.saveOvertime(overtime, employeeId );
 
         return "redirect:/overtime/list/{employeeId}";
+    }
 
+    @PostMapping("/edit/{employeeId}")
+    public String editOvertime(@PathVariable int employeeId, @RequestParam int overtimeId, Model theModel){
+
+        Employee employee = employeeService.getEmployee(employeeId);
+
+        Overtime overtime = overtimeService.getOvertime(overtimeId);
+
+        theModel.addAttribute("employee", employee);
+        theModel.addAttribute("overtime", overtime);
+
+        return "overtime-form";
+    }
+
+    @GetMapping("/delete/{employeeId}")
+    public String deleteOvertime(@RequestParam int overtimeId, @PathVariable int employeeId){
+
+        overtimeService.delete(overtimeId);
+
+        return "redirect:/overtime/list/{employeeId}";
     }
 }

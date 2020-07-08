@@ -107,7 +107,7 @@
                 Dod. stażowy:<br/>
                 <c:if test="${salary['class'].simpleName == 'EssentialSalary'}">
                     Wyn. chor.:<br/>
-                    Zas chor:<br/>
+                    Zas. chor:<br/>
                 </c:if>
                 <c:if test="${salary['class'].simpleName == 'OvertimeSalary'}">
                     Liczba godzin:<br/>
@@ -115,7 +115,7 @@
                 </c:if>
                 <b>Suma brutto:</b><br/>
             </div>
-            <div class="comp-values border">
+            <div class="comp-values border pr-4 text-right">
                     ${salary.baseSalaryString}<br/>
                     ${salary.functionalBonusString}<br/>
                     ${salary.incentivePayString}<br/>
@@ -130,7 +130,7 @@
                 </c:if>
                 <b>${salary.grossSalaryString}</b><br/>
             </div>
-            <div class="employee-contribution border">
+            <div class="employee-contribution  ">
                 Skł. emeryt. prac.:<br/>
                 Skł. rentowa prac.:<br/>
                 Skł. chorob. prac.:<br/>
@@ -147,7 +147,7 @@
                 Skł. wypadkowa:<br/>
                 Fund. pracy:<br/>
             </div>
-            <div class="ec-values border">
+            <div class="ec-values border pr-4 text-right">
                     ${salary.pensionContributionEmployeeString}<br/>
                     ${salary.disabilityContributionEmployeeString}<br/>
                     ${salary.sicknessContributionString}<br/>
@@ -162,7 +162,7 @@
 
 
             </div>
-            <div class="pc-values border">
+            <div class="pc-values border pr-4 text-right">
                     ${salary.pensionContributionPayerString}<br/>
                     ${salary.disabilityContributionPayerString}<br/>
                     ${salary.accidentInsuranceContributionString}<br/>
@@ -171,13 +171,19 @@
             <div class="net border">
                 <b>Suma netto:</b>
             </div>
-            <div class="net-value border">
+            <div class="net-value border pr-4 text-right">
                 <b>${salary.netSalaryString}</b>
             </div>
         </div>
     </c:forEach>
 
 </div>
+
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 </body>
 </html>

@@ -123,10 +123,6 @@ public class SalaryServiceImpl implements SalaryService {
         return salaryRepository.findAllByMonthAndYearOrderByEmployee_FirstName(month, year);
     }
 
-
-
-
-
     @Override
     public void saveSalary(Salary salary, int employeeId) {
         employeeService.getEmployee(employeeId).addSalary(salary);
@@ -142,6 +138,7 @@ public class SalaryServiceImpl implements SalaryService {
     public EssentialSalary getEmployeeEssentialSalary(int employeeId, int month, int year) {
         return essentialSalaryRepository.findByEmployee_IdAndMonthAndYear(employeeId, month, year);
     }
+
 
     @Override
     public Salary getEssentialSalary(int id) {
@@ -177,7 +174,7 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public List<Salary> getEmployeeSalaries(int employeeId) {
-        return salaryRepository.findByEmployee_Id(employeeId);
+        return salaryRepository.findByEmployee_IdOrderByYearDescMonthDesc(employeeId);
     }
 
     @Override
@@ -198,6 +195,11 @@ public class SalaryServiceImpl implements SalaryService {
     @Override
     public List<SalaryListDTO> getEssentialSalaryListDTO() {
         return salaryRepository.getAllEssentialPayrollMonths();
+    }
+
+    @Override
+    public List<SalaryListDTO> getEmployeeSalaryListDTO(String email) {
+        return salaryRepository.getEmployeePayrollMonths(email);
     }
 
 }

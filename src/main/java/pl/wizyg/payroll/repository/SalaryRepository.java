@@ -27,7 +27,7 @@ public interface SalaryRepository extends JpaRepository<Salary, Integer> {
 
     List<Salary> findAllByEmployeeIdAndMonthIsLessThanAndYearOrMonthGreaterThanEqualAndYear(int employeeId, int month, int thisYear, int sameMonth, int prevYear);
 
-    List<Salary> findByEmployee_Id(int employeeId);
+    List<Salary> findByEmployee_IdOrderByYearDescMonthDesc(int employeeId);
 
     @Query("select distinct new pl.wizyg.payroll.DTO.SalaryListDTO(s.month,s.year)  " +
             "from Salary s order by s.year desc,s.month desc ")

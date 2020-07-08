@@ -1,25 +1,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Wizyg
-  Date: 28.05.2020
-  Time: 19:48
+  Date: 25.03.2020
+  Time: 21:46
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <html>
 <head>
-    <title>Salary list</title>
+    <title>Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
-    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
+
+    <style>
+        #dropdownMenu1 {
+            height: 80%;
+        }
+
+        td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
 
 </head>
 <body>
-
 <div class="container sticky-top" id="nav-container">
     <nav class="navbar navbar-dark navbar-expand-md bg-dark ">
         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -92,44 +103,52 @@
 
 </div>
 
-<h2>${employee.firstName} ${employee.lastName}</h2>
+<div class="container col-6 offset-3">
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-light ">
+            <tr class="d-table-row justify-content-center">
+                <th class="text-center">Rok</th>
+                <th class="text-center">Miesiąc</th>
+                <th class="text-center">Akcja</th>
+            </tr>
+            </thead>
 
 
-<table class="table table-responsive table-bordered">
-    <thead class="thead-light">
-    <tr>
-        <th>Name</th>
-        <th>L. godzin</th>
-        <th>GSalary</th>
-        <th>NetSalary</th>
-        <th>SContr</th>
-        <th>PenContr(E)</th>
-        <th>DisContr(E)</th>
-        <th>AccInsContr</th>
-        <th>PenContr(P)</th>
-        <th>DisContr(P)</th>
-    </tr>
-    </thead>
+            <c:forEach var="month" items="${salaryMonths}">
 
 
-    <c:forEach var="salary" items="${}">
-        <tr class="d-table-row">
-            <td> ${salary.employee.firstName} ${salary.employee.lastName}</td>
-            <td> ${salary.numberOfOvertimeHours} </td>
-            <td> ${salary.baseSalaryString} </td>
-            <td> ${salary.grossSalaryString} </td>
-            <td> ${salary.netSalaryString} </td>
-            <td> ${salary.sicknessContributionString} </td>
-            <td> ${salary.pensionContributionEmployeeString}</td>
-            <td> ${salary.disabilityContributionEmployeeString}</td>
-            <td> ${salary.accidentInsuranceContributionString} </td>
-            <td> ${salary.pensionContributionPayerString}</td>
-            <td> ${salary.disabilityContributionPayerString}</td>
+                <c:url var="showList" value="/salary/my/${month.year}/${month.month}">
 
-        </tr>
-        ${salary.month}/${salary.year}
-    </c:forEach>
-</table>
+                </c:url>
+
+
+                <tr class="d-table-row">
+                    <td class="text-center"> ${month.year} </td>
+                    <td class="text-center"> ${month.month} </td>
+                    <td class="text-center">
+
+                        <div class="dropdown">
+                            <button class="btn btn-secondary bg-success"
+                                    type="button">
+                                <a class="dropdown-item" href="${showList}">Lista</a>
+                            </button>
+
+                        </div>
+                    </td>
+                </tr>
+
+            </c:forEach>
+
+        </table>
+    </div>
+</div>
+
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 </body>
 </html>

@@ -3,6 +3,8 @@ package pl.wizyg.payroll.entity;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Table(name = "overtime")
@@ -20,6 +22,7 @@ public class Overtime {
     private int month;
 
     @Column(name = "overtime_hours")
+    @Positive(message = "Wartość musi być dodatnia")
     private int numberOfOverTimeHoursInCurrentMonth;
 
     @ManyToOne

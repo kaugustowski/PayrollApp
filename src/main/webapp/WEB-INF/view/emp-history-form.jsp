@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -18,6 +19,8 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
+
 </head>
 
 <body>
@@ -34,7 +37,7 @@
 
             <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link" href="#">Strona główna</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
@@ -94,62 +97,65 @@
 
 </div>
 
-<div id="wrapper">
-    <div id="header">
+
+<div id="container ">
+    <div class="col-6 offset-3">
         <h2>Historia zatrudnienia</h2>
+        <h3>Dodaj nową pozycję</h3>
+
+        <h2>${employee.firstName } ${employee.lastName }</h2>
+
+        <form:form action="${pageContext.request.contextPath}/history/save/${employeeId}"
+                   modelAttribute="empHistory" method="POST">
+
+            <table>
+                <tbody>
+                <tr>
+                    <td><label>Nazwa placówki:</label></td>
+                    <td><form:input path="institutionName"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>Data rozpoczęcia pracy:</label></td>
+                    <td><form:input type="date" path="startDate"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>Data zakończenia pracy:</label></td>
+                    <td><form:input type="date" path="endDate"/> <form:errors cssClass="ui-state-error-text"/></td>
+                </tr>
+
+                <tr>
+                    <td><label>Liczba dni na urlopie bezpłatnym:</label></td>
+                    <td><form:input type="number" min="0" path="numberOfDaysOnUnpaidLeave"/></td>
+                </tr>
+
+                <tr>
+                    <td><label></label></td>
+                    <td><input class="btn btn-primary" type="submit" value="Dodaj pozycję"/> <a class="btn btn-primary"
+                                                                                                href="${pageContext.request.contextPath}/history/list/${employeeId}">Powrót
+                        do listy</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </form:form>
     </div>
-</div>
 
-<div id="container">
-    <h3>Dodaj nową pozycję</h3>
-
-    <h2>${employee.firstName } ${employee.lastName }</h2>
-
-    <form:form action="${pageContext.request.contextPath}/history/save/${employeeId}"
-               modelAttribute="empHistory" method="POST">
-
-        <%--        <form:hidden path="sickLeaveId"/>--%>
-
-        <table>
-            <tbody>
-            <tr>
-                <td><label>Nazwa placówki:</label></td>
-                <td><form:input path="institutionName"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Data rozpoczęcia pracy:</label></td>
-                <td><form:input type="date" path="startDate"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Data zakończenia pracy:</label></td>
-                <td><form:input type="date" path="endDate"/></td>
-            </tr>
-
-            <tr>
-                <td><label>Liczba dni na urlopie bezpłatnym:</label></td>
-                <td><form:input path="numberOfDaysOnUnpaidLeave"/></td>
-            </tr>
-
-            <tr>
-                <td><label></label></td>
-                <td><input type="submit" value="Dodaj pozycję" class="save"/></td>
-            </tr>
-            </tbody>
-        </table>
-
-
-    </form:form>
 
     <div style="clear: both"></div>
 
-    <p>
-        <a href="${pageContext.request.contextPath}/history/list/${employeeId}">Powrót do listy</a>
-    </p>
+
+
 
 </div>
-
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 </body>
 
 </html>

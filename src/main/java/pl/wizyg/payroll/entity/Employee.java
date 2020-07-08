@@ -39,7 +39,7 @@ public abstract class Employee {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "pesel", unique = true)
-    @PESEL
+    @PESEL(message = "niepoprawny numer PESEL")
     private String pesel;
     @Column(name = "email", unique = true)
     @Email
@@ -60,7 +60,7 @@ public abstract class Employee {
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "employee")
     private List<SickLeave> sickLeaves;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "employee")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "employee")
     private List<EmploymentHistory> employmentHistoryList;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "employee")

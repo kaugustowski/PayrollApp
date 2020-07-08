@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
-
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
 </head>
 <body>
 
@@ -92,56 +92,61 @@
 
 </div>
 
-<h1>Zwolnienia lekarskie</h1>
-<h2>${employee.firstName} ${employee.lastName}</h2>
+<div class="container">
 
-<table>
-    <thead>
-    <tr>
-        <th>Początek</th>
-        <th>Koniec</th>
-        <th>Liczba dni</th>
-        <th>Akcje</th>
-    </tr>
+    <h2>Zwolnienia lekarskie</h2>
+    <h3>${employee.firstName} ${employee.lastName}</h3>
 
-    </thead>
-
-
-    <c:forEach var="sickLeave" items="${sickLeaves}">
-
-        <c:url var="edit" value="${pageContext.request.contextPath}/sickLeave/edit/${employee.id}">
-            <c:param name="sickLeaveId" value="${sickLeave.sickLeaveId}"/>
-        </c:url>
-
-        <c:url var="deleteLink" value="${pageContext.request.contextPath}/sickLeave/delete">
-            <c:param name="sickLeaveId" value="${sickLeave.sickLeaveId}"/>
-        </c:url>
-
-
+    <table id="searchTable" class="table table-bordered table-hover table-striped">
+        <thead class="thead-light">
         <tr>
-            <td>${sickLeave.startDate}</td>
-            <td>${sickLeave.endDate}</td>
-            <td>${sickLeave.consecutiveDays}</td>
-            <td>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle bg-success"
-                            type="button" id="dropdownMenu1" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        Akcje
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <a class="dropdown-item" href="${edit}">Aktualizuj</a>
-                        <a class="dropdown-item" href="${deleteLink}"
-                           onclick="if (!(confirm('Czy na pewno chcesz to zwolnienie?'))) return false">Usuń
-                            pracownika</a>
+            <th>Początek</th>
+            <th>Koniec</th>
+            <th>Liczba dni</th>
+            <th class="text-center">Akcje</th>
 
-                    </div>
-                </div>
-            </td>
         </tr>
-    </c:forEach>
+        </thead>
 
-</table>
+
+        <c:forEach var="sickLeave" items="${sickLeaves}">
+
+            <c:url var="edit" value="/sickLeave/edit/${employee.id}">
+                <c:param name="sickLeaveId" value="${sickLeave.sickLeaveId}"/>
+            </c:url>
+
+            <c:url var="deleteLink" value="/sickLeave/delete/${employeeId}">
+                <c:param name="sickLeaveId" value="${sickLeave.sickLeaveId}"/>
+            </c:url>
+
+
+            <tr class="d-table-row">
+                <td>${sickLeave.startDate}</td>
+                <td>${sickLeave.endDate}</td>
+                <td>${sickLeave.consecutiveDays}</td>
+                <td class="text-center">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary bg-success"
+                                type="button">
+                            <a class="text-dark" href="${deleteLink}"
+                               onclick="if (!(confirm('Czy na pewno chcesz to zwolnienie?'))) return false">Usuń
+                                zwolnienie</a>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </c:forEach>
+
+    </table>
+
+    <a class="btn btn-primary" href="${pageContext.request.contextPath}/sickLeave/add/${employee.id}">Dodaj nowe zwolnienie</a>
+</div>
+
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 
 </body>

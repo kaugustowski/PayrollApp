@@ -1,5 +1,6 @@
 package pl.wizyg.payroll.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.wizyg.payroll.validator.ValidEmploymentHistoryDates;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 @Entity
 @Table(name = "employment_history")
-@ValidEmploymentHistoryDates(message = "Data zakończenia zwolnienia nie może poprzedzać daty jego rozpoczęcia")
+@ValidEmploymentHistoryDates(message = "Data zakończenia nie może poprzedzać daty rozpoczęcia")
 public class EmploymentHistory {
 
     @Id
@@ -20,9 +21,11 @@ public class EmploymentHistory {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "start_date")
     private LocalDate startDate;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "end_date")
     private LocalDate endDate;
 

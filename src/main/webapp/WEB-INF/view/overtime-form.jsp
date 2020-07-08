@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
 </head>
 
-<body>
+<body onload="selectValues()">
 
 <div class="container sticky-top" id="nav-container">
     <nav class="navbar navbar-dark navbar-expand-md bg-dark ">
@@ -96,90 +96,52 @@
 
 </div>
 
-<div id="wrapper">
-    <div id="header">
-        <h2>Overtime form</h2>
-    </div>
-</div>
+<div id="form-container justify-content-center pt-2 mt-2" >
 
-<div id="container">
-    <h3>add overtime hours</h3>
+    <div class="col-4 col-sm-6 offset-sm-3  offset-4">
 
-    <h2>${employee.firstName } ${employee.lastName }</h2>
 
     <form:form action="${pageContext.request.contextPath}/overtime/save/${employee.id}" modelAttribute="overtime"
                method="POST">
 
+        <h3>Nadgodziny</h3>
+
+        <h2>${employee.firstName } ${employee.lastName }</h2>
+
         <form:hidden path="id"/>
 
-        <table>
-            <tbody>
+                    <div class="form-group">
+                        <label>Miesiąc:</label>
+                        <form:select type="date" class="form-control" id="month" path="month">
+                        </form:select>
+                    </div>
 
-            <tr>
-                        <td><label>Month:</label></td>
-                        <td><form:select type="date" path="month">
-                            <option value=''>--Select Month--</option>
-                            <option selected value='1'>January</option>
-                            <option value='2'>February</option>
-                            <option value='3'>March</option>
-                            <option value='4'>April</option>
-                            <option value='5'>May</option>
-                            <option value='6'>June</option>
-                            <option value='7'>July</option>
-                            <option value='8'>August</option>
-                            <option value='9'>September</option>
-                            <option value='10'>October</option>
-                            <option value='11'>November</option>
-                            <option value='12'>December</option>
-                        </form:select></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><label>Year:</label></td>
-                        <td><form:select id="year" type="date" path="year">
+                    <div class="form-group">
+                        <label>Rok:</label>
+                        <form:select id="year" class="form-control" type="date" path="year">
+                        </form:select>
+                    </div>
 
 
-                        </form:select></td>
-                    </tr>
+                    <div class="form-group">
+                        <label>Liczba godzin:</label>
+                        <form:input type="number" min="1" class="form-control" path="numberOfOverTimeHoursInCurrentMonth"/>
+                        <form:errors cssClass="ui-state-error-text"/>
+                    </div>
 
-                    <script>
-                        const start = new Date().getFullYear() - 5;
-                        const end = new Date().getFullYear();
-                        let options = "";
-                        for (let year = start; year <= end; year++) {
-                            options += "<option value=\"" + year + "\">" + year + "</option>";
-                        }
-                        document.getElementById("year").innerHTML = options;
-                    </script>
+                        <input type="submit" class="btn btn-primary" value="Zapisz" class="save"/> <a class="btn btn-primary" href="${pageContext.request.contextPath}/teacher/list">Powrót do listy</a>
 
-
-                    <tr>
-                        <td><label>number of hours:</label></td>
-                        <td><form:input path="numberOfOverTimeHoursInCurrentMonth"/></td>
-                    </tr>
-
-
-                    <tr>
-                        <td><label></label></td>
-                        <td><input type="submit" value="Save" class="save"/></td>
-                    </tr>
-
-
-                    </tbody>
-                </table>
 
 
             </form:form>
 
-            <div style="clear: both"></div>
-
-            <p>
-                <a href="${pageContext.request.contextPath}/teacher/list">Back to List</a>
-            </p>
-
         </div>
-
+</div>
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 </body>
 
 </html>

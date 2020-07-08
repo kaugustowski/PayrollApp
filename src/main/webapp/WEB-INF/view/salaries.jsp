@@ -103,14 +103,14 @@
 
 </div>
 
-<div class="container justify-content-center">
-    <div class="col-auto">
+<div class="container col-6 offset-3">
+    <div>
         <table class="table table-bordered">
             <thead class="thead-light ">
             <tr class="d-table-row justify-content-center">
-                <th>Rok</th>
-                <th>Miesiąc</th>
-                <th>Akcje</th>
+                <th class="text-center">Rok</th>
+                <th class="text-center">Miesiąc</th>
+                <th class="text-center">Akcja</th>
             </tr>
             </thead>
 
@@ -124,9 +124,9 @@
 
 
                 <tr class="d-table-row">
-                    <td> ${month.year} </td>
-                    <td> ${month.month} </td>
-                    <td>
+                    <td class="text-center"> ${month.year} </td>
+                    <td class="text-center"> ${month.month} </td>
+                    <td class="text-center">
 
                         <div class="dropdown">
                             <button class="btn btn-secondary bg-success"
@@ -144,6 +144,11 @@
     </div>
 </div>
 
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 </body>
 </html>
