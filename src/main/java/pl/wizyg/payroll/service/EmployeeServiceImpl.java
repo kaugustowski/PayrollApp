@@ -18,16 +18,14 @@ import java.util.List;
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
 
-    @Autowired
+    private final
+    EmployeeRepository employeeRepository;
+    private final
     PasswordEncoder passwordEncoder;
-
-
-    @Autowired
+    private final
     JdbcUserDetailsManager jdbcUserDetailsManager;
 
-    private final EmployeeRepository employeeRepository;
-
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder, JdbcUserDetailsManager jdbcUserDetailsManager) {
         this.employeeRepository = employeeRepository;
         this.passwordEncoder = passwordEncoder;
         this.jdbcUserDetailsManager = jdbcUserDetailsManager;
@@ -53,18 +51,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findByEmail(email).get();
     }
 
-//TODO
     @Override
-    public void createEmployeeAccountIfDoesNotExist(Employee employee){
-        if(!employeeRepository.findByEmail(employee.getEmail()).isPresent()){
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("USER"));
+    public void createEmployeeAccountIfDoesNotExist(Employee employee) {
+        if (employeeRepository.findByEmail(employee.getEmail()).isEmpty()) {
+            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-        String username = employee.getEmail();
-        String encodedPassword = passwordEncoder.encode(employee.getPesel());
+            String username = employee.getEmail();
+            String encodedPassword = passwordEncoder.encode(employee.getPesel());
 
-        User user = new User(username, encodedPassword, authorities);
-        jdbcUserDetailsManager.createUser(user);
+            User user = new User(username, encodedPassword, authorities);
+            jdbcUserDetailsManager.createUser(user);
         }
     }
 }

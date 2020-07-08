@@ -103,52 +103,54 @@
 
 </div>
 
-<table class="table table-responsive table-bordered">
-    <thead class="thead-light">
-    <tr>
-        <th>Rok</th>
-        <th>Miesiąc</th>
-        <th>Akcje</th>
-    </tr>
-    </thead>
+
+<div class="container col-6 offset-3">
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-light ">
+            <tr class="d-table-row justify-content-center">
+                <th class="text-center">Rok</th>
+                <th class="text-center">Miesiąc</th>
+                <th class="text-center">Akcja</th>
+            </tr>
+            </thead>
 
 
-    <c:forEach var="month" items="${salaryMonths}">
+            <c:forEach var="month" items="${salaryMonths}">
 
 
-        <c:url var="showList" value="/salary/overtimeList/${month.year}/${month.month}">
+                <c:url var="showList" value="/salary/overtimeList/${month.year}/${month.month}">
 
-        </c:url>
-
-
-        <c:url var="recalculate" value="/salary/calculateSalaries/${month.year}/${month.month}">
-
-        </c:url>
+                </c:url>
 
 
-        <tr class="d-table-row">
-            <td> ${month.year} </td>
-            <td> ${month.month} </td>
-            <td>
+                <tr class="d-table-row">
+                    <td class="text-center"> ${month.year} </td>
+                    <td class="text-center"> ${month.month} </td>
+                    <td class="text-center">
 
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle bg-success"
-                            type="button" id="dropdownMenu1" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        Action
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <a class="dropdown-item" href="${showList}">List</a>
-                        <a class="dropdown-item" href="${recalculate}">Recalculate</a>
-                    </div>
-                </div>
-            </td>
-        </tr>
+                        <div >
+                            <button class="btn btn-secondary bg-success"
+                                    type="button">
+                                <a class="dropdown-item" href="${showList}">Lista</a>
+                            </button>
 
-    </c:forEach>
+                        </div>
+                    </td>
+                </tr>
 
-</table>
+            </c:forEach>
 
+        </table>
+    </div>
+</div>
+
+
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 </body>
 </html>

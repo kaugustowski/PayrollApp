@@ -79,8 +79,8 @@ public class SickLeaveController {
         return "redirect:/sickLeave/list/{employeeId}";
     }
 
-    @PostMapping("/delete")
-    public String deleteSickLeave(@RequestParam int sickLeaveId) throws SickLeaveNotFoundException {
+    @GetMapping("/delete/{employeeId}")
+    public String deleteSickLeave(@RequestParam int sickLeaveId, @PathVariable int employeeId) throws SickLeaveNotFoundException {
 
         sickLeaveService.delete(sickLeaveId);
 

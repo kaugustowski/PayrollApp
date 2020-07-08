@@ -66,7 +66,7 @@ public class SickLeaveServiceImpl implements SickLeaveService {
 
     @Override
     public List<SickLeave> getEmployeesSickLeaves(int employeeId) {
-        return sickLeaveRepository.findAllByEmployeeId(employeeId);
+        return sickLeaveRepository.findAllByEmployeeIdOrderByStartDateDesc(employeeId);
     }
 
     @Validated({SickLeaveValidator.class})
@@ -74,7 +74,7 @@ public class SickLeaveServiceImpl implements SickLeaveService {
     public void saveSickLeave(@Validated SickLeave sickLeave,
                               int employeeId) throws SickLeavesOverlapException {
 
-        List<SickLeave> employeeSickLeaves = sickLeaveRepository.findAllByEmployeeId(employeeId);
+        List<SickLeave> employeeSickLeaves = sickLeaveRepository.findAllByEmployeeIdOrderByStartDateDesc(employeeId);
         for (SickLeave sl : employeeSickLeaves) {
             if (areSickLeavesOverlapped(sl, sickLeave)) {
                 throw new SickLeavesOverlapException("Zwolnienie nakłada się na już istniejące!");

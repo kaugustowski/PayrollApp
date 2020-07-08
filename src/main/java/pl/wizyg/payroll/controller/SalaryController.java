@@ -1,15 +1,19 @@
 package pl.wizyg.payroll.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.wizyg.payroll.DTO.EssentialSalaryDTO;
 import pl.wizyg.payroll.DTO.SalaryListDTO;
-import pl.wizyg.payroll.entity.*;
+import pl.wizyg.payroll.entity.Employee;
+import pl.wizyg.payroll.entity.EssentialSalary;
+import pl.wizyg.payroll.entity.OvertimeSalary;
+import pl.wizyg.payroll.entity.Salary;
 import pl.wizyg.payroll.service.EmployeeService;
 import pl.wizyg.payroll.service.SalaryService;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller

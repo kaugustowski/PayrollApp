@@ -29,7 +29,7 @@
 
             <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link" href="#">Strona główna</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
@@ -175,6 +175,12 @@
     </p>
 
 </div>
+
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 </body>
 

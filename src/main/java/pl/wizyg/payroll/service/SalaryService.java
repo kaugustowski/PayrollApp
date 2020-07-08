@@ -48,4 +48,6 @@ public interface SalaryService {
     List<SalaryListDTO> getOvertimeSalaryListDTO();
 
     List<SalaryListDTO> getEssentialSalaryListDTO();
+
+    List<SalaryListDTO> getEmployeeSalaryListDTO(String email);
 }

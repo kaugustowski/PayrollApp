@@ -45,6 +45,7 @@ public class PayrollSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/salary/my/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/salary/**").hasRole("PAYROLL_SPECIALIST")
+                .antMatchers("/history/**").hasRole("PAYROLL_SPECIALIST")
                 .antMatchers("/employee/**").hasRole("PAYROLL_SPECIALIST")
                 .antMatchers("/teacher/**").hasRole("PAYROLL_SPECIALIST")
                 .antMatchers("/sickLeave/**").hasRole("PAYROLL_SPECIALIST")

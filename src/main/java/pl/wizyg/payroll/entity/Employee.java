@@ -39,7 +39,7 @@ public abstract class Employee {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "pesel", unique = true)
-    @PESEL
+    @PESEL(message = "niepoprawny numer PESEL")
     private String pesel;
     @Column(name = "email", unique = true)
     @Email

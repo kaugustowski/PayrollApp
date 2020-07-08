@@ -13,7 +13,7 @@
 <html>
 
 <head>
-    <title>Save Sick leave</title>
+    <title>Zwolnienie lekarskie</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -96,47 +96,51 @@
 
 </div>
 
-<div id="container">
-    <h3>Zwolnienie lekarskie</h3>
 
-    <h3>${employee.firstName } ${employee.lastName }</h3>
+<div id="form-container pt-2 mt-2" >
 
-    <form:form action="${pageContext.request.contextPath}/sickLeave/save/${employeeId}"
-               modelAttribute="sickLeave" method="POST">
-
-        <%--        <form:hidden path="sickLeaveId"/>--%>
-
-        <table>
-            <tbody>
-            <tr>
-                <td><label>Początek zwolnienia:</label></td>
-                <td><form:input type="date" path="startDate"/>
-                </td>
-            </tr>
-
-            <tr>
-                <td><label>Koniec zwolnienia:</label></td>
-                <td><form:input type="date" path="endDate"/>
-                    <form:errors cssClass="ui-state-error-text"/></td>
-            </tr>
-
-            <tr>
-                <td><label></label></td>
-                <td><input type="submit" value="Zapisz" class="save"/></td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="col-4  offset-4 justify-content-center">
 
 
-    </form:form>
+        <form:form action="${pageContext.request.contextPath}/sickLeave/save/${employee.id}" modelAttribute="sickLeave"
+                   method="POST">
 
-    <div style="clear: both"></div>
+            <h3>Zwolnienie lekarskie</h3>
 
-    <p>
-        <a href="${pageContext.request.contextPath}/teacher/list">Back to List</a>
-    </p>
+            <h2>${employee.firstName } ${employee.lastName }</h2>
 
+            <form:hidden path="sickLeaveId"/>
+
+            <div class="form-group">
+                <label for="startDate">Początek zwolnienia:</label>
+                    <form:input type="date" path="startDate" id="startDate"/>
+            </div>
+
+            <div class="form-group">
+                <label for="endDate">Koniec zwolnienia:</label>
+                    <form:input type="date" path="endDate" id="endDate"/>
+                <br>
+                    <form:errors cssClass="ui-state-error-text"/>
+            </div>
+
+
+                <input type="submit" value="Zapisz" class="save btn btn-primary"/>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/sickLeave/list/${employee.id}">Lista zwolnień</a>
+
+
+
+
+
+        </form:form>
+
+    </div>
 </div>
+
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 </body>
 

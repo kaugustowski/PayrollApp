@@ -12,4 +12,6 @@ public interface EmploymentHistoryService {
     void saveEmploymentHistory(EmploymentHistory employmentHistory, int employeeId);
 
     void deleteEmploymentHistory(EmploymentHistory employmentHistory);
+
+    void deleteEmploymentHistory(int empHistoryId);
 }

@@ -47,4 +47,15 @@ public class OvertimeServiceImpl implements OvertimeService {
         return overtimeRepository.findByEmployee_IdAndMonthAndYear(employeeId, month, year);
     }
 
+    @Override
+    public void delete(int overtimeId) {
+
+        overtimeRepository.delete(getOvertime(overtimeId));
+    }
+
+    @Override
+    public Overtime getOvertime(int overtimeId) {
+        return overtimeRepository.findById(overtimeId).get();
+    }
+
 }

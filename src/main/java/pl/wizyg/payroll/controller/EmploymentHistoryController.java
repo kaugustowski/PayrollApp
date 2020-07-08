@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.wizyg.payroll.entity.Employee;
 import pl.wizyg.payroll.entity.EmploymentHistory;
 import pl.wizyg.payroll.service.EmployeeService;
@@ -45,6 +42,14 @@ public class EmploymentHistoryController {
         model.addAttribute("employee", employee);
 
         return "emp-history-form";
+    }
+
+    @RequestMapping("/delete/{employeeId}")
+    public String showEmploymentHistoryForm(@PathVariable int employeeId, @RequestParam int empHistId){
+
+        employmentHistoryService.deleteEmploymentHistory(empHistId);
+
+        return "redirect:/history/{employeeId}";
     }
 
     @PostMapping("/save/{employeeId}")

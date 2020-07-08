@@ -19,16 +19,6 @@
     <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
 
-    <script>
-        // $(document).ready(function(){
-        //     $("#search").on("keyup", function() {
-        //         const value = $(this).val().toLowerCase();
-        //         $("#searchTable tr").filter(function() {
-        //             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        //         });
-        //     });
-        // });
-    </script>
 </head>
 <body>
 <div class="container sticky-top" id="nav-container">
@@ -43,7 +33,7 @@
 
             <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link" href="#">Strona główna</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
@@ -116,8 +106,8 @@
                 <th>Imię</th>
                 <th>Nazwisko</th>
                 <th>Email</th>
-                <th>Aktywny</th>
-                <th>Akcje</th>
+                <th class="text-center">Aktywny</th>
+                <th class="text-center">Akcje</th>
             </tr>
             </thead>
 
@@ -129,14 +119,10 @@
                 </c:url>
 
 
-                <c:url var="deleteLink" value="/teacher/delete">
-                    <c:param name="teacherId" value="${tempTeacher.id}"/>
-                </c:url>
-
-            <c:url var="addSickLeaveLink" value="/sickLeave/add/${tempTeacher.id}">
+            <c:url var="addSickLeaveLink" value="/sickLeave/list/${tempTeacher.id}">
             </c:url>
 
-            <c:url var="addOvertimeLink" value="/overtime/add/${tempTeacher.id}">
+            <c:url var="addOvertimeLink" value="/overtime/list/${tempTeacher.id}">
             </c:url>
 
             <c:url var="salaryList" value="/salary/list/employee/${tempTeacher.id}">
@@ -150,9 +136,9 @@
                 <td> ${tempTeacher.firstName} </td>
                 <td> ${tempTeacher.lastName} </td>
                 <td> ${tempTeacher.email} </td>
-                <td> ${tempTeacher.active==true ? "+" : "-"}</td>
+                <td class="text-center"> ${tempTeacher.active==true ? "+" : "-"}</td>
 
-                <td>
+                <td class="text-center">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle bg-success"
                                 type="button" id="dropdownMenu1" data-toggle="dropdown"
@@ -161,9 +147,9 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <a class="dropdown-item" href="${updateLink}">Aktualizuj</a>
-                            <a class="dropdown-item" href="${addSickLeaveLink}">Dodaj zwolnienie lekarskie</a>
+                            <a class="dropdown-item" href="${addSickLeaveLink}">Zwolnienia lekarskie</a>
 
-                            <a class="dropdown-item" href="${addOvertimeLink}">Dodaj nadgodziny</a>
+                            <a class="dropdown-item" href="${addOvertimeLink}">Nadgodziny</a>
                             <a class="dropdown-item" href="${salaryList}">Lista płac pracownika</a>
                             <a class="dropdown-item" href="${empHistory}">Historia zatrudnienia</a>
                         </div>
@@ -177,6 +163,11 @@
     </div>
 </div>
 
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 </body>
 </html>

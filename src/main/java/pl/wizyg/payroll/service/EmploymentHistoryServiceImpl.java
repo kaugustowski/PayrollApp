@@ -35,6 +35,10 @@ public class EmploymentHistoryServiceImpl implements EmploymentHistoryService {
         employmentHistoryRepository.delete(employmentHistory);
     }
 
+    @Override
+    public void deleteEmploymentHistory(int empHistoryId) {
+        employmentHistoryRepository.delete(getEmploymentHistory(empHistoryId));
+    }
 
 
 }

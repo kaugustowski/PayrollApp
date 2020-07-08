@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: Wizyg
@@ -10,7 +11,12 @@
 <html>
 <head>
     <title>Historia zatrudnienia</title>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
 
 </head>
 <body>
@@ -27,7 +33,7 @@
 
             <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link" href="#">Strona główna</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">
@@ -86,35 +92,77 @@
     </nav>
 
 </div>
-<h1>Historia zatrudnienia</h1>
 
-<h2>${employee.firstName} ${employee.lastName}</h2>
+<div class="container">
 
-<table>
-    <thead class="thead-light">
-    <tr class="table table-responsive table-bordered">
-        <th>Nazwa placówki</th>
-        <th>Data rozpoczęcia</th>
-        <th>Data zakończenia</th>
-        <th>Dni na urlopie bezpłatnym</th>
-    </tr>
-    </thead>
+    <h2>Historia zatrudnienia</h2>
+    <h3>${employee.firstName} ${employee.lastName}</h3>
 
+    <table id="searchTable" class="table table-bordered table-hover table-striped">
+        <thead class="thead-light">
+        <tr>
+            <th>Nazwa placówki</th>
+            <th>Data rozpoczęcia</th>
+            <th>Data zakończenia</th>
+            <th>Dni na urlopie bezpłatnym</th>
+            <th class="text-center">Akcja</th>
 
-    <c:forEach var="eh" items="${history}">
-        <tr class="d-table-row">
-            <td>${eh.institutionName}</td>
-            <td>${eh.startDate}</td>
-            <td>${eh.endDate}</td>
-            <td>${eh.numberOfDaysOnUnpaidLeave}</td>
         </tr>
-    </c:forEach>
+        </thead>
 
-    <a class="btn btn-primary" href="${pageContext.request.contextPath}/history/add/${employeeId}" class="ui-button">Add
-        another work experience</a>
+        <c:forEach var="eh" items="${history}">
 
-</table>
+            <c:url var="deleteLink" value="/sickLeave/delete/${employeeId}">
+                <c:param name="empId" value="${eh.id}"/>
+            </c:url>
 
+            <tr class="d-table-row">
+                <td>${eh.institutionName}</td>
+                <td>${eh.startDate}</td>
+                <td>${eh.endDate}</td>
+                <td>${eh.numberOfDaysOnUnpaidLeave}</td>
+                <td class="text-center">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary bg-success"
+                                type="button">
+                            <a class="text-dark" href="${deleteLink}"
+                               onclick="if (!(confirm('Czy na pewno chcesz to zwolnienie?'))) return false">Usuń
+                                zwolnienie</a>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </c:forEach>
+
+
+        <c:forEach var="sickLeave" items="${sickLeaves}">
+
+            <c:url var="edit" value="/sickLeave/edit/${employee.id}">
+                <c:param name="sickLeaveId" value="${sickLeave.sickLeaveId}"/>
+            </c:url>
+
+
+
+
+            <tr class="d-table-row">
+                <td>${sickLeave.startDate}</td>
+                <td>${sickLeave.endDate}</td>
+                <td>${sickLeave.consecutiveDays}</td>
+
+            </tr>
+        </c:forEach>
+
+    </table>
+
+    <a class="btn btn-primary" href="${pageContext.request.contextPath}/history/add/${employee.id}">Dodaj historię zatrudnienia</a>
+</div>
+
+
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 </body>
 </html>

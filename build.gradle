@@ -6,7 +6,9 @@ plugins {
 group 'pl.wizyg'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
+
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()

@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface SickLeaveRepository extends JpaRepository<SickLeave, Integer> {
 
-    List<SickLeave> findAllByEmployeeId(int employeeId);
+    List<SickLeave> findAllByEmployeeIdOrderByStartDateDesc(int employeeId);
 
     List<SickLeave> findAllByEmployeeIdAndStartDateBeforeAndEndDateAfter(
             int employeeId,

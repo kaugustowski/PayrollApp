@@ -102,39 +102,42 @@
     </div>
 </div>
 
-<div id="container">
+<div class="container justify-content-center">
+    <div class="jumbotron justify-content-center">
+        <form:form action="${pageContext.request.contextPath}/admin/register" modelAttribute="user" method="POST">
+        <div class="form-group row">
+                <label for="username" class="offset-sm-3 col-sm-3 col-form-label">Nazwa użytkownika:</label>
+                <div class="col-sm-6">
+                    <form:input path="username"/>
+                </div>
+            </div>
 
-    <form:form action="${pageContext.request.contextPath}/admin/register" modelAttribute="user" method="POST">
-
-        <table>
-            <tbody>
-            <tr>
-                <td><label>login:</label></td>
-                <td><form:input path="username"/></td>
-            </tr>
-
-
-            <tr>
-                <td><label>pass:</label></td>
-                <td><form:input type="password" path="password"/></td>
-            </tr>
-
-
-            <tr>
-                <td><label></label></td>
-                <td><input type="submit" value="Dodaj użytkownika" class="save"/></td>
-            </tr>
+            <div class="form-group row">
+                <label for="password" class="offset-sm-3 col-sm-3 col-form-label">Hasło:</label>
+                <div class="col-sm-6">
+                    <form:input type="password" path="password"/>
+                </div>
+            </div>
 
 
-            </tbody>
-        </table>
+            <div class="form-group row">
+                <div class="col-sm-6 offset-sm-6">
+                    <button type="submit" class="btn btn-primary">Dodaj użytkownika</button>
+                </div>
+            </div>
 
-
-    </form:form>
+        </form:form>
+    </div>
 
 
 </div>
 
+
+<footer class="border-top footer text-muted">
+    <div class="footer-copyright text-center">© 2020 - PayrollApp - Copyright:
+        <a href="https://github.com/kaugustowski"> Karol Augustowski</a>
+    </div>
+</footer>
 
 </body>
 
