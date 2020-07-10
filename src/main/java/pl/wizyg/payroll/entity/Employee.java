@@ -11,7 +11,6 @@ import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.*;
 
-//@Component
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Employee {
@@ -56,7 +55,6 @@ public abstract class Employee {
     @Column(name = "active")
     private boolean active;
 
-    //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacher")
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, mappedBy = "employee")
     private List<SickLeave> sickLeaves;
 

@@ -99,7 +99,7 @@
         <input type="text" onkeyup="filterBySearchbar()" id="search" placeholder="Wyszukaj...">
     </div>
 
-    <table id="searchTable" class="table  table-bordered">
+    <table id="searchTable" class="table table-striped  table-bordered">
         <thead class="thead-light">
         <tr>
             <th>Imię</th>
@@ -118,11 +118,12 @@
                 <c:param name="teacherId" value="${tempTeacher.id}"/>
             </c:url>
 
-            <c:url var="addSickLeaveLink" value="/sickLeave/add/${tempTeacher.id}">
+            <c:url var="listSickLeaveLink" value="/sickLeave/list/${tempTeacher.id}">
             </c:url>
 
-            <c:url var="addOvertimeLink" value="/overtime/add/${tempTeacher.id}">
+            <c:url var="listOvertimeLink" value="/overtime/list/${tempTeacher.id}">
             </c:url>
+
 
             <c:url var="salaryList" value="/salary/list/employee/${tempTeacher.id}">
             </c:url>
@@ -143,15 +144,15 @@
                         <button class="btn btn-secondary dropdown-toggle bg-success"
                                 type="button" id="dropdownMenu1" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                            Action
+                            Akcje
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <a class="dropdown-item" href="${updateLink}">Aktualizuj</a>
-                            <a class="dropdown-item" href="${addSickLeaveLink}">Dodaj zwolnienie lekarskie</a>
+                            <a class="dropdown-item" href="${listSickLeaveLink}">Zwolnienia lekarskie</a>
 
-                            <a class="dropdown-item" href="${addOvertimeLink}">Dodaj nadgodziny</a>
+                            <a class="dropdown-item" href="${listOvertimeLink}">Nadgodziny</a>
                             <a class="dropdown-item" href="${salaryList}">Lista płac pracownika</a>
-                            <a class="dropdown-item" href="${empHistory}">Lista płac pracownika</a>
+                            <a class="dropdown-item" href="${empHistory}">Historia zatrudnienia</a>
                         </div>
                     </div>
                 </td>

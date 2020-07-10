@@ -529,7 +529,7 @@ public abstract class Salary {
 
     //podstawa ubezpieczenia zdrowotnego
     public int getHealthcareContributionBase() {
-        return grossSalary - calculatePensionContributionEmployee() - calculateDisabilityContributionEmployee() - calculateSicknessContribution() - sicknessAllowance;
+        return grossSalary - getPensionContributionEmployee() - getDisabilityContributionEmployee() - getSicknessContribution() - sicknessAllowance;
     }
 
     //ubezpieczenie zdrowotne

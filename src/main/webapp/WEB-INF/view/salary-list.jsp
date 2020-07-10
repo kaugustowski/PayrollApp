@@ -32,7 +32,7 @@
 
             <ul class="navbar-nav mr-auto">
                 <li>
-                    <a class="nav-link" href="#">Strona główna</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}">Strona główna</a>
                 </li>
                 <c:if test="${pageContext.request.isUserInRole('PAYROLL_SPECIALIST')}">
                     <li class="nav-item">

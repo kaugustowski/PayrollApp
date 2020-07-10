@@ -99,7 +99,7 @@ public class PayrollConfig implements WebMvcConfigurer {
 //        props.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
         props.put(Environment.DIALECT, hibernateDialect);
 
-        props.put(Environment.HBM2DDL_AUTO, "update");
+        props.put(Environment.HBM2DDL_AUTO, "validate");
 
         return props;
     }

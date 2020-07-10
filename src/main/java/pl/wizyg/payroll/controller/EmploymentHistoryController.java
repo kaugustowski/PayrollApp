@@ -49,7 +49,7 @@ public class EmploymentHistoryController {
 
         employmentHistoryService.deleteEmploymentHistory(empHistId);
 
-        return "redirect:/history/{employeeId}";
+        return "redirect:/history/list/{employeeId}";
     }
 
     @PostMapping("/save/{employeeId}")
