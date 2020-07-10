@@ -112,7 +112,7 @@
 
         <c:forEach var="eh" items="${history}">
 
-            <c:url var="deleteLink" value="/sickLeave/delete/${employeeId}">
+            <c:url var="deleteLink" value="/history/delete/${employeeId}">
                 <c:param name="empId" value="${eh.id}"/>
             </c:url>
 
@@ -126,8 +126,8 @@
                         <button class="btn btn-secondary bg-success"
                                 type="button">
                             <a class="text-dark" href="${deleteLink}"
-                               onclick="if (!(confirm('Czy na pewno chcesz to zwolnienie?'))) return false">Usuń
-                                zwolnienie</a>
+                               onclick="if (!(confirm('Czy na pewno chcesz usunąć historię zatrudnienia?'))) return false">Usuń
+                                historię zatrudnienia</a>
                         </button>
                     </div>
                 </td>
@@ -135,22 +135,7 @@
         </c:forEach>
 
 
-        <c:forEach var="sickLeave" items="${sickLeaves}">
 
-            <c:url var="edit" value="/sickLeave/edit/${employee.id}">
-                <c:param name="sickLeaveId" value="${sickLeave.sickLeaveId}"/>
-            </c:url>
-
-
-
-
-            <tr class="d-table-row">
-                <td>${sickLeave.startDate}</td>
-                <td>${sickLeave.endDate}</td>
-                <td>${sickLeave.consecutiveDays}</td>
-
-            </tr>
-        </c:forEach>
 
     </table>
 

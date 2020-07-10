@@ -119,45 +119,45 @@
                 </c:url>
 
 
-            <c:url var="addSickLeaveLink" value="/sickLeave/list/${tempTeacher.id}">
-            </c:url>
+                <c:url var="listSickLeaveLink" value="/sickLeave/list/${tempTeacher.id}">
+                </c:url>
 
-            <c:url var="addOvertimeLink" value="/overtime/list/${tempTeacher.id}">
-            </c:url>
+                <c:url var="listOvertimeLink" value="/overtime/list/${tempTeacher.id}">
+                </c:url>
 
-            <c:url var="salaryList" value="/salary/list/employee/${tempTeacher.id}">
-            </c:url>
+                <c:url var="salaryList" value="/salary/list/employee/${tempTeacher.id}">
+                </c:url>
 
-            <c:url var="empHistory" value="/history/list/${tempTeacher.id}">
-            </c:url>
+                <c:url var="empHistory" value="/history/list/${tempTeacher.id}">
+                </c:url>
 
 
-            <tr class="d-table-row">
-                <td> ${tempTeacher.firstName} </td>
+                <tr class="d-table-row">
+                    <td> ${tempTeacher.firstName} </td>
                 <td> ${tempTeacher.lastName} </td>
                 <td> ${tempTeacher.email} </td>
                 <td class="text-center"> ${tempTeacher.active==true ? "+" : "-"}</td>
 
-                <td class="text-center">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle bg-success"
-                                type="button" id="dropdownMenu1" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            Akcja
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <a class="dropdown-item" href="${updateLink}">Aktualizuj</a>
-                            <a class="dropdown-item" href="${addSickLeaveLink}">Zwolnienia lekarskie</a>
+                    <td class="text-center">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle bg-success"
+                                    type="button" id="dropdownMenu1" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                Akcja
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <a class="dropdown-item" href="${updateLink}">Aktualizuj</a>
+                                <a class="dropdown-item" href="${listSickLeaveLink}">Zwolnienia lekarskie</a>
 
-                            <a class="dropdown-item" href="${addOvertimeLink}">Nadgodziny</a>
-                            <a class="dropdown-item" href="${salaryList}">Lista płac pracownika</a>
-                            <a class="dropdown-item" href="${empHistory}">Historia zatrudnienia</a>
+                                <a class="dropdown-item" href="${listOvertimeLink}">Nadgodziny</a>
+                                <a class="dropdown-item" href="${salaryList}">Lista płac pracownika</a>
+                                <a class="dropdown-item" href="${empHistory}">Historia zatrudnienia</a>
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
 
-        </c:forEach>
+            </c:forEach>
 
         </table>
     </div>
