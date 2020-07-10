@@ -158,12 +158,12 @@ public class SalaryServiceImpl implements SalaryService {
 
     @Override
     public List<EssentialSalary> getEssentialSalariesInMonthYear(int month, int year) {
-        return essentialSalaryRepository.findAllByMonthAndYear(month,year);
+        return essentialSalaryRepository.findAllByMonthAndYearOrderByEmployee_LastName(month, year);
     }
 
     @Override
     public List<OvertimeSalary> getOvertimeSalariesInMonthYear(int month, int year) {
-        return overtimeSalaryRepository.findAllByMonthAndYear(month, year);
+        return overtimeSalaryRepository.findAllByMonthAndYearOrderByEmployee_LastName(month, year);
     }
 
     @Override

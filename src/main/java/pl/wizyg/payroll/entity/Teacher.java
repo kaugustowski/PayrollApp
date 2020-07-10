@@ -24,6 +24,7 @@ public class Teacher extends Employee {
 
 
     public Teacher() {
+
     }
 
 
@@ -90,15 +91,19 @@ public class Teacher extends Employee {
         return (int) ((double) getBaseSalary() / SalaryConstants.TEACHER_OVERTIME_COEFFICIENT);
     }
 
-    public void setIncentivePayString (String senBonus){
+    public String getIncentivePayString() {
 
-        incentivePay = (int) Math.round(Double.parseDouble(senBonus)*100);
-    }
-    public String getIncentivePayString(){
+        double sb = (double) incentivePay / 100;
 
-        double sb = (double)incentivePay/100;
-
-        return String.format(Locale.ROOT,"%.2f",sb);
+        return String.format(Locale.ROOT, "%.2f", sb);
     }
 
+    public void setIncentivePayString(String senBonus) {
+
+        incentivePay = (int) Math.round(Double.parseDouble(senBonus) * 100);
+    }
+
+    public void calculateBaseSalary() {
+        this.baseSalary = getBaseSalary();
+    }
 }

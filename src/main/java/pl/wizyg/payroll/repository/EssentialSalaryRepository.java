@@ -11,7 +11,7 @@ public interface EssentialSalaryRepository extends JpaRepository<EssentialSalary
 
     EssentialSalary findByEmployee_IdAndMonthAndYear(Integer employee_id, int month, int year);
 
-    List<EssentialSalary> findAllByMonthAndYear(int month, int year);
+    List<EssentialSalary> findAllByMonthAndYearOrderByEmployee_LastName(int month, int year);
 
     List<EssentialSalary> findAllByMonthAndYearAndEmployee_ActiveTrue(int month, int year);
 

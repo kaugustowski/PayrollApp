@@ -39,6 +39,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void saveTeacher(Teacher teacher) {
+        teacher.calculateBaseSalary();
         teacherRepository.save(teacher);
     }
 
