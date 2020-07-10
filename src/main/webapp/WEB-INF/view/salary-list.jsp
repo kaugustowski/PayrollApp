@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Salary list</title>
+    <title>Lista wynagrodzeń</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

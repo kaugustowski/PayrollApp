@@ -13,12 +13,14 @@
 <html>
 
 <head>
-    <title>Save Customer</title>
+    <title>Dodaj użytkownika</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="<c:url value="/resources/js/script1.js" />" rel="stylesheet" defer></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
 
 </head>
 
@@ -96,14 +98,11 @@
 
 </div>
 
-<div id="wrapper">
-    <div id="header">
-        <h2>Dodaj użytkownika płac</h2>
-    </div>
-</div>
 
 <div class="container justify-content-center">
     <div class="jumbotron justify-content-center">
+        <h2 class="text-center">Dodaj nowego specjalistę do spraw płac</h2>
+        <br/>
         <form:form action="${pageContext.request.contextPath}/admin/register" modelAttribute="user" method="POST">
         <div class="form-group row">
                 <label for="username" class="offset-sm-3 col-sm-3 col-form-label">Nazwa użytkownika:</label>

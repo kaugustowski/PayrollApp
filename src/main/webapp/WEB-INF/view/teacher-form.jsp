@@ -8,12 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Save Teacher</title>
+    <title>Nauczyciel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />">
@@ -25,7 +26,7 @@
 </head>
 
 <body>
-
+<spring:htmlEscape defaultHtmlEscape="true"/>
 <div class="container sticky-top" id="nav-container">
     <nav class="navbar navbar-dark navbar-expand-md bg-dark ">
         <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -114,7 +115,7 @@
                     <div class="form-group">
                         <label for="firstName" class="col-sm-2 col-form-label">Imię:</label>
                         <div class="col-sm-10">
-                            <form:input path="firstName" id="firstName"/>
+                            <form:input path="firstName" htmlEscape="true" id="firstName"/>
                             <form:errors path="firstName" cssClass="ui-state-error-text"/>
                         </div>
                     </div>
@@ -183,7 +184,7 @@
                     <div class="form-group">
                         <label for="funcBonus" class="col-form-label">Dodatek funkcyjny [zł]:</label>
                         <div class="col-sm-10">
-                            <form:input id="funcBonus" type="number" step="0.01" path="functionalBonusString"/>
+                            <form:input id="funcBonus" type="number" min="0" step="0.01" path="functionalBonusString"/>
                             <form:errors path="functionalBonus" cssClass="ui-state-error-text"/>
                         </div>
                     </div>
@@ -191,7 +192,8 @@
                     <div class="form-group">
                         <label for="seniorityBonus" class="col-form-label">Dodatek stażowy [zł]:</label>
                         <div class="col-sm-10">
-                            <form:input id="seniorityBonus" type="number" step="0.01" path="seniorityBonusString"/>
+                            <form:input id="seniorityBonus" type="number" min="0" step="0.01"
+                                        path="seniorityBonusString"/>
                             <form:errors path="seniorityBonus" cssClass="ui-state-error-text"/>
                         </div>
                     </div>
@@ -199,7 +201,7 @@
                     <div class="form-group">
                         <label for="incPay" class="col-form-label">Dodatek motywacyjny [zł]:</label>
                         <div class="col-sm-10">
-                            <form:input id="incPay" type="number" step="0.01" path="incentivePayString"/>
+                            <form:input id="incPay" type="number" min="0" step="0.01" path="incentivePayString"/>
                             <form:errors path="incentivePay" cssClass="ui-state-error-text"/>
                         </div>
                     </div>

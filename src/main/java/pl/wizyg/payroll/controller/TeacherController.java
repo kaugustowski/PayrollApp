@@ -24,7 +24,7 @@ import java.util.List;
 public class TeacherController {
 
     Logger logger = LoggerFactory.getLogger(TeacherController.class);
-    // private static final Logger logger = Logger.getLogger(TeacherController.class);
+
 
 
     private final TeacherService teacherService;
@@ -85,13 +85,23 @@ public class TeacherController {
     }
 
     @PostMapping("/saveTeacher")
-    public String saveTeacher(@Valid @ModelAttribute("teacher") Teacher teacher, BindingResult bindingResult) {
+    public String saveTeacher(@Valid @ModelAttribute("teacher") Teacher teacher, BindingResult bindingResult, Model theModel) {
 
         if (bindingResult.hasErrors()) {
+
+
+            Education[] education = Education.values();
+
+            TeacherType[] teacherTypes = TeacherType.values();
+
+            theModel.addAttribute("teacher", teacher);
+            theModel.addAttribute("educationValues", education);
+            theModel.addAttribute("teacherTypeValues", teacherTypes);
             return "teacher-form";
         }
-        employeeServiceService.createEmployeeAccountIfDoesNotExist(teacher);
+
         teacherService.saveTeacher(teacher);
+        employeeServiceService.createEmployeeAccountIfDoesNotExist(teacher);
 
         return "redirect:/teacher/list";
     }
@@ -110,13 +120,6 @@ public class TeacherController {
         return "teacher-form";
     }
 
-//    @GetMapping("/delete")
-//    public String deleteTeacher(@RequestParam("teacherId") int theId) {
-//
-//        teacherService.deleteTeacher(theId);
-//
-//        return "redirect:/teacher/list";
-//    }
 
     @GetMapping("/setInactive")
     public String setTeacherInactive(@RequestParam("teacherId") int theId) {

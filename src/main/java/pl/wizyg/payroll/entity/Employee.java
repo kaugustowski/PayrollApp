@@ -178,9 +178,6 @@ public abstract class Employee {
         return baseSalary;
     }
 
-    public void setBaseSalary(int baseSalary) {
-        this.baseSalary = baseSalary;
-    }
 
     public int getSeniorityBonus() {
         return seniorityBonus;
@@ -277,7 +274,7 @@ public abstract class Employee {
 
     public String getBaseSalaryString() {
 
-        double bs = (double) baseSalary / 100;
+        double bs = (double) getBaseSalary() / 100;
 
         return String.format(Locale.ROOT, "%.2f", bs);
     }
