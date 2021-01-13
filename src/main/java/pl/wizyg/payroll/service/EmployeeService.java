@@ -10,16 +10,10 @@ public interface EmployeeService {
 
     List<Employee> getActiveEmployees();
 
-    //    void saveEmployee(Employee employee);
-//
     Employee getEmployee(int id);
 
     Employee getEmployee(String email);
 
     void createEmployeeAccountIfDoesNotExist(Employee employee);
-
-    // void createEmployeeAccount(Teacher employee);
-//
-//    void deleteTeacher(int id);
 
 }

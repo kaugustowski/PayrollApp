@@ -62,11 +62,6 @@ public class PayrollConfig implements WebMvcConfigurer {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-//        dataSource.setUrl("jdbc:sqlserver://localhost;DatabaseName=payroll");
-//
-//        dataSource.setUsername("wizyg");
-//        dataSource.setPassword("wizyg");
 
         dataSource.setDriverClassName(driver);
         dataSource.setUrl(databaseUrl);
@@ -91,35 +86,15 @@ public class PayrollConfig implements WebMvcConfigurer {
 
     private Properties getHibernateProperties() {
 
-        // set hibernate properties
         Properties props = new Properties();
 
         props.put(Environment.SHOW_SQL, "true");
-//        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-//        props.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
         props.put(Environment.DIALECT, hibernateDialect);
 
         props.put(Environment.HBM2DDL_AUTO, "validate");
 
         return props;
     }
-
-
-//    @Bean
-//    @Autowired
-//    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-//
-//        HibernateTransactionManager txManager = new HibernateTransactionManager();
-//        txManager.setSessionFactory(sessionFactory);
-//
-//        return txManager;
-//    }
-
-
-//    @Bean
-//    public EntityManager entityManger () {
-//        return Objects.requireNonNull(entityManagerFactory().getObject()).createEntityManager();
-//    }
 
 
     @Bean

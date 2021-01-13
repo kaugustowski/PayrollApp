@@ -8,7 +8,7 @@
         <datasource-mapping>
           <factory-entry name="Entities" value="3796eefd-1219-4b5b-abf7-b76aa3a9a4c4" />
           <factory-entry name="PayrollApp.main" value="3796eefd-1219-4b5b-abf7-b76aa3a9a4c4" />
-          <factory-entry name="entityManagerFactory" value="ba669277-ad77-4aff-92ef-a66d97643ab1" />
+          <factory-entry name="entityManagerFactory" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

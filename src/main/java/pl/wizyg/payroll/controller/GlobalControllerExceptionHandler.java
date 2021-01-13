@@ -23,7 +23,6 @@ public class GlobalControllerExceptionHandler {
         if (AnnotationUtils.findAnnotation
                 (e.getClass(), ResponseStatus.class) != null)
             throw e;
-        System.out.println(e.getMessage());
 
         ModelAndView mav = new ModelAndView();
 
